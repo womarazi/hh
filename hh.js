@@ -715,20 +715,27 @@ function getMissions()/* :{time: seconds, button: html, container: html}[] */ {
     const retelem = {time: null, button: null, container: null};
     const cont = missioncontainers[i];
     retelem.container = cont;
-    pe(cont.children.length !== 4, errmsg+0);
-    const btnaccept = cont.children[0];
-    const btnfinishpay = cont.children[2];
-    const btnreward = cont.children[3];
+    if (cont.children.length !== 5) { alert(errmsg); return; }
+    const timehtml = cont.children[0];
+    const btnaccept = cont.children[1];
+    const progressbarcontainer = cont.children[2];
+    const btnfinishpay = cont.children[3];
+    const btnreward = cont.children[4];
     
-    pe(btnaccept.getAttribute('rel') !== 'mission_start', errmsg+1);
-    pe(btnfinishpay.getAttribute('rel') !== 'finish', errmsg+2);
-    pe(btnreward.getAttribute('rel') !== 'claim', errmsg+3);
+    if (cont.children.length !== 5) { console.error(cont.children); alert(errmsg); return; }
+    if(btnaccept.getAttribute('rel') !== 'mission_start') {
+      console.error(errmsg+1 + 'wrong accept_rel:', btnaccept); return; }
+    if(btnfinishpay.getAttribute('rel') !== 'finish') {
+      console.error( errmsg+2+ 'wrong pay_rel:', btnfinishpay); return; }
+    if(btnreward.getAttribute('rel') !== 'claim') {
+      console.error( errmsg+3 + 'wrong reward_rel:', btnreward); return; }
     
     if (btnaccept.style.display !== 'none') {
-      pe(btnaccept.childNodes.length !== 2, errmsg+4);
+      pe(btnaccept.childNodes.length !== 0, errmsg+4);
       retelem.status = 'to accept';
-      retelem.time = timeparse(btnaccept.childNodes[1].innerText);
+      retelem.time = timeparse(timehtml.innerText);
       retelem.button = btnaccept; }
+    ////
     if (btnfinishpay.style.display !== 'none') {
       retelem.status = 'accepted';
       retelem.time = 1*60;
