@@ -731,7 +731,7 @@ function getMissions()/* :{time: seconds, button: html, container: html}[] */ {
       console.error( errmsg+3 + 'wrong reward_rel:', btnreward); return; }
     
     if (btnaccept.style.display !== 'none') {
-      pe(btnaccept.childNodes.length !== 0, errmsg+4);
+      if(btnaccept.childNodes.length !== 1) { console.error('wrong childrens of btnaccept', btnaccept); return; }
       retelem.status = 'to accept';
       retelem.time = timeparse(timehtml.innerText);
       retelem.button = btnaccept; }
