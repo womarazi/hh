@@ -6,7 +6,7 @@ function refreshPage(){
 }
 function addKobanAutoButton() {
   var kobanbtn = document.createElement("button");
-  buttonContainer.add(kobanbtn);
+  buttonContainer.append(kobanbtn);
   kobanbtn.style.borderRadius = "15px";
   kobanbtn.style.border = "3px solid yellow";
   kobanbtn.style.background = localStorage.getItem("useKoban") ? "green" : "red";
