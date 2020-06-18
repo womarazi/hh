@@ -13,6 +13,7 @@ function addKobanAutoButton() {
   kobanbtn.style.background = localStorage.getItem("useKoban") === "true" ? "green" : "red";
   $(kobanbtn).on('click', () => {
     const b = localStorage.getItem("useKoban") === "true";
+    console.log("useKoban ? " + b + " --> " + !b);
     localStorage.setItem("useKoban", !b);
     kobanbtn.style.background == !b ? "red" : "green";
   });
