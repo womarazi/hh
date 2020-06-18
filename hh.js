@@ -10,9 +10,9 @@ function addKobanAutoButton() {
   kobanbtn.style.borderRadius = "15px";
   kobanbtn.style.width = kobanbtn.style.height = "30px";
   kobanbtn.style.border = "3px solid yellow";
-  kobanbtn.style.background = localStorage.getItem("useKoban") ? "green" : "red";
+  kobanbtn.style.background = localStorage.getItem("useKoban") === "true" ? "green" : "red";
   $(kobanbtn).on('click', () => {
-    const b = localStorage.getItem("useKoban");
+    const b = localStorage.getItem("useKoban") === "true";
     localStorage.setItem("useKoban", !b);
     kobanbtn.style.background == !b ? "red" : "green";
   });
@@ -333,7 +333,7 @@ function towerOfFameMain(autorefill = true){
 
   const $challenge = $('.challenge_points');
   const energy = +$challenge.find('[energy]')[0].innerText;
-  const usekoban = localStorage.getItem("useKoban");
+  const usekoban = localStorage.getItem("useKoban") === "true";
   // console.log('energy:', energy); return;
   let userlist = JSON.parse(localStorage.getItem('_hhtowerlist'));
   if (userlist.length === 0) userlist = null;
@@ -619,7 +619,7 @@ function trollFight() {
   var energy = +$(
     '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
   )[0].innerHTML;
-  const usekoban = localStorage.getItem("useKoban");
+  const usekoban = localStorage.getItem("useKoban") === "true";
   if (energy === 0) {
     if (!usekoban) { setTimeout(trollFight, 30 * minutes); return; }
     let $energybtn = $('[type="energy_fight"] .hudPlus_mix_icn');
