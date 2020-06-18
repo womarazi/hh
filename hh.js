@@ -10,7 +10,7 @@ function addKobanAutoButton() {
   kobanbtn.style.borderRadius = "15px";
   kobanbtn.style.border = "3px solid yellow";
   kobanbtn.style.background = localStorage.getItem("useKoban") ? "green" : "red";
-  $(kobanbtn).on('click' () => {
+  $(kobanbtn).on('click', () => {
     const b = localStorage.getItem("useKoban");
     localStorage.setItem("useKoban", !b);
     kobanbtn.style.background == !b ? "red" : "green";
