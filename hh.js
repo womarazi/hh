@@ -1,4 +1,4 @@
-console.log("hh.js");
+console.log("hh.js v1 6/18/2020");
 setTimeout(main0, 500);
 
 function refreshPage(){
