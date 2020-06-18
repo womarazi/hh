@@ -5,7 +5,7 @@ function refreshPage(){
   setUrl(document.location.href);
 }
 function addKobanAutoButton() {
-  var kobanbtn = document.createElement("button");
+  let kobanbtn = document.createElement("button");
   buttonContainer.append(kobanbtn);
   kobanbtn.style.borderRadius = "15px";
   kobanbtn.style.width = kobanbtn.style.height = "30px";
