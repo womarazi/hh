@@ -329,8 +329,8 @@ function towerOfFameMain(autorefill = true){
       const $popup = $('#no_energy_challenge:visible');
       if ($popup.length) $popup.find('.orange_text_button').trigger('click');
     }
-    return true; }
-  };
+    return true; };
+
   const $challenge = $('.challenge_points');
   const energy = +$challenge.find('[energy]')[0].innerText;
   const usekoban = localStorage.getItem("useKoban");
