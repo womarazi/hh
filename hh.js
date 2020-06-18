@@ -625,11 +625,14 @@ function trollFight() {
     if (!usekoban) { setTimeout(trollFight, 30 * minutes); return; }
     let $energybtn = $('[type="energy_fight"] .hudPlus_mix_icn');
     if ($energybtn.length !== 1) { alert("found multiple energy-fight buttons"); return; }
-    $energybtn.trigger('click');
+    if (!$energybtn[0].disabled) {
+      $energybtn.trigger('click');
+      $energybtn[0].disabled = true;
+    }
     setTimeout( () => {
       $('#no_energy_fight .orange_text_button').trigger('click');
       setTimeout( () => { trollFight(); }, 300);
-    }, 100);
+    }, 200);
     return; }
 
   var listeners = undefined;
