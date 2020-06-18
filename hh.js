@@ -13,9 +13,9 @@ function addKobanAutoButton() {
   kobanbtn.style.backgroundColor = localStorage.getItem("useKoban") === "true" ? "green" : "red";
   $(kobanbtn).on('click', () => {
     const b = localStorage.getItem("useKoban") === "true";
-    console.log("useKoban ? " + b + " --> " + !b, !b ? "red" : "green", kobanbtn);
+    console.log("useKoban ? ", b, " --> ", !b, !b ? "green" : "red", kobanbtn);
     localStorage.setItem("useKoban", !b);
-    kobanbtn.style.backgroundColor == !b ? "red" : "green";
+    kobanbtn.style.backgroundColor == !b ? "green" : "red";
   });
 }
 var buttonContainer;
