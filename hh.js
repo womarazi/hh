@@ -626,11 +626,10 @@ function trollFight() {
     if ($energybtn.length !== 1) { alert("found multiple energy-fight buttons"); return; }
     $energybtn.trigger('click');
     setTimeout( () => {
-        $('#no_energy_fight .orange_text_button').trigger('click');
-        setTimeout( trollFight(); }, 300);
+      $('#no_energy_fight .orange_text_button').trigger('click');
+      setTimeout( () => { trollFight(); }, 300);
     }, 100);
-  return;
-  }
+    return; }
 
   var listeners = undefined;
   //listeners = window.getEventListeners($button[0]);
