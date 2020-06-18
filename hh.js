@@ -8,6 +8,7 @@ function addKobanAutoButton() {
   var kobanbtn = document.createElement("button");
   buttonContainer.append(kobanbtn);
   kobanbtn.style.borderRadius = "15px";
+  kobanbtn.style.width = kobanbtn.style.height = "30px";
   kobanbtn.style.border = "3px solid yellow";
   kobanbtn.style.background = localStorage.getItem("useKoban") ? "green" : "red";
   $(kobanbtn).on('click', () => {
@@ -44,7 +45,8 @@ function main0() {
   buttonContainer.style.zIndex = "1001";
   start.style.borderRadius = autorun.style.borderRadius = "15px";
   start.style.border = autorun.style.border = "3px solid black";
-
+  start.style.width = start.style.height = "30px";
+  autorun.style.width = autorun.style.height = "30px";
   start.innerHTML = "->";
   switch (window.location.pathname) {
     case "/tower-of-fame.html":
@@ -53,8 +55,6 @@ function main0() {
   }
   $startButton = $(start).on("click", hhmain);
   $autorunButton = $(autorun).on("click", autorunClick);
-  document.body.appendChild(start);
-  document.body.appendChild(autorun);
   autorunClick();
 }
 function autorunClick(evt) {
