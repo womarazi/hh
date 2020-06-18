@@ -4,6 +4,19 @@ setTimeout(main0, 500);
 function refreshPage(){
   setUrl(document.location.href);
 }
+function addKobanAutoButton() {
+  var kobanbtn = document.createElement("button");
+  buttonContainer.add(kobanbtn);
+  kobanbtn.style.borderRadius = "15px";
+  kobanbtn.style.border = "3px solid yellow";
+  kobanbtn.style.background = localStorage.getItem("useKoban") ? "green" : "red";
+  $(kobanbtn).on('click' () => {
+    const b = localStorage.getItem("useKoban");
+    localStorage.setItem("useKoban", !b);
+    kobanbtn.style.background == !b ? "red" : "green";
+  });
+}
+var buttonContainer;
 function main0() {
   /*inj_jsLoad(
     "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/",
@@ -20,16 +33,17 @@ function main0() {
     return; }
   var start = document.createElement("button");
   var autorun = document.createElement("button");
-  start.style.position = autorun.style.position = "absolute";
-  start.style.height = autorun.style.height = "30px";
-  start.style.width = autorun.style.width = "30px";
+  buttonContainer = document.createElement("div");
+  document.body.append(buttonContainer);
+  buttonContainer.append(start);
+  buttonContainer.append(autorun);
+  addKobanAutoButton()
+  buttonContainer.style.position = "absolute";
+  buttonContainer.style.right = '30px';
+  buttonContainer.style.top = '30px';
+  buttonContainer.style.zIndex = "1001";
   start.style.borderRadius = autorun.style.borderRadius = "15px";
-  //start.style.left = autorun.style.left = "calc(100vw - 100px)";
-  start.style.right = autorun.style.right = "0";
-  autorun.style.top = "calc(0)";
-  start.style.top = "calc(30px + 10px)";
   start.style.border = autorun.style.border = "3px solid black";
-  start.style.zIndex = autorun.style.zIndex = "1001";
 
   start.innerHTML = "->";
   switch (window.location.pathname) {
@@ -303,10 +317,9 @@ function towerOfFameMain(autorefill = true){
   const userlistbutton = $('#buttonmakeuserlist')[0];
   // end setup html buttons, start logic
   if (!doch && !dokh && !dohk) return;
-  
-  const $challenge = $('.challenge_points');
-  const energy = +$challenge.find('[energy]')[0].innerText;
-  if (energy === 0 ) {
+  const mustStopToRefill = () => {
+    if (energy > 0 ) return false;
+    if (!usekoban) return true;
     setTimeout(() => towerOfFameMain(false), 300);
     if (autorefill) {
       console.log('energyrefill: popup not visible');
@@ -316,7 +329,11 @@ function towerOfFameMain(autorefill = true){
       const $popup = $('#no_energy_challenge:visible');
       if ($popup.length) $popup.find('.orange_text_button').trigger('click');
     }
-    return; }
+    return true; }
+  };
+  const $challenge = $('.challenge_points');
+  const energy = +$challenge.find('[energy]')[0].innerText;
+  const usekoban = localStorage.getItem("useKoban");
   // console.log('energy:', energy); return;
   let userlist = JSON.parse(localStorage.getItem('_hhtowerlist'));
   if (userlist.length === 0) userlist = null;
@@ -345,6 +362,7 @@ function towerOfFameMain(autorefill = true){
     const user = userlist[key];
     if (+user.fought === 3) continue;
     if (!(user.isch && doch || user.iskh && dokh || user.ishk && dohk)) continue;
+    if (mustStopToRefill()) return;
     setUrl('https://www.hentaiheroes.com/battle.html?league_battle=1&id_member=' + key);
     // let html = $leagues.find('[sorting_id="' + key + '"]')[0];
     // if (!html) { alert('html not found codeline 171'); return; }
@@ -586,13 +604,6 @@ function trollFight() {
     console.log('timeouttrollFight 100');
     setTimeout(trollFight, 100);
     return; }
-  var energy = +$(
-    '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
-  )[0].innerHTML;
-  if (energy === 0) {
-    setTimeout(trollFight, 30 * minutes);
-    return;
-  }
   if ($(".slot.slot_girl_shards").length === 0) {
     let favBoss = +localStorage.getItem('favBoss');
     let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
@@ -604,6 +615,23 @@ function trollFight() {
     if (isNaN(favBoss) || favBoss <= 0) return;
     if (document.location.href !== favurl || !forceFight) { setUrl(favurl); }
   }
+
+  var energy = +$(
+    '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
+  )[0].innerHTML;
+  const usekoban = localStorage.getItem("useKoban");
+  if (energy === 0) {
+    if (!usekoban) { setTimeout(trollFight, 30 * minutes); return; }
+    let $energybtn = $('[type="energy_fight"] .hudPlus_mix_icn');
+    if ($energybtn.length !== 1) { alert("found multiple energy-fight buttons"); return; }
+    $energybtn.trigger('click');
+    setTimeout( () => {
+        $('#no_energy_fight .orange_text_button').trigger('click');
+        setTimeout( trollFight(); }, 300);
+    }, 100);
+  return;
+  }
+
   var listeners = undefined;
   //listeners = window.getEventListeners($button[0]);
   var event = "click";
