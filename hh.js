@@ -10,12 +10,12 @@ function addKobanAutoButton() {
   kobanbtn.style.borderRadius = "15px";
   kobanbtn.style.width = kobanbtn.style.height = "30px";
   kobanbtn.style.border = "3px solid yellow";
-  kobanbtn.style.background = localStorage.getItem("useKoban") === "true" ? "green" : "red";
+  kobanbtn.style.backgroundColor = localStorage.getItem("useKoban") === "true" ? "green" : "red";
   $(kobanbtn).on('click', () => {
     const b = localStorage.getItem("useKoban") === "true";
     console.log("useKoban ? " + b + " --> " + !b, !b ? "red" : "green", kobanbtn);
     localStorage.setItem("useKoban", !b);
-    kobanbtn.style.background == !b ? "red" : "green";
+    kobanbtn.style.backgroundColor == !b ? "red" : "green";
   });
 }
 var buttonContainer;
