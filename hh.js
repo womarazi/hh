@@ -116,7 +116,7 @@ function championmain(){
   if (time) {
     const sec = timeparse(time);
     console.log('waiting: ' + time , ' = ', sec, ' secondi');
-    setTimeout(championmain, (sec * 1.1 * 1000);
+    setTimeout(championmain, sec * 1.1 * 1000);
     return; }
   $fightbutton = $('button.champions-bottom__start-battle');
     
