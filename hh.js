@@ -113,7 +113,46 @@ var $startButton;
 function championmain(){
   $fightbutton = $('button.champions-bottom__start-battle');
   $fightbutton.trigger('click');
+  refreshPage();
 }
+contestmain() {
+  $contestEndedRoots = $('.contest_header.ended');
+  const ranks = $contestEndedRoots.find('.rank').map( (i, e) => +e.firstChild.nodeValue);
+  const $retireButtons = $contestEndedRoots.find('.purple_button_L');
+  if (ranks.length !== $buttons.length) { alert ('contestmain code became obsolete'); return; }
+  
+  const now = new Date();
+  const serverResetHour = 14;
+  const getServerMidnight = (date) => {
+    const daychange = (date.getHours() < serverResetHour); // cannot set day backward, causa problemi se cambia mese...
+    date.setHours(0, 0, 0, 0);
+    return date.getTime() - (daychange ? 24 * 60 * 60 : 0);
+  }
+
+  const todaymidnight = getServerMidnight(now);
+  const hours = now.getHours();
+  const hoursLeft = (24 - (1 + hours) + 14) % 24;
+  console.log('Changing server-day in: ', hoursLeft, '   =   (24 - (1 + hours) + 14) % 24   =   (24 - (1 + ' + hours + ') + 14) % 24');
+  setTimeout(contestmain, Math.max(10, hoursLeft * 1.1) * 60 * 60); // day-change check, setto un max per evitare hibernating issues
+  let lastdate = +localStorage.contestretiredate;
+  
+  const setRetireDate = () => {
+    localStorage.contestretiredate = lastdate = todaymidnight = getServerMidnight(new Date());
+  }
+  
+  $retireButtons.on('click', setRetireDate):
+  if (todaymidnight - lastdate <= 2 * 60 * 60 * 60) return; // every 2 days i collect.
+  // collect the least ranked challenge ended.
+  let minindex = 0;
+  let minvalue = ranks[0];
+  for (let i = 1; i < ranks.length; i++) {
+    if (minvalue < ranks[i]) { minvalue = ranks[i]; minindex = i; }
+  }
+  // minindex = 0; // perchè forse è "se hai una challenge non ritirata da 4 giorni" invece di "se non ritiri challenge per 4 giorni"
+  console.log('collecting:', $retireButtons[minindex]);
+  $($retireButtons[minindex]).trigger('click');
+}
+
 function popmain() {
 }
 
