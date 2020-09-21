@@ -19,6 +19,11 @@ function addKobanAutoButton() {
   });
 }
 var buttonContainer;
+
+var start = document.createElement("button");
+var autorun = document.createElement("button");
+var autorunp = document.createElement("button");
+
 function main0() {
   /*inj_jsLoad(
     "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/",
@@ -33,9 +38,7 @@ function main0() {
     alert('old timeout hhmain0 100, should never happen!');
     setTimeout(main0, 100);
     return; }
-  var start = document.createElement("button");
-  var autorun = document.createElement("button");
-  var autorunp = document.createElement("button");
+  
   buttonContainer = document.createElement("div");
   document.body.append(buttonContainer);
   buttonContainer.append(start);
