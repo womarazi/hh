@@ -107,7 +107,7 @@ function autorunClick(evt) {
 
 var $startButton;
 function championmain(){
-  $fightbutton = $('button.champions-bottom__start-battle);
+  $fightbutton = $('button.champions-bottom__start-battle');
   $fightbutton.trigger('click');
 }
 function popmain() {
