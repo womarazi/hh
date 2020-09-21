@@ -111,10 +111,22 @@ function autorunClick(evt) {
 
 var $startButton;
 function championmain(){
+  const time = $('.champions-bottom__rest [property="teamRest"]')[0];
+  const maxChampionWait = 15*60*60*1000;
+  todo cerca settimeout di contest che ha data in secondi invece di msec e confronta giorni per sec invece di msec.
+  if (time) {
+    const sec = timeparse(time);
+    console.log('waiting: ' + time , ' = ', sec, ' secondi');
+    setTimeout(championmain, (sec * 1.1 * 1000);
+    return; }
   $fightbutton = $('button.champions-bottom__start-battle');
+    
+    
   $fightbutton.trigger('click');
   refreshPage();
 }
+
+
 contestmain() {
   $contestEndedRoots = $('.contest_header.ended');
   const ranks = $contestEndedRoots.find('.rank').map( (i, e) => +e.firstChild.nodeValue);
@@ -126,14 +138,14 @@ contestmain() {
   const getServerMidnight = (date) => {
     const daychange = (date.getHours() < serverResetHour); // cannot set day backward, causa problemi se cambia mese...
     date.setHours(0, 0, 0, 0);
-    return date.getTime() - (daychange ? 24 * 60 * 60 : 0);
+    return date.getTime() - (daychange ? 24 * 60 * 60 * 1000 : 0);
   }
 
   const todaymidnight = getServerMidnight(now);
   const hours = now.getHours();
   const hoursLeft = (24 - (1 + hours) + 14) % 24;
   console.log('Changing server-day in: ', hoursLeft, '   =   (24 - (1 + hours) + 14) % 24   =   (24 - (1 + ' + hours + ') + 14) % 24');
-  setTimeout(contestmain, Math.max(10, hoursLeft * 1.1) * 60 * 60); // day-change check, setto un max per evitare hibernating issues
+  setTimeout(contestmain, Math.max(10, hoursLeft * 1.1) * 60 * 60 * 1000); // day-change check, setto un max per evitare hibernating issues
   let lastdate = +localStorage.contestretiredate;
   
   const setRetireDate = () => {
@@ -141,7 +153,7 @@ contestmain() {
   }
   
   $retireButtons.on('click', setRetireDate):
-  if (todaymidnight - lastdate <= 2 * 60 * 60 * 60) return; // every 2 days i collect.
+  if (todaymidnight - lastdate <= 2 * 60 * 60 * 60 * 1000) return; // every 2 days i collect.
   // collect the least ranked challenge ended.
   let minindex = 0;
   let minvalue = ranks[0];
