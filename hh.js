@@ -126,7 +126,7 @@ function championmain(){
 }
 
 
-contestmain() {
+function contestmain() {
   $contestEndedRoots = $('.contest_header.ended');
   const ranks = $contestEndedRoots.find('.rank').map( (i, e) => +e.firstChild.nodeValue);
   const $retireButtons = $contestEndedRoots.find('.purple_button_L');
