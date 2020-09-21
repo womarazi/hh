@@ -68,8 +68,8 @@ function main0() {
 function autorunClick(evt) {
   var realClick = evt ? true : false;
   var autorun = $autorunButton[0];
-  var isGlobal = evt.currentTarget === autorun;
-  var isLocal = !isGlobal;
+  var isGlobal = evt && evt.currentTarget === autorun;
+  var isLocal = evt && !isGlobal;
   var pathArray = window.location.pathname.substring(1).split('/');
   var pagename = pathArray[0];
   var lskey_g = 'injectAutorun';
