@@ -35,6 +35,7 @@ function main0() {
     return; }
   var start = document.createElement("button");
   var autorun = document.createElement("button");
+  var autorunp = document.createElement("button");
   buttonContainer = document.createElement("div");
   document.body.append(buttonContainer);
   buttonContainer.append(start);
@@ -44,11 +45,12 @@ function main0() {
   buttonContainer.style.right = '30px';
   buttonContainer.style.top = '30px';
   buttonContainer.style.zIndex = "1001";
-  start.style.borderRadius = autorun.style.borderRadius = "15px";
-  start.style.border = autorun.style.border = "3px solid black";
-  start.style.width = start.style.height = "30px";
-  autorun.style.width = autorun.style.height = "30px";
+  start.style.borderRadius = autorun.style.borderRadius =  autorunp.style.borderRadius = "15px";
+  start.style.border = autorun.style.border = autorunp.style.border = "3px solid black";
+  start.style.width = autorun.style.width = autorunp.style.width = "30px";
+  start.style.height = autorun.style.height = autorunp.style.height = "30px";
   start.innerHTML = "->";
+  autorun.innerHTML = 'G';
   switch (window.location.pathname) {
     case "/tower-of-fame.html":
       towerOfFameSetup();
@@ -56,15 +58,23 @@ function main0() {
   }
   $startButton = $(start).on("click", hhmain);
   $autorunButton = $(autorun).on("click", autorunClick);
+  $pageautorunButton = $(autorunp).on("click", autorunClick);
   autorunClick();
 }
 function autorunClick(evt) {
   var realClick = evt ? true : false;
   var autorun = $autorunButton[0];
+  var isGlobal = evt.currentTarget === autorun;
+  var isLocal = !isGlobal;
+  var pathArray = window.location.pathname.substring(1).split('/');
+  var pagename = pathArray[0];
+  var lskey_g = 'injectAutorun';
+  var lskey_p = 'pageAutorun_' + pagename
+  var lskey = '';
+  if (isGlobal) { lskey = lskey_g; }
+  if (isLocal) { lskey = lskey_p; }
   if (realClick) {
-    localStorage.injectAutorun =
-        localStorage.injectAutorun === "true" ? false : true;
-    //sessionStorage.injectAutorun = !sessionStorage.injectAutorun;
+    if (lskey) localStorage[lskey] = (localStorage[lskey_g] === "true" ? false : true);
   }
   console.log(
       "autorunclick(realclick?",
@@ -78,57 +88,55 @@ function autorunClick(evt) {
       ")"
   );
 
-  if (localStorage.injectAutorun !== "false") {
+  if (localStorage[lskey_g] === "true") {
     autorun.style.backgroundColor = "green";
-    $startButton.trigger("click");
     console.log("start(", realClick, ")");
   } else {
     autorun.style.backgroundColor = "red";
   }
+  if (localStorage[lskey_p] === "true") {
+    autorunp.style.backgroundColor = "green";
+    console.log("start(", realClick, ")");
+  } else {
+    autorunp.style.backgroundColor = "red";
+  }
+  
+  if (localStorage[lskey_g] === 'true' && localStorage[lskey_p] === 'true') $startButton.trigger("click");
 }
 
 var $startButton;
+function championmain(){
+  $fightbutton = $('button.champions-bottom__start-battle);
+  $fightbutton.trigger('click');
+}
+function popmain() {
+}
+
 function hhmain() {
   console.log("hhMain");
-  switch (window.location.pathname) {
-    case "/tower-of-fame.html":
+  const pathArray = window.location.pathname.substring(1).replace('\.html', '').split('/');
+  switch (pathArray[0]) {
+    case "tower-of-fame":
       towerOfFameMain();
       break;
-    case "/home.html":
-    case "/shop.html":
-    case "/pachinko.html": break;
-    case "/activities.html":
-      if (window.location.pathname.indexOf('tab=contests') > 0) return;
-      missionmain(); break;
-    case "/":
-    case "/hero.html":
-    case "/world.html":
-    case "/champions-map.html":
+      
+    case "home":
+    case "shop":
+    case "quest":
+    case "":
+    case "hero":
+    case "world":
+    case "champions-map":
+    case "pachinko": break;
+      
+    case "harem": harem0(); break;
+    case "activities":
+      // if (window.location.pathname.indexOf('tab=contests') > 0) return;
+      missionmain();
+      popmain();
       break;
-    default:
-      var path = window.location.pathname.substring(
-        0,
-        window.location.pathname.indexOf("/", 2)
-      );
-      if (path === "/quest") break;
-      if (path === "/harem") {
-        harem0();
-        break;
-      }
-      console.log(path);
-      console.log(
-        true,
-        "unexpected path (hh):" +
-          window.location.pathname +
-          "; fragment: |" +
-          path +
-          "|"
-      );
-      break;
-    case "/harem.html":
-      harem0();
-      break;
-    case "/battle.html":
+
+    case "battle":
       var params = getJsonFromUrl();
       if (params["id_arena"] !== undefined) {
         return arenaFight();
@@ -140,9 +148,20 @@ function hhmain() {
         return leagueFight();
       }
       break;
-    case "/arena.html":
+      
+    case "arena":
       arenaMain();
       break;
+      
+    case "champions":
+      championmain();
+      break;
+      
+    default:
+      switch(pathArray[1]){
+        default: break;
+      }
+
   }
 }
 
