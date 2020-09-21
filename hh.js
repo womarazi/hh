@@ -40,6 +40,7 @@ function main0() {
   document.body.append(buttonContainer);
   buttonContainer.append(start);
   buttonContainer.append(autorun);
+  buttonContainer.append(autorunp);
   addKobanAutoButton()
   buttonContainer.style.position = "absolute";
   buttonContainer.style.right = '30px';
