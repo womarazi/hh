@@ -78,7 +78,7 @@ function autorunClick(evt) {
   if (isGlobal) { lskey = lskey_g; }
   if (isLocal) { lskey = lskey_p; }
   if (realClick) {
-    if (lskey) localStorage[lskey] = (localStorage[lskey_g] === "true" ? false : true);
+    if (lskey) localStorage[lskey] = (localStorage[lskey] === "true" ? false : true);
   }
   console.log(
       "autorunclick(realclick?",
@@ -98,6 +98,7 @@ function autorunClick(evt) {
   } else {
     autorun.style.backgroundColor = "red";
   }
+  console.log('lskey_p:', lskey_p, 'val:', localStorage[lskey_p]);
   if (localStorage[lskey_p] === "true") {
     autorunp.style.backgroundColor = "green";
     console.log("start(", realClick, ")");
