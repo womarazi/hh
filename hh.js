@@ -151,7 +151,7 @@ function contestmain() {
     localStorage.contestretiredate = lastdate = todaymidnight = getServerMidnight(new Date());
   }
   
-  $retireButtons.on('click', setRetireDate):
+  $retireButtons.on('click', setRetireDate);
   if (todaymidnight - lastdate <= 2 * 60 * 60 * 60 * 1000) return; // every 2 days i collect.
   // collect the least ranked challenge ended.
   let minindex = 0;
