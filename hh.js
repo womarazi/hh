@@ -113,7 +113,6 @@ var $startButton;
 function championmain(){
   const time = $('.champions-bottom__rest [property="teamRest"]')[0];
   const maxChampionWait = 15*60*60*1000;
-  todo cerca settimeout di contest che ha data in secondi invece di msec e confronta giorni per sec invece di msec.
   if (time) {
     const sec = timeparse(time);
     console.log('waiting: ' + time , ' = ', sec, ' secondi');
