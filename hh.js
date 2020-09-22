@@ -114,8 +114,9 @@ function championmain(){
   const time = $('.champions-bottom__rest [property="teamRest"]')[0];
   const maxChampionWait = 15*60*60*1000;
   if (time) {
-    const sec = timeparse(time);
-    console.log('waiting: ' + time , ' = ', sec, ' secondi');
+    const timestr = time.innerText;
+    const sec = timeparse(timestr);
+    console.log('waiting: ' + timestr , ' = ', sec, ' secondi');
     setTimeout(championmain, sec * 1.1 * 1000);
     return; }
   $fightbutton = $('button.champions-bottom__start-battle');
