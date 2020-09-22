@@ -225,6 +225,7 @@ function hhmain() {
     case "activities":
       // if (window.location.pathname.indexOf('tab=contests') > 0) return;
       missionmain();
+      contestmain();
       popmain();
       break;
 
