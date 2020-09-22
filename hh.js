@@ -122,7 +122,8 @@ function championmain(){
     
     
   $fightbutton.trigger('click');
-  refreshPage();
+  console.log('btn:', $fightbutton);
+  // refreshPage();
 }
 
 
