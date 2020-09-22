@@ -123,7 +123,7 @@ function championmain(){
     
   $fightbutton.trigger('click');
   console.log('btn:', $fightbutton);
-  // refreshPage();
+  setTimeout(refreshpage, 10*1000);
 }
 
 
