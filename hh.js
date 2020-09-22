@@ -166,7 +166,42 @@ function contestmain() {
   $($retireButtons[minindex]).trigger('click');
 }
 
-function popmain() {
+function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
+  let $btn = $('#rewards_popup .blue_button_L:visible');
+  if ($btn.length) {
+    $btn.trigger('click');
+    afterSuccessFunc && afterSuccessFunc();
+    return;
+  }
+  setTimeout( () => closeRewardPopup(retrycount++, afterSuccessFunc), 1000);
+}
+
+function popmain(collected = false, retrycount = 0) {
+  const $collect = $('#pop .pop_central_part .purple_button_L:visible');
+  const retry = () => setTimeout(()=>popmain(true), 1000, retrycount+1);
+  if (retrycount > 5) { pageRefresh(); return; }
+  if ($collect.length) {
+    if (!collected) $collect.trigger('click');
+    retry();
+    return; }
+
+  const $autoassign = $('#pop .pop_right_part .blue_button_L[rel="pop_auto_assign"]:visible');
+  if ($autoassign.length) { $autoassign.trigger('click'); retry(); return; }
+  
+  const $depart = $('#pop .pop_central_part .blue_button_L[rel="pop_action"]:visible');
+  if ($depart.length) { $depart.trigger('click'); retry(); return; }
+  
+  const $kobanend = $('#pop .pop_central_part .orange_button_L[rel="pop_finish"]:visible');
+  const $trackbar = $('#pop .pop_central_part .hh_bar .frontbar:visible');
+  const $timeleft = $('#pop .pop_central_part .pop_remaining span');
+  const time = timeparse($timeleft[0].innerText);
+
+  if (!$kobanend.length || !$trackbar.length || !$timeleft.length) { retry(); return; }
+  const percent = +$trackbar[0].style.width.replace('\%', '') /100; // tra 0 e 1
+  retrycount = 0;
+  setTimeout(()=>popmain(true), (timeleft * 1 + 1) *1000, retrycount);
+  
+  
 }
 
 function hhmain() {
