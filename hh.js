@@ -132,7 +132,7 @@ function contestmain() {
   $contestEndedRoots = $('.contest_header.ended');
   const ranks = $contestEndedRoots.find('.rank').map( (i, e) => +e.firstChild.nodeValue);
   const $retireButtons = $contestEndedRoots.find('.purple_button_L');
-  if (ranks.length !== $buttons.length) { alert ('contestmain code became obsolete'); return; }
+  if (ranks.length !== $retireButtons.length) { alert ('contestmain code became obsolete'); return; }
   
   const now = new Date();
   const serverResetHour = 14;
