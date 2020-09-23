@@ -723,7 +723,7 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
   var $girls = $rewardcontainer.find('.girls_reward .slot_girl_shards');
   if (istroll && $button.length == 0 || $rewardcontainer.length == 0) {
     console.log('timeouttrollFight 100');
-    setTimeout(() => trollFight(isarena, istroll, isleague, 100);
+    setTimeout(() => trollFight(isarena, istroll, isleague), 100);
     return; }
   if (istroll && $girls.length === 0) {
     let favBoss = +localStorage.getItem('favBoss');
