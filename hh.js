@@ -725,6 +725,8 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
     console.log('timeouttrollFight 100');
     setTimeout(() => trollFight(isarena, istroll, isleague), 100);
     return; }
+  
+  console.log("trollFight1");
   if (istroll && $girls.length === 0) {
     let favBoss = +localStorage.getItem('favBoss');
     let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
@@ -737,6 +739,7 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
     if (document.location.href !== favurl || !forceFight) { setUrl(favurl); }
   }
 
+  console.log("trollFight2");
   var energy = istroll ? +$(
     '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
   )[0].innerHTML : 20;
@@ -756,6 +759,7 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
     }, 200);
     return; }
 
+  console.log("trollFight3");
   var listeners = undefined;
   //listeners = window.getEventListeners($button[0]);
   var event = "click";
@@ -772,6 +776,7 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
     return;
   }
 
+  console.log("trollFight4");
   $button[0].innerHTML = "PerforM!";
   $button
     .off("click")
