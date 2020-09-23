@@ -712,12 +712,15 @@ function arenaFightMod() {
 
 function trollFight() {
   console.log("trollFight");
-  var $button = $("#battle_middle > .green_button_L");
-  if ($button.length == 0 || $('.rewards_list').length == 0) {
+  var $button = $('#battle_middle .green_button_L[rel="launch"]');
+  var $girls = $('.rewards_list .girls_reward .slot_girl_shards');
+  var $rewardcontainer = $('.rewards_list');
+  var $girls = $rewardcontainer.find('.girls_reward .slot_girl_shards');
+  if ($button.length == 0 || $rewardcontainer.length == 0) {
     console.log('timeouttrollFight 100');
     setTimeout(trollFight, 100);
     return; }
-  if ($(".slot.slot_girl_shards").length === 0) {
+  if ($girls.length === 0) {
     let favBoss = +localStorage.getItem('favBoss');
     let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
     let forceFight = localStorage.getItem('forceFight');
