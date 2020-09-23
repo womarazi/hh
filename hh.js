@@ -207,6 +207,7 @@ function popmain(collected = false, retrycount = 0) {
 function hhmain() {
   console.log("hhMain");
   const pathArray = window.location.pathname.substring(1).replace('\.html', '').split('/');
+  window.is_cheat_click = () => false;
   switch (pathArray[0]) {
     case "tower-of-fame":
       towerOfFameMain();
@@ -232,13 +233,13 @@ function hhmain() {
     case "battle":
       var params = getJsonFromUrl();
       if (params["id_arena"] !== undefined) {
-        return arenaFight();
+        return trollFight(true, false, false);
       }
       if (params["id_troll"] !== undefined) {
-        return trollFight();
+        return trollFight(false, true, false);
       }
       if (params["league_battle"] !== undefined) {
-        return leagueFight();
+        return leagueFight(false, false, true);
       }
       break;
       
@@ -604,6 +605,7 @@ function arenaMain() {
     document.location.href = $opponents[2].getAttribute("href");
   }
 }
+/*
 function arenaFight() {
   console.log("arenaFight");
   var $BUTTON = $("#battle_middle > .green_button_L");
@@ -612,9 +614,10 @@ function arenaFight() {
     .off("click")
     .on("click", arenaFightMod)
     .trigger("click");
-}
+}*/
 
 function arenaFightMod() {
+  // original fight function withouth cheatclick check
   // if (is_cheat_click(arguments[0])) return false;
   $("#battle .battle_hero .class_change_btn").unbind("click");
   $("#battle .battle_hero .class_change_btn .hh_class_tooltip").addClass(
@@ -709,18 +712,20 @@ function arenaFightMod() {
     });
   }
 }
-
-function trollFight() {
+function canUseKoban() {
+  return localStorage.getItem("useKoban") === "true";
+}
+function trollFight(isarena = false, istroll = false, isleague = false) {
   console.log("trollFight");
   var $button = $('#battle_middle .green_button_L[rel="launch"]');
   var $girls = $('.rewards_list .girls_reward .slot_girl_shards');
   var $rewardcontainer = $('.rewards_list');
   var $girls = $rewardcontainer.find('.girls_reward .slot_girl_shards');
-  if ($button.length == 0 || $rewardcontainer.length == 0) {
+  if (istroll && $button.length == 0 || $rewardcontainer.length == 0) {
     console.log('timeouttrollFight 100');
-    setTimeout(trollFight, 100);
+    setTimeout(() => trollFight(isarena, istroll, isleague, 100);
     return; }
-  if ($girls.length === 0) {
+  if (istroll && $girls.length === 0) {
     let favBoss = +localStorage.getItem('favBoss');
     let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
     let forceFight = localStorage.getItem('forceFight');
@@ -732,12 +737,13 @@ function trollFight() {
     if (document.location.href !== favurl || !forceFight) { setUrl(favurl); }
   }
 
-  var energy = +$(
+  var energy = istroll ? +$(
     '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
-  )[0].innerHTML;
-  const usekoban = localStorage.getItem("useKoban") === "true";
+  )[0].innerHTML : 20;
+  const usekoban = canUsekoban();
+  
+  if (!usekoban) { setTimeout(() => trollFight(isarena, istroll, isleague), 30 * minutes); return; }
   if (energy === 0) {
-    if (!usekoban) { setTimeout(trollFight, 30 * minutes); return; }
     let $energybtn = $('[type="energy_fight"] .hudPlus_mix_icn');
     if ($energybtn.length !== 1) { alert("found multiple energy-fight buttons"); return; }
     if (!$energybtn[0].disabled) {
@@ -746,7 +752,7 @@ function trollFight() {
     }
     setTimeout( () => {
       $('#no_energy_fight .orange_text_button').trigger('click');
-      setTimeout( () => { trollFight(); }, 300);
+      setTimeout( () => { trollFight(isarena, istroll, isleague); }, 300);
     }, 200);
     return; }
 
@@ -756,6 +762,7 @@ function trollFight() {
   //console.log("original event.click: ", listeners[event]);
   //console.log(listeners[event].toSource());
   if (
+    istroll &&
     listeners !== undefined &&
     listeners[event].toSource() !== originaltrollfight.toSource()
   ) {
