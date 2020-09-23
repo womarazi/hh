@@ -740,7 +740,7 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
   var energy = istroll ? +$(
     '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
   )[0].innerHTML : 20;
-  const usekoban = canUsekoban();
+  const usekoban = canUseKoban();
   
   if (!usekoban) { setTimeout(() => trollFight(isarena, istroll, isleague), 30 * minutes); return; }
   if (energy === 0) {
