@@ -142,7 +142,7 @@ function contestmain() {
     return date.getTime() - (daychange ? 24 * 60 * 60 * 1000 : 0);
   }
 
-  const todaymidnight = getServerMidnight(now);
+  let todaymidnight = getServerMidnight(now);
   const hours = now.getHours();
   const hoursLeft = (24 - (1 + hours) + 14) % 24;
   console.log('Changing server-day in: ', hoursLeft, '   =   (24 - (1 + hours) + 14) % 24   =   (24 - (1 + ' + hours + ') + 14) % 24');
