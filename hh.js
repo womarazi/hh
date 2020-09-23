@@ -721,7 +721,7 @@ function trollFight(isarena = false, istroll = false, isleague = false) {
   var $girls = $('.rewards_list .girls_reward .slot_girl_shards');
   var $rewardcontainer = $('.rewards_list');
   var $girls = $rewardcontainer.find('.girls_reward .slot_girl_shards');
-  if (istroll && $button.length == 0 || $rewardcontainer.length == 0) {
+  if (istroll && ($button.length == 0 || $rewardcontainer.length == 0)) {
     console.log('timeouttrollFight 100');
     setTimeout(() => trollFight(isarena, istroll, isleague), 100);
     return; }
