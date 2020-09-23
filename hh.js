@@ -207,7 +207,7 @@ function popmain(collected = false, retrycount = 0) {
 function hhmain() {
   console.log("hhMain");
   const pathArray = window.location.pathname.substring(1).replace('\.html', '').split('/');
-  window.is_cheat_click = () => false;
+  // window.is_cheat_click = () => false;
   switch (pathArray[0]) {
     case "tower-of-fame":
       towerOfFameMain();
