@@ -239,7 +239,7 @@ function hhmain() {
         return trollFight(false, true, false);
       }
       if (params["league_battle"] !== undefined) {
-        return leagueFight(false, false, true);
+        return trollFight(false, false, true);
       }
       break;
       
@@ -787,7 +787,7 @@ function write(key, val){
   localStorage.setItem(key, val);
 }
 function read(val){}
-function leagueFight() {
+function leagueFightOld() {
   console.log("leagueFight");
   var $button = $("#battle_middle > .green_button_L");
   if ($button.length <= 0) {
