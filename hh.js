@@ -180,14 +180,18 @@ function popmain(collected = false, retrycount = 0) {
   const $collect = $('#pop .pop_central_part .purple_button_L:visible');
   const retry = () => setTimeout(()=>popmain(true), 1000, retrycount+1);
   if (retrycount > 5) { pageRefresh(); return; }
+  
+  console.log('pop collect check');
   if ($collect.length) {
     if (!collected) $collect.trigger('click');
     retry();
     return; }
 
+  console.log('pop assign check');
   const $autoassign = $('#pop .pop_right_part .blue_button_L[rel="pop_auto_assign"]:visible');
   if ($autoassign.length) { $autoassign.trigger('click'); retry(); return; }
   
+  console.log('pop depart check');
   const $depart = $('#pop .pop_central_part .blue_button_L[rel="pop_action"]:visible');
   if ($depart.length) { $depart.trigger('click'); retry(); return; }
   
@@ -196,6 +200,7 @@ function popmain(collected = false, retrycount = 0) {
   const $timeleft = $('#pop .pop_central_part .pop_remaining span');
   const time = timeparse($timeleft[0].innerText);
 
+  console.log('$collect', $collect, '$autoassign', $autoassign, '$depart', $depart, '$kobanend', $kobanend, '$trackbar', $trackbar, '$timeleft', $timeleft);
   if (!$kobanend.length || !$trackbar.length || !$timeleft.length) { retry(); return; }
   const percent = +$trackbar[0].style.width.replace('\%', '') /100; // tra 0 e 1
   retrycount = 0;
@@ -837,6 +842,12 @@ function getJsonFromUrl(hashBased) {
 var $haremClickable;
 
 function missionmain(missions = null, index = 0) {
+  // le missioni sono ordinate per durata e le completo nell'ordine dell'array.
+  // quindi controllo sempre l'elemento[0].
+  // se lo sto svolgendo aspetto.
+  // se è completo lo riscatto e controllo la [1].
+  // se è da accettare lo accetto.
+  // se è "new day" (sta finendo la mia giornata e sto per dormire) prende invece la quest più lunga (ultima nell'array)
   const rewardcontainer = $('#rewards_popup')[0];
   if (rewardcontainer.style.display !== 'none') {
     $('#rewards_popup button').trigger('click');
@@ -844,7 +855,8 @@ function missionmain(missions = null, index = 0) {
   var isNewDay = new Date().getHours();
   isNewDay = isNewDay <= 8 && isNewDay >= 5;
   if(missions === null) missions = this.getMissions();
-  if (missions.length === 0) return;
+  if (missions.length === 0) { collectDailyReward(); return; }
+  if (index >= missions.length) { setTimeout( () => missionmain(null, 0), 1000); }// succede se viene riscattata l'ultima quest nell'array (ma potrebbero essercene altre)
   if (isNewDay && missions[missions.length-1].time >= 1*60*60) index = missions.length-1;
   const mission = missions[index];
   console.log('quest:', mission, ' = ', missions,'['+index+']');
@@ -856,7 +868,9 @@ function missionmain(missions = null, index = 0) {
   }
   setTimeout(missionmain, 1000*(1.1*mission.time+5));
 }
-  
+function collectDailyReward() {
+  console.log('collectDailyReward() todo');
+}
 function questAccept(btn, time){
   $(btn).trigger('click');
 }
