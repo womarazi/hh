@@ -190,12 +190,12 @@ function popmain(collected = false, retrycount = 0) {
     return; }
   
 
-  console.log('pop assign check', $autoassign, 'disabled:', $autoassign[0].disabled);
   const $autoassign = $('#pop .pop_right_part .blue_button_L[rel="pop_auto_assign"]:visible');
+  console.log('pop assign check', $autoassign, 'disabled:', $autoassign[0].disabled);
   if ($autoassign.length && !$autoassign[0].disabled) { $autoassign.trigger('click'); retry(); return; }
   
-  console.log('pop depart check');
   const $depart = $('#pop .pop_central_part .blue_button_L[rel="pop_action"]:visible');
+  console.log('pop depart check', $depart);
   if ($depart.length) { $depart.trigger('click'); retry(); return; }
   
   const $kobanend = $('#pop .pop_central_part .orange_button_L[rel="pop_finish"]:visible');
