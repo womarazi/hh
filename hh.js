@@ -173,6 +173,7 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
     afterSuccessFunc && afterSuccessFunc();
     return;
   }
+  if (retrycount > 10) return;
   setTimeout( () => closeRewardPopup(retrycount++, afterSuccessFunc), 1000);
 }
 
@@ -184,12 +185,14 @@ function popmain(collected = false, retrycount = 0) {
   console.log('pop collect check');
   if ($collect.length) {
     if (!collected) $collect.trigger('click');
+    closeRewardPopup();
     retry();
     return; }
+  
 
-  console.log('pop assign check');
+  console.log('pop assign check', $autoassign, 'disabled:', $autoassign[0].disabled);
   const $autoassign = $('#pop .pop_right_part .blue_button_L[rel="pop_auto_assign"]:visible');
-  if ($autoassign.length) { $autoassign.trigger('click'); retry(); return; }
+  if ($autoassign.length && !$autoassign[0].disabled) { $autoassign.trigger('click'); retry(); return; }
   
   console.log('pop depart check');
   const $depart = $('#pop .pop_central_part .blue_button_L[rel="pop_action"]:visible');
@@ -848,10 +851,7 @@ function missionmain(missions = null, index = 0) {
   // se è completo lo riscatto e controllo la [1].
   // se è da accettare lo accetto.
   // se è "new day" (sta finendo la mia giornata e sto per dormire) prende invece la quest più lunga (ultima nell'array)
-  const rewardcontainer = $('#rewards_popup')[0];
-  if (rewardcontainer.style.display !== 'none') {
-    $('#rewards_popup button').trigger('click');
-  }
+  closeRewardPopup();
   var isNewDay = new Date().getHours();
   isNewDay = isNewDay <= 8 && isNewDay >= 5;
   if(missions === null) missions = this.getMissions();
