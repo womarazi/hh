@@ -201,13 +201,13 @@ function popmain(collected = false, retrycount = 0) {
   const $kobanend = $('#pop .pop_central_part .orange_button_L[rel="pop_finish"]:visible');
   const $trackbar = $('#pop .pop_central_part .hh_bar .frontbar:visible');
   const $timeleft = $('#pop .pop_central_part .pop_remaining span');
-  const time = timeparse($timeleft[0].innerText);
+  const timeleft_num = timeparse($timeleft[0].innerText);
 
   console.log('$collect', $collect, '$autoassign', $autoassign, '$depart', $depart, '$kobanend', $kobanend, '$trackbar', $trackbar, '$timeleft', $timeleft);
   if (!$kobanend.length || !$trackbar.length || !$timeleft.length) { retry(); return; }
   const percent = +$trackbar[0].style.width.replace('\%', '') /100; // tra 0 e 1
   retrycount = 0;
-  setTimeout(()=>popmain(true), (timeleft * 1 + 1) *1000, retrycount);
+  setTimeout(()=>popmain(true), (timeleft_num * 1 + 1) *1000, retrycount);
   
   
 }
