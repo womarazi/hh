@@ -71,7 +71,11 @@ function autorunClick(evt) {
   var isGlobal = evt && evt.currentTarget === autorun;
   var isLocal = evt && !isGlobal;
   var pathArray = window.location.pathname.substring(1).split('/');
+  var params = getJsonFromUrl();
   var pagename = pathArray[0];
+  if (params["league_battle"] !== undefined) { pagename = "tower-of-fame.html"; }
+  if (params["id_arena"] !== undefined) { pagename = "arena.html"; }
+  
   var lskey_g = 'injectAutorun';
   var lskey_p = 'pageAutorun_' + pagename
   var lskey = '';
@@ -178,6 +182,7 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
 }
 
 function popmain(collected = false, retrycount = 0) {
+  return; // currently disabled, update it.
   const $collect = $('#pop .pop_central_part .purple_button_L:visible');
   const retry = () => setTimeout(()=>popmain(true), 1000, retrycount+1);
   if (retrycount > 5) { pageRefresh(); return; }
@@ -247,6 +252,7 @@ function hhmain() {
         return trollFight(false, true, false);
       }
       if (params["league_battle"] !== undefined) {
+        towerOfFameSetup();
         return trollFight(false, false, true);
       }
       break;
