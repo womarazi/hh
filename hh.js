@@ -56,6 +56,7 @@ function main0() {
   start.innerHTML = "->";
   autorun.innerHTML = 'G';
   switch (window.location.pathname) {
+    case "battle.html":
     case "/tower-of-fame.html":
       towerOfFameSetup();
       break;
@@ -65,6 +66,7 @@ function main0() {
   $pageautorunButton = $(autorunp).on("click", autorunClick);
   autorunClick();
 }
+
 function autorunClick(evt) {
   var realClick = evt ? true : false;
   var autorun = $autorunButton[0];
@@ -75,6 +77,7 @@ function autorunClick(evt) {
   var pagename = pathArray[0];
   if (params["league_battle"] !== undefined) { pagename = "tower-of-fame.html"; }
   if (params["id_arena"] !== undefined) { pagename = "arena.html"; }
+  if (params["id_season_arena"] !== undefined) { pagename = "season-arena.html"; }
   
   var lskey_g = 'injectAutorun';
   var lskey_p = 'pageAutorun_' + pagename
@@ -347,8 +350,10 @@ function hhmain() {
         return trollFight(false, true, false);
       }
       if (params["league_battle"] !== undefined) {
-        towerOfFameSetup();
         return trollFight(false, false, true);
+      }
+      if (params["id_season_arena"] !== undefined) {
+        return trollFight(false, false, false, true);
       }
       break;
       
@@ -824,8 +829,11 @@ function arenaFightMod() {
 function canUseKoban() {
   return localStorage.getItem("useKoban") === "true";
 }
-function trollFight(isarena = false, istroll = false, isleague = false) {
+function trollFight(isarena = false, istroll = false, isleague = false, isSeason = false) {
   console.log("trollFight");
+  if (isSeason) {
+    window.location.href = "https://www.hentaiheroes.com/season-arena.html";
+  }
   var $button = $('#battle_middle .green_button_L[rel="launch"]');
   var $girls = $('.rewards_list .girls_reward .slot_girl_shards');
   var $rewardcontainer = $('.rewards_list');
