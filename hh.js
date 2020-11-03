@@ -197,7 +197,6 @@ function seasonArenaMain() {
     const pg = all[i];
     const $pg = $allpg[i];
     let atkarr = $pg.find('[carac="damage"]')[0].innerText.replace(',', '').split('-');
-    let atkarr = $pg.find('[carac="def3"]')[0].innerText.replace(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replace(',', '').split('-');
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.class ='hk'; }
