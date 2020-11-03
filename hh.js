@@ -196,7 +196,7 @@ function seasonArenaMain() {
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
   console.log('all', all, 'all length', all.length);
-  for (let i = 0; i < all.lenght; i++) {
+  for (let i = 0; i < all.length; i++) {
   console.log('index:', i);
     const isYou = i === 0;
     const pg = all[i];
