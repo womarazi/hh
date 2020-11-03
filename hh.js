@@ -195,12 +195,12 @@ function seasonArenaMain() {
   const you = new cCharacter();
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
-  console.log('all', all, 'all length', all.length);
   for (let i = 0; i < all.length; i++) {
   console.log('index:', i);
     const isYou = i === 0;
     const pg = all[i];
-    const $pg = $allpg[i];
+    const $pg = $($allpg[i]);
+    console.log('$pg:', $pg);
     let atkarr = $pg.find('[carac="damage"]')[0].innerText.replace(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replace(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
