@@ -180,7 +180,7 @@ deduceMissingData() {
   }
 }
 
-seasonArenaMain() {
+function seasonArenaMain() {
   const $allpg = $('#season-arena .hero_stats');
   if ($allpg.length !== 4) { console.err('arena season character length error', $allpg); return; }
   const $you = $($allpg[0]);
