@@ -173,10 +173,10 @@ deduceMissingData() {
   this.stage1.deduceMissingData();
   this.stage2.deduceMissingData();
   this.stage3.deduceMissingData();
-  if (!this.stage2.atk) this.stage2.atk = ((this.stage1.atk + this.stage3.atk)) || 0) / 2;
-  if (!this.stage2.khdef) this.stage2.khdef = ((this.stage1.khdef + this.stage3.khdef)) || 0) / 2;
-  if (!this.stage2.hkdef) this.stage2.hkdef = ((this.stage1.hkdef + this.stage3.hkdef)) || 0) / 2;
-  if (!this.stage2.chdef) this.stage2.chdef = ((this.stage1.chdef + this.stage3.chdef)) || 0) / 2;
+  if (!this.stage2.atk) this.stage2.atk = ((this.stage1.atk + this.stage3.atk) || 0) / 2;
+  if (!this.stage2.khdef) this.stage2.khdef = ((this.stage1.khdef + this.stage3.khdef) || 0) / 2;
+  if (!this.stage2.hkdef) this.stage2.hkdef = ((this.stage1.hkdef + this.stage3.hkdef) || 0) / 2;
+  if (!this.stage2.chdef) this.stage2.chdef = ((this.stage1.chdef + this.stage3.chdef) || 0) / 2;
   }
 }
 
