@@ -201,6 +201,7 @@ function seasonArenaMain() {
     const $pg = $allpg[i];
     let atkarr = $pg.find('[carac="damage"]')[0].innerText.replace(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replace(',', '').split('-');
+    console.log('setting [' + i + ']', atkarr, mainDefArr);
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.class ='hk'; }
     if (classHtml.getAttribute('carac') === 'class2') { pg.class ='ch'; }
@@ -225,7 +226,7 @@ function seasonArenaMain() {
     }
     pg.deduceMissingData();
   }
-  console.log('season arena script end:', all);
+  console.log('season arena script end:', all, $allpg);
 }
 
 function contestmain() {
