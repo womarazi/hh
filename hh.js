@@ -131,6 +131,100 @@ function championmain(){
   setTimeout(refreshPage, 3*1000);
 }
 
+class Girl {
+  type = null; // | 'hk' | 'kh' | 'ch'
+  attack = 0;
+  ego = 0;
+  excitement = 0;
+  kh = 0;// at 0-star lv1
+  hk = 0;
+  ch = 0;
+}
+class stage {
+  atk = 0;
+  hkdef = 0;
+  khdef = 0;
+  chdef = 0;
+
+deduceMissingData() {
+  this.hkdef = this.hkdef || 0;
+  this.khdef = this.khdef || 0;
+  this.chdef = this.chdef || 0;
+  const foundCounter = (this.hkdef ? 1 : 0) + (this.khdef ? 1 : 0) + (this.chdef ? 1 : 0);
+  const avgDef = (this.hkdef + this.chdef + this.khdef) / foundCounter;
+  this.hkdef = this.hkdef || avgDef;
+  this.khdef = this.khdef || avgDef;
+  this.chdef = this.chdef || avgDef;
+}
+}
+class Character {
+  type = null; // | 'hk' | 'kh' | 'ch'
+  lv = 0;
+  ego = 0;
+  harmony = 0;
+  stage1 = new stage();
+  stage2 = new stage();
+  stage3 = new stage();
+  mojoReward = 0;
+  a = new Girl();
+  b = new Girl();
+  c = new Girl();
+deduceMissingData() {
+  this.stage1.deduceMissingData();
+  this.stage2.deduceMissingData();
+  this.stage3.deduceMissingData();
+  if (!this.stage2.atk) this.stage2.atk = ((this.stage1.atk + this.stage3.atk)) || 0) / 2;
+  if (!this.stage2.khdef) this.stage2.khdef = ((this.stage1.khdef + this.stage3.khdef)) || 0) / 2;
+  if (!this.stage2.hkdef) this.stage2.hkdef = ((this.stage1.hkdef + this.stage3.hkdef)) || 0) / 2;
+  if (!this.stage2.chdef) this.stage2.chdef = ((this.stage1.chdef + this.stage3.chdef)) || 0) / 2;
+  }
+}
+
+seasonArenaMain() {
+  const $allpg = $('#season-arena .hero_stats');
+  if ($allpg.length !== 4) { console.err('arena season character length error', $allpg); return; }
+  const $you = $($allpg[0]);
+  const $op1 = $($allpg[1]);
+  const $op2 = $($allpg[2]);
+  const $op3 = $($allpg[3]);
+  const $opp = $($op1, $op2, $op3);
+  
+  const you = new Character();
+  const opponents = [new Character(), new Character(), new Character()];
+  const all = [you, ...opponents];
+  for (let i = 0; i < all.lenght; i++) {
+    const isYou = i === 0;
+    const pg = all[i];
+    const $pg = $allpg[i];
+    let atkarr = $pg.find('[carac="damage"]')[0].innerText.replace(',', '').split('-');
+    let atkarr = $pg.find('[carac="def3"]')[0].innerText.replace(',', '').split('-');
+    let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replace(',', '').split('-');
+    let classHtml = $pg.find('[carac^="class"]')[0];
+    if (classHtml.getAttribute('carac') === 'class1') { pg.class ='hk'; }
+    if (classHtml.getAttribute('carac') === 'class2') { pg.class ='ch'; }
+    if (classHtml.getAttribute('carac') === 'class3') { pg.class ='kh'; }
+    pg.lv = +$pg.find('.text_hero_level)[0].innerText.substring('Level '.length);
+    pg.stage1.atk = +atkarr[0];
+    pg.stage3.atk = +atkarr[1];
+    switch(pg.type) {
+      default: console.error('invalid hero class:', pg, classHtml, $pg); return;
+      case 'hk':
+        pg.stage1.hkdef = +mainDefArr[0];
+        pg.stage3.hkdef = +mainDefArr[1];
+        break;
+      case 'hk':
+        pg.stage1.khdef = +mainDefArr[0];
+        pg.stage3.khdef = +mainDefArr[1];
+        break;
+      case 'hk':
+        pg.stage1.chdef = +mainDefArr[0];
+        pg.stage3.chdef = +mainDefArr[1];
+        break;
+    }
+    pg.deduceMissingData();
+  }
+  console.log('season arena script end:', all);
+}
 
 function contestmain() {
   $contestEndedRoots = $('.contest_header.ended');
@@ -234,7 +328,9 @@ function hhmain() {
     case "world":
     case "champions-map":
     case "pachinko": break;
-      
+    case "season-arena":
+      seasonArenaMain();
+      break;
     case "harem": harem0(); break;
     case "activities":
       // if (window.location.pathname.indexOf('tab=contests') > 0) return;
