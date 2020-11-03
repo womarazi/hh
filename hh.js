@@ -202,7 +202,7 @@ function seasonArenaMain() {
     if (classHtml.getAttribute('carac') === 'class1') { pg.class ='hk'; }
     if (classHtml.getAttribute('carac') === 'class2') { pg.class ='ch'; }
     if (classHtml.getAttribute('carac') === 'class3') { pg.class ='kh'; }
-    pg.lv = +$pg.find('.text_hero_level)[0].innerText.substring('Level '.length);
+    pg.lv = +$pg.find('.text_hero_level')[0].innerText.substring('Level '.length);
     pg.stage1.atk = +atkarr[0];
     pg.stage3.atk = +atkarr[1];
     switch(pg.type) {
