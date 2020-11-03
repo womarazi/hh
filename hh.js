@@ -131,7 +131,7 @@ function championmain(){
   setTimeout(refreshPage, 3*1000);
 }
 
-class Girl {
+class cGirl {
   type = null; // | 'hk' | 'kh' | 'ch'
   attack = 0;
   ego = 0;
@@ -140,7 +140,7 @@ class Girl {
   hk = 0;
   ch = 0;
 }
-class stage {
+class cstage {
   atk = 0;
   hkdef = 0;
   khdef = 0;
@@ -157,18 +157,18 @@ deduceMissingData() {
   this.chdef = this.chdef || avgDef;
 }
 }
-class Character {
+class cCharacter {
   type = null; // | 'hk' | 'kh' | 'ch'
   lv = 0;
   ego = 0;
   harmony = 0;
-  stage1 = new stage();
-  stage2 = new stage();
-  stage3 = new stage();
+  stage1 = new cstage();
+  stage2 = new cstage();
+  stage3 = new cstage();
   mojoReward = 0;
-  a = new Girl();
-  b = new Girl();
-  c = new Girl();
+  a = new cGirl();
+  b = new cGirl();
+  c = new cGirl();
 deduceMissingData() {
   this.stage1.deduceMissingData();
   this.stage2.deduceMissingData();
@@ -189,8 +189,8 @@ function seasonArenaMain() {
   const $op3 = $($allpg[3]);
   const $opp = $($op1, $op2, $op3);
   
-  const you = new Character();
-  const opponents = [new Character(), new Character(), new Character()];
+  const you = new cCharacter();
+  const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
   for (let i = 0; i < all.lenght; i++) {
     const isYou = i === 0;
