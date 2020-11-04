@@ -218,7 +218,7 @@ function seasonArenaMain() {
         pg.stage1.hkdef = +mainDefArr[0];
         pg.stage3.hkdef = +mainDefArr[1];
         break;
-      case 'hk':
+      case 'kh':
         pg.stage1.khdef = +mainDefArr[0];
         pg.stage3.khdef = +mainDefArr[1];
         break;
@@ -228,7 +228,6 @@ function seasonArenaMain() {
         break;
     }
     pg.deduceMissingData();
-    // pg.deduceMissingData();
   }
   console.log('season arena script end:', all, $allpg);
 }
