@@ -193,7 +193,7 @@ winratio(enemy, judge = null, tentativi = 100) { // return % [0, 1]
   return wins / tentativi0;
 }
 
-fight(pg2, judge = null){ // return boolean
+fight(enemy, judge = null){ // return boolean
   let status1 = {
     ego: this.ego,
     excit: 0,
