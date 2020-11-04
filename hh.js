@@ -205,16 +205,18 @@ function seasonArenaMain() {
     let atkarr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
+    const $rewardpt = $pg.find('[cur="victory_points"]');
+    pg.mojoReward = $rewardpt.length && +$rewardpt[0].innerText;
+    pg.lv = +$pg.find('.text_hero_level')[0].innerText.substring('Level '.length);
     pg.ego = +$pg.find('[carac="ego"]')[0].parentElement.innerText.replaceAll(',', '');
     pg.harmony = +$pg.find('[carac="chance"]')[0].parentElement.innerText.replaceAll(',', '');
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
     if (classHtml.getAttribute('carac') === 'class2') { pg.type ='ch'; }
     if (classHtml.getAttribute('carac') === 'class3') { pg.type ='kh'; }
-    pg.lv = +$pg.find('.text_hero_level')[0].innerText.substring('Level '.length);
     pg.stage1.atk = +atkarr[0];
     pg.stage3.atk = +atkarr[1];
-    switch(pg.type) {
+    switch (pg.type) {
       default: console.error('invalid hero class:', pg, classHtml, $pg); return;
       case 'hk':
         pg.stage1.hkdef = +mainDefArr[0];
