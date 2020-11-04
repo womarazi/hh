@@ -207,7 +207,7 @@ fight(enemy, judge = null){ // return boolean
     chshield: 1,
   }
   let wins = 0;
-  while(tentativi-- > 0) {
+  while (true) {
     this.attack(enemy, status1, status2, judge) ? 1 : 0;
     if (status2.ego <=0) return true;
     enemy.attack(this, status2, status1, judge);
@@ -316,7 +316,6 @@ function seasonArenaMain() {
         break;
     }
     pg.deduceMissingData();
-    // pg.deduceMissingData();
   }
   console.log('season arena script end:', all, $allpg);
 }
