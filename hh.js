@@ -160,7 +160,8 @@ deduceMissingData() {
   this.khdef = this.khdef || avgDef;
   this.chdef = this.chdef || avgDef;
 }
-}
+} // class cGirl end
+
 class cCharacter {
   type = null; // | 'hk' | 'kh' | 'ch'
   lv = 0;
@@ -197,11 +198,13 @@ fight(pg2, judge = null){ // return boolean
     ego: this.ego,
     excit: 0,
     stage: 1,
+    chshield: 1, // ch bonus active (def 1x or 2x)
   }
   let status2 = {
     ego: enemy.ego,
     excit: 0,
     stage: 1,
+    chshield: 1,
   }
   let wins = 0;
   while(tentativi-- > 0) {
@@ -213,8 +216,56 @@ fight(pg2, judge = null){ // return boolean
 }
 
 attack(enemy, mystatus, enstatus, judge = 0){
-
+  let mystage = this['stage' + mystatus.stage];
+  let enstage = this['stage' + mystatus.stage];
+  this.excitement += this['girl' + mystatus.stage].excitement;
+  const classPoses = 4;
+  const allPoses = classPoses * 3;
+  let poseChance = 1 / allPoses;
+  if (judge) { // in realtà dovrei fare match con judge && girl type, non con judge && hero type
+    if (isSameType(judge, this.type)) { poseChance = 0.7 * (1 / classPoses); } else
+    if (isLosingType(judge, this.type)) { poseChance = 0.05 * (1 / classPoses); } else
+    if (isWinningType(judge, this.type)) { poseChance = 0.25 * (1 / classPoses); }
+  }
+  let harmonyChance = 0.25;
+  if (this.harmony && enemy.harmony) {
+    let myh = this.harmony;
+    let enh = enemy.harmony;
+    if (this.type && enemy.type) {
+      if (isWinningType(this.type, enemy.type)) { myh *= 1.2; }
+      if (isWinningType(enemy.type, type.type)) { enh *= 1.2; }
+    }
+    harmonyChance = 0.5 * Math.round(myh / (myh + enh));
+  }
+  /*
+  note:
+  hk = 1.5x damage
+  kh = heal 10% max hp
+  ch = double defense
+  */
+  let gotCrit = checkRandom(harmonyChance);
+  let judgeBonus = checkRandom(poseChance) ? 1.05 : 1;
+  let orgasmBonus = 1.5;
+  let hkCrit = gotCrit && this.type == 'hk' ? 1.5 : 1;
+  let khHeal = gotCrit && this.type == 'kh' ? 0.1 : 0;
+  this.chshield = gotCrit && this.type == 'ch' ? 2 : 1;
+  let dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[enemy.type + 'def'] * enstatus.chshield;
+  console.log('lv:', this.lv, 'dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
+  console.log('lv:', this.lv, 'dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
+  enstatus.ego -= dmg;
 }
+
+} // class cCharacter end
+
+function isSameType(type1, type2){ return type1 === type2 }
+function isLosingType(type1, type2){
+  return type1 !== type2 && (type1 === 'kh' && type2 === 'hk' || type1 === 'ch' && type2 === 'kh' ||  type1 === 'hk' && type2 === 'ch'); }
+function isWinningType(type1, type2){
+  return type1 !== type2 && (type1 === 'kh' && type2 === 'ch' || type1 === 'ch' && type2 === 'hk' ||  type1 === 'hk' && type2 === 'kh'); }
+
+
+function checkRandom(percentage) { // return bool (pass or not pass)
+  Math.random() < percentage;
 }
 
 function seasonArenaMain() {
