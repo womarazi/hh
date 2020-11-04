@@ -310,7 +310,7 @@ function seasonArenaMain() {
         pg.stage1.khdef = +mainDefArr[0];
         pg.stage3.khdef = +mainDefArr[1];
         break;
-      case 'hk':
+      case 'ch':
         pg.stage1.chdef = +mainDefArr[0];
         pg.stage3.chdef = +mainDefArr[1];
         break;
