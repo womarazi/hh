@@ -182,6 +182,39 @@ deduceMissingData() {
   if (!this.stage2.hkdef) this.stage2.hkdef = ((this.stage1.hkdef + this.stage3.hkdef) || 0) / 2;
   if (!this.stage2.chdef) this.stage2.chdef = ((this.stage1.chdef + this.stage3.chdef) || 0) / 2;
   }
+
+winratio(enemy, judge = null, tentativi = 100) { // return % [0, 1]
+  let wins = 0;
+  let tentativi0 = tentativi;
+  while(tentativi-- > 0) {
+    wins += this.fight(enemy, judge) ? 1 : 0;
+  }
+  return wins / tentativi0;
+}
+
+fight(pg2, judge = null){ // return boolean
+  let status1 = {
+    ego: this.ego,
+    excit: 0,
+    stage: 1,
+  }
+  let status2 = {
+    ego: enemy.ego,
+    excit: 0,
+    stage: 1,
+  }
+  let wins = 0;
+  while(tentativi-- > 0) {
+    this.attack(enemy, status1, status2, judge) ? 1 : 0;
+    if (status2.ego <=0) return true;
+    enemy.attack(this, status2, status1, judge);
+    if (status1.ego <=0) return false;
+  }
+}
+
+attack(enemy, mystatus, enstatus, judge = 0){
+
+}
 }
 
 function seasonArenaMain() {
