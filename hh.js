@@ -202,9 +202,11 @@ function seasonArenaMain() {
     const pg = all[i];
     const $pg = $($allpg[i]);
     console.log('$pg:', $pg);
-    let atkarr = $pg.find('[carac="damage"]')[0].innerText.replaceAll(',', '').split('-');
-    let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replaceAll(',', '').split('-');
+    let atkarr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
+    let mainDefArr = $pg.find('[carac^="def"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
+    pg.ego = +$pg.find('[carac="ego"]')[0].parentElement.innerText.replaceAll(',', '');
+    pg.harmony = +$pg.find('[carac="chance"]')[0].parentElement.innerText.replaceAll(',', '');
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
     if (classHtml.getAttribute('carac') === 'class2') { pg.type ='ch'; }
