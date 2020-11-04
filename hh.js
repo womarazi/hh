@@ -228,6 +228,7 @@ function seasonArenaMain() {
         break;
     }
     pg.deduceMissingData();
+    // pg.deduceMissingData();
   }
   console.log('season arena script end:', all, $allpg);
 }
