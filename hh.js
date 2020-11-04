@@ -202,8 +202,8 @@ function seasonArenaMain() {
     const pg = all[i];
     const $pg = $($allpg[i]);
     console.log('$pg:', $pg);
-    let atkarr = $pg.find('[carac="damage"]')[0].innerText.replace(',', '').split('-');
-    let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replace(',', '').split('-');
+    let atkarr = $pg.find('[carac="damage"]')[0].innerText.replaceAll(',', '').split('-');
+    let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replaceAll(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
@@ -310,7 +310,7 @@ function popmain(collected = false, retrycount = 0) {
 
   console.log('$collect', $collect, '$autoassign', $autoassign, '$depart', $depart, '$kobanend', $kobanend, '$trackbar', $trackbar, '$timeleft', $timeleft);
   if (!$kobanend.length || !$trackbar.length || !$timeleft.length) { retry(); return; }
-  const percent = +$trackbar[0].style.width.replace('\%', '') /100; // tra 0 e 1
+  const percent = +$trackbar[0].style.width.replaceAll('\%', '') /100; // tra 0 e 1
   retrycount = 0;
   setTimeout(()=>popmain(true), (timeleft_num * 1 + 1) *1000, retrycount);
   
@@ -319,7 +319,7 @@ function popmain(collected = false, retrycount = 0) {
 
 function hhmain() {
   console.log("hhMain");
-  const pathArray = window.location.pathname.substring(1).replace('\.html', '').split('/');
+  const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
   switch (pathArray[0]) {
     case "tower-of-fame":
@@ -783,7 +783,7 @@ function arenaFightMod() {
     var $oppGirl_image = $('#girlsBattleground img[girl-owner="opponent"]');
     $oppGirl_image.each(function() {
       var iname = $(this).attr("src");
-      $(this).attr("src", iname.replace("ico", "ava"));
+      $(this).attr("src", iname.replaceAll("ico", "ava"));
     });
     $button.prop("disabled", true);
     $('#battle button[rel="skip"]').hide();
