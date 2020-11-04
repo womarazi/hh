@@ -4,6 +4,7 @@ setTimeout(main0, 500);
 function refreshPage(){
   setUrl(document.location.href);
 }
+
 function addKobanAutoButton() {
   let kobanbtn = document.createElement("button");
   buttonContainer.append(kobanbtn);
@@ -205,9 +206,9 @@ function seasonArenaMain() {
     let mainDefArr = $pg.find('[carac^="def"]')[0].innerText.replace(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
     let classHtml = $pg.find('[carac^="class"]')[0];
-    if (classHtml.getAttribute('carac') === 'class1') { pg.class ='hk'; }
-    if (classHtml.getAttribute('carac') === 'class2') { pg.class ='ch'; }
-    if (classHtml.getAttribute('carac') === 'class3') { pg.class ='kh'; }
+    if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
+    if (classHtml.getAttribute('carac') === 'class2') { pg.type ='ch'; }
+    if (classHtml.getAttribute('carac') === 'class3') { pg.type ='kh'; }
     pg.lv = +$pg.find('.text_hero_level')[0].innerText.substring('Level '.length);
     pg.stage1.atk = +atkarr[0];
     pg.stage3.atk = +atkarr[1];
