@@ -184,7 +184,7 @@ deduceMissingData() {
 }
 
 function seasonArenaMain() {
-  const $allpg = $('#season-arena .hero_stats');
+  const $allpg = $('#season-arena .season_arena_opponent_container');
   if ($allpg.length !== 4) { console.err('arena season character length error', $allpg); return; }
   const $you = $($allpg[0]);
   const $op1 = $($allpg[1]);
