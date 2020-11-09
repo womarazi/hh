@@ -195,18 +195,16 @@ winratio(enemy, judge = null, tentativi = 100) { // return % [0, 1]
 }
 
 fight(enemy, judge = null){ // return boolean
-  let status1 = {
-    ego: this.ego,
-    excit: 0,
-    stage: 1,
-    chshield: 1, // ch bonus active (def 1x or 2x)
-  }
-  let status2 = {
-    ego: enemy.ego,
-    excit: 0,
-    stage: 1,
-    chshield: 1,
-  }
+  let status1 = {}
+  let status2 = {}
+  let fillstatus = () => {
+    status1.ego = this.ego;
+    status2.ego = enemy.ego;
+    status1.excit = status2.excit = 0;
+    status1.stage = status2.stage = 1;
+    status1.chshield = status2.chshield = 1; } // ch bonus active (def 1x or 2x)
+  
+  fillstatus();
   let wins = 0;
   while (true) {
     this.attack(enemy, status1, status2, judge) ? 1 : 0;
@@ -218,7 +216,7 @@ fight(enemy, judge = null){ // return boolean
 
 attack(enemy, mystatus, enstatus, judge = 0){
   let mystage = this['stage' + mystatus.stage];
-  let enstage = this['stage' + mystatus.stage];
+  let enstage = enemy['stage' + mystatus.stage];
   console.log('pg.this:', this, 'status:', mystatus, '     enemy:', enemy, ' status:', enstatus);
   this.excitement += this['girl' + mystatus.stage].excitement;
   const classPoses = 4;
