@@ -318,7 +318,7 @@ function seasonArenaMain() {
     }
     pg.deduceMissingData();
   }
-  $pg[
+  window['allpg'] = all;
   console.log('season arena script end:', all, $allpg);
 }
 
