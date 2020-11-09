@@ -263,7 +263,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
   if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
   if (oppstr === 'YOU') outcomestr = 'YOU WON'; else outcomestr = ' player lv' + this.lv + ' won';
 
-  console.info(oppstr + ' life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego,  ';      ' + outcome);
+  console.info(oppstr + ' life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego,  ';      ' + outcomestr);
   
 }
 
