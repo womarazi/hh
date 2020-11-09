@@ -218,6 +218,7 @@ fight(enemy, judge = null){ // return boolean
 attack(enemy, mystatus, enstatus, judge = 0){
   let mystage = this['stage' + mystatus.stage];
   let enstage = this['stage' + mystatus.stage];
+  console.log('pg.this:', this, 'status:', mystatus, '     enemy:', enemy, ' status:', enstatus);
   this.excitement += this['girl' + mystatus.stage].excitement;
   const classPoses = 4;
   const allPoses = classPoses * 3;
