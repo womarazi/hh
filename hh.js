@@ -262,11 +262,11 @@ attack(enemy, mystatus, enstatus, judge = 0){
   let outcomestr = '';
   if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
   if (oppstr === 'YOU') outcomestr = 'YOU WON'; else outcomestr = ' player lv' + this.lv + ' won';
-  if (enstatus.ego <= 0)
-    outcomestr += ' remaining ego:', mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )';
-  else outcomestr = '';
+  if (enstatus.ego <= 0) {
+    outcomestr = outcomestr + ' remaining ego:', mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )'; }
+  else { outcomestr = ''; }
 
-  console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg, ' = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
+  console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg / 1000, 'k = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
   
 }
 
