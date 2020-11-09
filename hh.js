@@ -286,6 +286,7 @@ function seasonArenaMain() {
     const pg = all[i];
     const $pg = $($allpg[i]);
     console.log('$pg:', $pg);
+    $pg.on('click', () => { you.fight(pg); });
     let atkarr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
@@ -317,6 +318,7 @@ function seasonArenaMain() {
     }
     pg.deduceMissingData();
   }
+  $pg[
   console.log('season arena script end:', all, $allpg);
 }
 
