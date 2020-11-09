@@ -246,10 +246,12 @@ attack(enemy, mystatus, enstatus, judge = 0){
   ch = double defense
   */
   let gotCrit = checkRandom(harmonyChance);
+  let gotOrgasm = checkRandom(0);
   let judgeBonus = checkRandom(poseChance) ? 1.05 : 1;
-  let orgasmBonus = 1.5;
+  let orgasmBonus0 = 1.5;
   let hkCrit = gotCrit && this.type == 'hk' ? 1.5 : 1;
   let khHeal = gotCrit && this.type == 'kh' ? 0.1 : 0;
+  let orgasmBonus = gotOrgasm ? orgasmBonus0 : 1;
   this.chshield = gotCrit && this.type == 'ch' ? 2 : 1;
   let dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[enemy.type + 'def'] * enstatus.chshield;
   console.log('lv:', this.lv, 'dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
