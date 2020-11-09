@@ -263,7 +263,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
   if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
   if (oppstr === 'YOU') outcomestr = 'YOU WON'; else outcomestr = ' player lv' + this.lv + ' won';
   if (enstatus.ego <= 0) {
-    outcomestr = outcomestr + ' remaining ego:', mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )'; }
+    outcomestr = outcomestr + ' remaining ego:' + mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )'; }
   else { outcomestr = ''; }
 
   console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg / 1000, 'k = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
@@ -296,7 +296,7 @@ function seasonArenaMain() {
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
   for (let i = 0; i < all.length; i++) {
-  console.log('index:', i);
+    console.log('index:', i);
     const isYou = i === 0;
     const pg = all[i];
     pg.you = isYou;
@@ -330,9 +330,9 @@ function seasonArenaMain() {
       case 'ch':
         pg.stage1.chdef = +mainDefArr[0];
         pg.stage3.chdef = +mainDefArr[1];
-        break;
-    }
+        break; }
     pg.deduceMissingData();
+    $pg.find('.text_hero_level')[0].innerText = pg.lv + ' winratio: ' + (you.winratio(pg) * 100) + '%';
   }
   window['allpg'] = all;
   console.log('season arena script end:', all, $allpg);
