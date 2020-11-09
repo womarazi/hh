@@ -261,7 +261,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
   enstatus.ego -= dmg;
   let outcomestr = '';
   if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
-  if (oppstr === 'YOU') outcomestr = 'YOU WON'; else outcomestr = ' player lv' + this.lv + ' won';
+  if (oppstr === 'YOU') outcomestr = 'YOU LOST !!!'; else outcomestr = ' player lv' + this.lv + ' won';
   if (enstatus.ego <= 0) {
     outcomestr = outcomestr + ' remaining ego:' + mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )'; }
   else { outcomestr = ''; }
