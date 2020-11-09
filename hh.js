@@ -235,7 +235,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
     let enh = enemy.harmony;
     if (this.type && enemy.type) {
       if (isWinningType(this.type, enemy.type)) { myh *= 1.2; }
-      if (isWinningType(enemy.type, type.type)) { enh *= 1.2; }
+      if (isWinningType(enemy.type, this.type)) { enh *= 1.2; }
     }
     harmonyChance = 0.5 * Math.round(myh / (myh + enh));
   }
