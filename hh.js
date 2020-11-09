@@ -257,6 +257,8 @@ attack(enemy, mystatus, enstatus, judge = 0){
   console.log('lv:', this.lv, 'dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
   console.log('lv:', this.lv, 'dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
   enstatus.ego -= dmg;
+  console.info('lv:', this.lv, 'life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego, enstatus.ego >= 0, '      lv ' + this.lv + ' WON');
+  
 }
 
 } // class cCharacter end
