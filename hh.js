@@ -171,9 +171,10 @@ class cCharacter {
   stage2 = new cstage();
   stage3 = new cstage();
   mojoReward = 0;
-  a = new cGirl();
-  b = new cGirl();
-  c = new cGirl();
+  girl1 = new cGirl();
+  girl2 = new cGirl();
+  girl3 = new cGirl();
+
 deduceMissingData() {
   this.stage1.deduceMissingData();
   this.stage2.deduceMissingData();
