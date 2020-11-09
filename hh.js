@@ -254,10 +254,16 @@ attack(enemy, mystatus, enstatus, judge = 0){
   let orgasmBonus = gotOrgasm ? orgasmBonus0 : 1;
   this.chshield = gotCrit && this.type == 'ch' ? 2 : 1;
   let dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[enemy.type + 'def'] * enstatus.chshield;
-  console.log('lv:', this.lv, 'dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
-  console.log('lv:', this.lv, 'dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
+  let playerstr = this.you !== enemy.you ? (this.you ? 'YOU' : 'OPPONENT') : 'PLAYER LV' + this.lv;
+  let oppstr = this.you !== enemy.you ? (enemy.you ? 'YOU' : 'OPPONENT') : 'PLAYER LV' + this.lv;
+  console.log(playerstr, 'dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
+  console.log(playerstr, 'dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
   enstatus.ego -= dmg;
-  console.info('lv:', this.lv, 'life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego, enstatus.ego >= 0, '      lv ' + this.lv + ' WON');
+  let outcomestr = '';
+  if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
+  if (oppstr === 'YOU') outcomestr = 'YOU WON'; else outcomestr = ' player lv' + this.lv + ' won';
+
+  console.info(oppstr + ' life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego,  ';      ' + outcome);
   
 }
 
@@ -290,6 +296,7 @@ function seasonArenaMain() {
   console.log('index:', i);
     const isYou = i === 0;
     const pg = all[i];
+    pg.you = isYou;
     const $pg = $($allpg[i]);
     console.log('$pg:', $pg);
     $pg.on('click', () => { you.fight(pg); });
