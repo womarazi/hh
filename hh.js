@@ -256,15 +256,17 @@ attack(enemy, mystatus, enstatus, judge = 0){
   let dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[enemy.type + 'def'] * enstatus.chshield;
   let playerstr = this.you !== enemy.you ? (this.you ? 'YOU' : 'OPPONENT') : 'PLAYER LV' + this.lv;
   let oppstr = this.you !== enemy.you ? (enemy.you ? 'YOU' : 'OPPONENT') : 'PLAYER LV' + this.lv;
-  console.log(playerstr, 'dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
-  console.log(playerstr, 'dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
+  console.log(playerstr, 'deals dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
+  console.log(playerstr, 'deals dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
   enstatus.ego -= dmg;
   let outcomestr = '';
   if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
   if (oppstr === 'YOU') outcomestr = 'YOU WON'; else outcomestr = ' player lv' + this.lv + ' won';
+  if (enstatus.ego <= 0)
+    outcomestr += ' remaining ego:', mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )';
+  else outcomestr = '';
 
-  console.info(oppstr + ' life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego,  ';      ' + outcomestr,
-               'remaining ego:', mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )');
+  console.info(oppstr + ' life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego,  ';      ' + outcomestr);
   
 }
 
