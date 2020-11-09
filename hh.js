@@ -266,7 +266,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
     outcomestr += ' remaining ego:', mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )';
   else outcomestr = '';
 
-  console.info(oppstr + ' life: ', enstatus.ego + dmg, ' - ', dmg, ' = ', enstatus.ego,  ';      ' + outcomestr);
+  console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg, ' = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
   
 }
 
