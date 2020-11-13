@@ -218,7 +218,7 @@ fight(enemy, judge = null, out = null){ // return boolean
 
 attack(enemy, mystatus, enstatus, judge = 0, out = null){
   // out = { you: { stage1: {damages: {}}, stage2...}, enemy: {... same as you }}}
-  if (out) {
+  if (!out) {
     if (!out.you) out.you = {};
     if (!out.you.stage1) out.you.stage1 = {};
     if (!out.you.stage1.damages) out.you.stage1.damages = {};
@@ -286,7 +286,7 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
     while (dmg && outt['stage' + mystatus.stage].dmg[ dmgkey +diffCounter] && outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] !== dmg) { diffCounter++; }
     outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] = dmg;
   }
-  
+  // blablabla just a asdohfg
 }
 
 harmonyRatio(enemy) {
