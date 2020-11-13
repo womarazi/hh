@@ -227,16 +227,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
     if (isLosingType(judge, this.type)) { poseChance = 0.05 * (1 / classPoses); } else
     if (isWinningType(judge, this.type)) { poseChance = 0.25 * (1 / classPoses); }
   }
-  let harmonyChance = 0.25;
-  if (this.harmony && enemy.harmony) {
-    let myh = this.harmony;
-    let enh = enemy.harmony;
-    if (this.type && enemy.type) {
-      if (isWinningType(this.type, enemy.type)) { myh *= 1.2; }
-      if (isWinningType(enemy.type, this.type)) { enh *= 1.2; }
-    }
-    harmonyChance = 0.5 * Math.round(myh / (myh + enh));
-  }
+  let harmonyChance = this.harmonyratio(enemy);
   /*
   note:
   hk = 1.5x damage
@@ -268,6 +259,18 @@ attack(enemy, mystatus, enstatus, judge = 0){
   
 }
 
+harmonyratio(enemy) {
+  let harmonyChance = 0.25;
+  if (this.harmony && enemy.harmony) {
+    let myh = this.harmony;
+    let enh = enemy.harmony;
+    if (this.type && enemy.type) {
+      if (isWinningType(this.type, enemy.type)) { myh *= 1.2; }
+      if (isWinningType(enemy.type, this.type)) { enh *= 1.2; }
+    }
+    harmonyChance = 0.5 * Math.round(myh / (myh + enh));
+  }
+}
 } // class cCharacter end
 
 function isSameType(type1, type2){ return type1 === type2 }
@@ -306,9 +309,13 @@ function seasonArenaMain() {
     console.log('setting [' + i + ']', atkarr, mainDefArr);
     const $rewardpt = $pg.find('[cur="victory_points"]');
     pg.mojoReward = $rewardpt.length && +$rewardpt[0].innerText;
-    pg.lv = +$pg.find('.text_hero_level')[0].innerText.substring('Level '.length);
+    const pglvhtml = $pg.find('.text_hero_level')[0];
+    let str = pglvhtml.innerText.replace('Level', '');
+    parseFloat("level 416 winratio: 100%")
+    pg.lv = +parseFloat(str);
     pg.ego = +$pg.find('[carac="ego"]')[0].parentElement.innerText.replaceAll(',', '');
-    pg.harmony = +$pg.find('[carac="chance"]')[0].parentElement.innerText.replaceAll(',', '');
+    const harmonyhtml = $pg.find('[hh_title="Harmony"] .pull_right.text_small')[0];
+    pg.harmony = +parseFloat(harmonyhtml.innerText.replaceAll(',', ''));
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
     if (classHtml.getAttribute('carac') === 'class2') { pg.type ='ch'; }
@@ -330,7 +337,8 @@ function seasonArenaMain() {
         pg.stage3.chdef = +mainDefArr[1];
         break; }
     pg.deduceMissingData();
-    $pg.find('.text_hero_level')[0].innerText = pg.lv + ' winratio: ' + (you.winratio(pg) * 100) + '%';
+    pglvhtml.innerText = pg.lv + ' winratio: ' + (you.winratio(pg) * 100) + '%';
+    harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
   }
   window['allpg'] = all;
   console.log('season arena script end:', all, $allpg);
