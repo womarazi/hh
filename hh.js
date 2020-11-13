@@ -269,6 +269,7 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
   console.log(playerstr, 'deals dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
   console.log(playerstr, 'deals dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
   enstatus.ego -= dmg;
+  mystatus.ego += dmg * khHeal;
   let outcomestr = '';
   if (playerstr === 'YOU') outcomestr = 'YOU WON'; else
   if (oppstr === 'YOU') outcomestr = 'YOU LOST !!!'; else outcomestr = ' player lv' + this.lv + ' won';
@@ -279,7 +280,7 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
   
   if (!out || this.you === enemy.you) return; // do not collect statistics
   let outt = this.you ? out.you : out.enemy;
-  let dmgkey = ((gotCrit ? ' & Crit' : '') + (judgeBonus !== 1 ? ' & Pose' : '') + (gotOrgasm ? ' & Orgasm' : '') + (enstatus.chshield !== 1 ? ' CH_Shield' : '')).substr(2).trim() || 'Base';
+  let dmgkey = ((hkCrit !== 1 ? ' & HK_Crit' : '') + (judgeBonus !== 1 ? ' & Pose' : '') + (gotOrgasm ? ' & Orgasm' : '') + (enstatus.chshield !== 1 ? ' CH_Shield' : '')).substr(2).trim() || 'Base';
   console.info('outt:', outt, '.stage' + mystatus.stage, outt['stage' + mystatus.stage], '.damages.', dmgkey);
   if (outt['stage' + mystatus.stage].damages[ dmgkey ] === dmg) { ; }
   else if (!outt['stage' + mystatus.stage].damages[ dmgkey ] ) { outt['stage' + mystatus.stage].damages[ dmgkey ] = dmg; }
@@ -289,7 +290,7 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
     while (dmg && outt['stage' + mystatus.stage].damages[ dmgkey +diffCounter] && outt['stage' + mystatus.stage].damages[ dmgkey + diffCounter] !== dmg) { diffCounter++; }
     outt['stage' + mystatus.stage].damages[ dmgkey + diffCounter] = dmg;
   }
-  
+  // gfhjklòà
 }
 
 harmonyRatio(enemy) {
