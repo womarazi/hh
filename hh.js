@@ -276,6 +276,8 @@ harmonyRatio(enemy) {
 
 fromBattleBlock($battleBlock) {
   const $pg = $battleBlock; // $('.battle_user_block')
+  let defOrder = ['hk', 'ch', 'kh'];
+  this.type = defOrder[ $pg.find('[carac^="class"]')[0].getAttribute('carac').substr('class'.length) - 1];
   this.lv = +$pg.find('.level_target')[0].innerText.replace(',', ''); // [1] contiene lv for alpha girl, etc...
   this.ego = +$pg.find('.battle-bar-ego')[0].innerText.replace('Ego', '').replace(',', '');
   let $mainStats = $pg.find('.main_stats');
@@ -283,7 +285,6 @@ fromBattleBlock($battleBlock) {
   this.hk = +$mainStats[0].innerText.replace(',', '');
   this.ch = +$mainStats[1].innerText.replace(',', '');
   this.kh = +$mainStats[2].innerText.replace(',', '');
-  let defOrder = ['hk', 'ch', 'kh'];
   for (let i = 0; i < $defStats.length; i++) {
     let defArrs = $defStats[i].parentElement.innerText.replaceAll(',', '').split('-');
     this.stage1[ defOrder[i] + 'def'] = +defArrs[0];
@@ -293,6 +294,7 @@ fromBattleBlock($battleBlock) {
   this.stage1.atk = +atkArr[0];
   this.stage3.atk = +atkArr[1];
   this.excitement = +$pg.find('[carac="excit"]')[0].parentElement.innerText.replaceAll(',', '');
+  this.harmony = parseFloat($pg.find('[carac="chance"]')[0].parentElement.innerText.replaceAll(',', ''));
   this.deduceMissingData();
   //  this.deduceMissingData(); usseless to force commit
 }
