@@ -282,6 +282,8 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
   let outt = this.you ? out.you : out.enemy;
   let dmgkey = ((hkCrit !== 1 ? ' & HK_Crit' : '') + (judgeBonus !== 1 ? ' & Pose' : '') + (gotOrgasm ? ' & Orgasm' : '') + (enstatus.chshield !== 1 ? ' CH_Shield' : '')).substr(2).trim() || 'Base';
   console.info('outt:', outt, '.stage' + mystatus.stage, outt['stage' + mystatus.stage], '.damages.', dmgkey);
+  outt.poseChance = poseChance;
+  outt.harmonyChance = harmonyChance;
   if (outt['stage' + mystatus.stage].damages[ dmgkey ] === dmg) { ; }
   else if (!outt['stage' + mystatus.stage].damages[ dmgkey ] ) { outt['stage' + mystatus.stage].damages[ dmgkey ] = dmg; }
   else {
