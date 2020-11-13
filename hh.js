@@ -280,14 +280,15 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
   if (!out || this.you === enemy.you) return; // do not collect statistics
   let outt = this.you ? out.you : out.enemy;
   let dmgkey = ((gotCrit ? ' & Crit' : '') + (judgeBonus === 1 ? ' & Pose' : '') + (gotOrgasm ? ' & Orgasm' : '') + (enstatus.chshield !== 1 ? ' CH_Shield' : '')).substr(2).trim() || 'Base';
-  console.info('outt:', outt, '.stage' + mystatus.stage, '.', dmgkey);
-  if (!outt['stage' + mystatus.stage].dmg[ dmgkey ] ) outt['stage' + mystatus.stage].dmg[ dmgkey ] = dmg;
+  console.info('outt:', outt, '.stage' + mystatus.stage, outt['stage' + mystatus.stage], '.', dmgkey);
+  if (!outt['stage' + mystatus.stage].damages[ dmgkey ] ) outt['stage' + mystatus.stage].damages[ dmgkey ] = dmg;
   else {
     dmgkey += ' ERR_';
     let diffCounter = 1;
-    while (dmg && outt['stage' + mystatus.stage].dmg[ dmgkey +diffCounter] && outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] !== dmg) { diffCounter++; }
-    outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] = dmg;
+    while (dmg && outt['stage' + mystatus.stage].damages[ dmgkey +diffCounter] && outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] !== dmg) { diffCounter++; }
+    outt['stage' + mystatus.stage].damages[ dmgkey + diffCounter] = dmg;
   }
+  //hhhhhhhhhhhhhhgjk
 }
 
 harmonyRatio(enemy) {
