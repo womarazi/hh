@@ -165,6 +165,7 @@ deduceMissingData() {
 
 class cCharacter {
   type = null; // | 'hk' | 'kh' | 'ch'
+  you = null;
   lv = 0;
   ego = 0;
   harmony = 0;
