@@ -187,16 +187,16 @@ deduceMissingData() {
   if (!this.stage2.chdef) this.stage2.chdef = ((this.stage1.chdef + this.stage3.chdef) || 0) / 2;
   }
 
-winratio(enemy, judge = null, tentativi = 100) { // return % [0, 1]
+winratio(enemy, judge = null, tentativi = 100, out = null) { // return % [0, 1]
   let wins = 0;
   let tentativi0 = tentativi;
   while(tentativi-- > 0) {
-    wins += this.fight(enemy, judge) ? 1 : 0;
+    wins += this.fight(enemy, judge, out) ? 1 : 0;
   }
   return wins / tentativi0;
 }
 
-fight(enemy, judge = null){ // return boolean
+fight(enemy, judge = null, out = null){ // return boolean
   let status1 = {}
   let status2 = {}
   let fillstatus = () => {
@@ -209,14 +209,32 @@ fight(enemy, judge = null){ // return boolean
   fillstatus();
   let wins = 0;
   while (true) {
-    this.attack(enemy, status1, status2, judge) ? 1 : 0;
-    if (status2.ego <=0) return true;
-    enemy.attack(this, status2, status1, judge);
-    if (status1.ego <=0) return false;
+    this.attack(enemy, status1, status2, judge, out) ? 1 : 0;
+    if (status2.ego <= 0) return true;
+    enemy.attack(this, status2, status1, judge, out);
+    if (status1.ego <= 0) return false;
   }
 }
 
-attack(enemy, mystatus, enstatus, judge = 0){
+attack(enemy, mystatus, enstatus, judge = 0, out = null){
+  // out = { you: { stage1: {damages: {}}, stage2...}, enemy: {... same as you }}}
+  if (out) {
+    if (!out.you) out.you = {};
+    if (!out.you.stage1) out.you.stage1 = {};
+    if (!out.you.stage1.damages) out.you.stage1.damages = {};
+    if (!out.you.stage2) out.you.stage2 = {};
+    if (!out.you.stage2.damages) out.you.stage2.damages = {};
+    if (!out.you.stage3) out.you.stage3 = {};
+    if (!out.you.stage3.damages) out.you.stage3.damages = {};
+    if (!out.enemy) out.enemy = {};
+    if (!out.enemy.stage1) out.enemy.stage1 = {};
+    if (!out.enemy.stage1.damages) out.enemy.stage1.damages = {};
+    if (!out.enemy.stage2) out.enemy.stage2 = {};
+    if (!out.enemy.stage2.damages) out.enemy.stage2.damages = {};
+    if (!out.enemy.stage3) out.enemy.stage3 = {};
+    if (!out.enemy.stage3.damages) out.enemy.stage3.damages = {};
+  }
+
   let mystage = this['stage' + mystatus.stage];
   let enstage = enemy['stage' + mystatus.stage];
   console.log('pg.this:', this, 'status:', mystatus, '     enemy:', enemy, ' status:', enstatus);
@@ -258,9 +276,34 @@ attack(enemy, mystatus, enstatus, judge = 0){
   else { outcomestr = ''; }
   console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg / 1000, 'k = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
   
+  if (!out || this.you === enemy.you) return; // do not collect statistics
+  let outt = this.you ? out.you : out.enemy;
+  let dmgkey = ((gotCrit ? ' & Crit' : '') + (judgeBonus === 1 ? ' & Pose' : '') + (gotOrgasm ? ' & Orgasm' : '')).substr(2).trim() || 'Base';
+  if (!outt['stage' + mystatus.stage].dmg[ dmgkey ] ) outt['stage' + mystatus.stage].dmg[ dmgkey ] = dmg;
+  else {
+    dmgkey += ' ERR_';
+    let diffCounter = 1;
+    while (dmg && outt['stage' + mystatus.stage].dmg[ dmgkey +diffCounter] && outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] !== dmg) { diffCounter++; }
+    outt['stage' + mystatus.stage].dmg[ dmgkey + diffCounter] = dmg;
+  }
+  
 }
 
 harmonyRatio(enemy) {
+  let harmonyChance = 0.25;
+  if (this.harmony && enemy.harmony) {
+    let myh = this.harmony;
+    let enh = enemy.harmony;
+    if (this.type && enemy.type) {
+      if (isWinningType(this.type, enemy.type)) { myh *= 1.2; }
+      if (isWinningType(enemy.type, this.type)) { enh *= 1.2; }
+    }
+    harmonyChance = 0.5 * myh / (myh + enh);
+  }
+  return harmonyChance;
+}
+
+listDamages(enemy) {
   let harmonyChance = 0.25;
   if (this.harmony && enemy.harmony) {
     let myh = this.harmony;
