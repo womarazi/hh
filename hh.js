@@ -359,7 +359,7 @@ function isWinningType(type1, type2){
 
 
 function checkRandom(percentage) { // return bool (pass or not pass)
-  Math.random() < percentage;
+  return Math.random() < percentage;
 }
 
 function seasonArenaMain() {
@@ -455,6 +455,7 @@ function contestmain() {
   for (let i = 1; i < ranks.length; i++) {
     if (minvalue < ranks[i]) { minvalue = ranks[i]; minindex = i; }
   }
+  //sdfghjklò
   // minindex = 0; // perchè forse è "se hai una challenge non ritirata da 4 giorni" invece di "se non ritiri challenge per 4 giorni"
   console.log('collecting:', $retireButtons[minindex]);
   $($retireButtons[minindex]).trigger('click');
