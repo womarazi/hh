@@ -227,7 +227,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
     if (isLosingType(judge, this.type)) { poseChance = 0.05 * (1 / classPoses); } else
     if (isWinningType(judge, this.type)) { poseChance = 0.25 * (1 / classPoses); }
   }
-  let harmonyChance = this.harmonyratio(enemy);
+  let harmonyChance = this.harmonyRatio(enemy);
   /*
   note:
   hk = 1.5x damage
@@ -259,7 +259,7 @@ attack(enemy, mystatus, enstatus, judge = 0){
   
 }
 
-harmonyratio(enemy) {
+harmonyRatio(enemy) {
   let harmonyChance = 0.25;
   if (this.harmony && enemy.harmony) {
     let myh = this.harmony;
