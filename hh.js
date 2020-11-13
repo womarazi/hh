@@ -143,7 +143,8 @@ class cGirl {
   kh = 0;// at 0-star lv1
   hk = 0;
   ch = 0;
-}
+} // class cGirl end
+
 class cstage {
   atk = 0;
   hkdef = 0;
@@ -160,13 +161,14 @@ deduceMissingData() {
   this.khdef = this.khdef || avgDef;
   this.chdef = this.chdef || avgDef;
 }
-} // class cGirl end
+} // class cstage end
 
 class cCharacter {
   type = null; // | 'hk' | 'kh' | 'ch'
   lv = 0;
   ego = 0;
   harmony = 0;
+  excitement = 0;
   stage1 = new cstage();
   stage2 = new cstage();
   stage3 = new cstage();
@@ -254,7 +256,6 @@ attack(enemy, mystatus, enstatus, judge = 0){
   if (enstatus.ego <= 0) {
     outcomestr = outcomestr + ' remaining ego:' + mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )'; }
   else { outcomestr = ''; }
-
   console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg / 1000, 'k = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
   
 }
@@ -271,6 +272,28 @@ harmonyRatio(enemy) {
     harmonyChance = 0.5 * Math.round(myh / (myh + enh));
   }
   return harmonyChance;
+}
+
+fromBattleBlock($battleBlock) {
+ // $pg = $('.battle_user_block')
+  this.lv = +$pg.find('.level_target')[0].innerText.replace(',', ''); // [1] contiene lv for alpha girl, etc...
+  this.ego = +$pg.find('.battle-bar-ego')[0].innerText.replace('Ego', '').replace(',', '');
+  let $mainStats = $pg.find('.main_stats');
+  let $defStats = $pg.find('[carac^="def"]');
+  this.hk = +$mainStats[0].innerText.replace(',', '');
+  this.ch = +$mainStats[1].innerText.replace(',', '');
+  this.kh = +$mainStats[2].innerText.replace(',', '');
+  let defOrder = ['hk', 'ch', 'kh'];
+  for (let i = 0; i < $defStats.length; i++) {
+    let defArrs = $defStats[i].parentElement.innerText.replaceAll(',', '').split('-');
+    this.stage1[ defOrder[i] + 'def'] = +defArrs[0];
+    this.stage3[ defOrder[i] + 'def'] = +defArrs[1];
+  }
+  let atkArr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
+  this.stage1.atk = +atkarr[0];
+  this.stage3.atk = +atkarr[1];
+  this.excitement = +$pg.find('[carac="excit"]')[0].parentElement.innerText.replaceAll(',', '');
+  this.deduceMissingData();
 }
 
 } // class cCharacter end
