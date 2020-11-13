@@ -269,7 +269,7 @@ harmonyRatio(enemy) {
       if (isWinningType(this.type, enemy.type)) { myh *= 1.2; }
       if (isWinningType(enemy.type, this.type)) { enh *= 1.2; }
     }
-    harmonyChance = 0.5 * Math.round(myh / (myh + enh));
+    harmonyChance = 0.5 * myh / (myh + enh);
   }
   return harmonyChance;
 }
