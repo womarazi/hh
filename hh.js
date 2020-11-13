@@ -290,10 +290,11 @@ fromBattleBlock($battleBlock) {
     this.stage3[ defOrder[i] + 'def'] = +defArrs[1];
   }
   let atkArr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
-  this.stage1.atk = +atkarr[0];
-  this.stage3.atk = +atkarr[1];
+  this.stage1.atk = +atkArr[0];
+  this.stage3.atk = +atkArr[1];
   this.excitement = +$pg.find('[carac="excit"]')[0].parentElement.innerText.replaceAll(',', '');
   this.deduceMissingData();
+  //  this.deduceMissingData(); usseless to force commit
 }
 
 } // class cCharacter end
