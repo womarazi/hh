@@ -270,7 +270,9 @@ harmonyRatio(enemy) {
     }
     harmonyChance = 0.5 * Math.round(myh / (myh + enh));
   }
+  return harmonyChance;
 }
+
 } // class cCharacter end
 
 function isSameType(type1, type2){ return type1 === type2 }
