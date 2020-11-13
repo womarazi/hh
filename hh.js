@@ -314,7 +314,7 @@ function seasonArenaMain() {
     parseFloat("level 416 winratio: 100%")
     pg.lv = +parseFloat(str);
     pg.ego = +$pg.find('[carac="ego"]')[0].parentElement.innerText.replaceAll(',', '');
-    const harmonyhtml = $pg.find('[hh_title="Harmony"] .pull_right.text_small')[0];
+    const harmonyhtml = $pg.find('[hh_title="Harmony"] .pull_right')[0];
     pg.harmony = +parseFloat(harmonyhtml.innerText.replaceAll(',', ''));
     let classHtml = $pg.find('[carac^="class"]')[0];
     if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
