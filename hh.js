@@ -275,7 +275,7 @@ harmonyRatio(enemy) {
 }
 
 fromBattleBlock($battleBlock) {
- // $pg = $('.battle_user_block')
+  const $pg = $battleBlock; // $('.battle_user_block')
   this.lv = +$pg.find('.level_target')[0].innerText.replace(',', ''); // [1] contiene lv for alpha girl, etc...
   this.ego = +$pg.find('.battle-bar-ego')[0].innerText.replace('Ego', '').replace(',', '');
   let $mainStats = $pg.find('.main_stats');
