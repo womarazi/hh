@@ -1030,12 +1030,13 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     let onFightStart = () => { window.location.href = "https://www.hentaiheroes.com/season-arena.html"; }
     let checkFightStart = (totalWait = 0, checkDelay = 1000, callback) => {
       if (totalWait > 10 * 1000) { refreshPage(); return; }
-      if (totalWait > 5) { setTimeout( () => { checkFightStart(totalWait += checkDelay, checkDelay); }) return; }
+      if (totalWait > 5) { setTimeout( () => { checkFightStart(totalWait += checkDelay, checkDelay); }); return; }
       callback();
     }
     checkFightStart(0, 1000, onFightStart);
     return;
   }
+  /////////////////////////////////////////////
   var $button = $('#battle_middle .green_button_L[rel="launch"]:visible');
   var $girls = $('.rewards_list .girls_reward .slot_girl_shards:visible');
   var $rewardcontainer = $('.rewards_list:visible');
