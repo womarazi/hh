@@ -76,9 +76,9 @@ function autorunClick(evt) {
   var pathArray = window.location.pathname.substring(1).split('/');
   var params = getJsonFromUrl();
   var pagename = pathArray[0];
-  if (params["league_battle"] !== undefined) { pagename = "tower-of-fame.html"; }
-  if (params["id_arena"] !== undefined) { pagename = "arena.html"; }
-  if (params["id_season_arena"] !== undefined) { pagename = "season-arena.html"; }
+  if (params["league_battle"] !== undefined) { pagename = "tower-of-fame2.html"; }
+  if (params["id_arena"] !== undefined) { pagename = "arena2.html"; }
+  if (params["id_season_arena"] !== undefined) { pagename = "season-arena2.html"; }
   
   var lskey_g = 'injectAutorun';
   var lskey_p = 'pageAutorun_' + pagename
@@ -1025,20 +1025,27 @@ function canUseKoban() {
   return localStorage.getItem("useKoban") === "true";
 }
 function trollFight(isarena = false, istroll = false, isleague = false, isSeason = false) {
-  console.log("trollFight");
+  // console.log("trollFight setup");
   if (isSeason) {
-    window.location.href = "https://www.hentaiheroes.com/season-arena.html";
+    let onFightStart = () => { window.location.href = "https://www.hentaiheroes.com/season-arena.html"; }
+    let checkFightStart = (totalWait = 0, checkDelay = 1000, callback) => {
+      if (totalWait > 10 * 1000) { refreshPage(); return; }
+      if (totalWait > 5) { setTimeout( () => { checkFightStart(totalWait += checkDelay, checkDelay); }) return; }
+      callback();
+    }
+    checkFightStart(0, 1000, onFightStart);
+    return;
   }
-  var $button = $('#battle_middle .green_button_L[rel="launch"]');
-  var $girls = $('.rewards_list .girls_reward .slot_girl_shards');
-  var $rewardcontainer = $('.rewards_list');
-  var $girls = $rewardcontainer.find('.girls_reward .slot_girl_shards');
+  var $button = $('#battle_middle .green_button_L[rel="launch"]:visible');
+  var $girls = $('.rewards_list .girls_reward .slot_girl_shards:visible');
+  var $rewardcontainer = $('.rewards_list:visible');
+  var $girls = $rewardcontainer.find('.girls_reward .slot_girl_shards:visible');
   if (istroll && ($button.length == 0 || $rewardcontainer.length == 0)) {
     console.log('timeouttrollFight 100');
-    setTimeout(() => trollFight(isarena, istroll, isleague), 100);
+    setTimeout(() => trollFight(isarena, istroll, isleague, isSeason), 100);
     return; }
   
-  console.log("trollFight1");
+  // console.log("trollFight check troll && girl");
   if (istroll && $girls.length === 0) {
     let favBoss = +localStorage.getItem('favBoss');
     let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
@@ -1051,12 +1058,12 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     if (document.location.href !== favurl || !forceFight) { setUrl(favurl); }
   }
 
-  console.log("trollFight2");
+  // console.log("trollFight check energy");
   var energy = istroll ? +$(
     '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
   )[0].innerHTML : 20;
   const usekoban = canUseKoban();
-  if (!usekoban && !isleague) { setTimeout(() => trollFight(isarena, istroll, isleague), 30 * minutes); }
+  if (!usekoban && !isleague) { setTimeout(() => trollFight(isarena, istroll, isleague, isSeason), 30 * minutes); }
   if (energy === 0) {
     if (!usekoban) return;
     let $energybtn = $('[type="energy_fight"] .hudPlus_mix_icn');
@@ -1067,11 +1074,11 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     }
     setTimeout( () => {
       $('#no_energy_fight .orange_text_button').trigger('click');
-      setTimeout( () => { trollFight(isarena, istroll, isleague); }, 300);
+      setTimeout( () => { trollFight(isarena, istroll, isleague, isSeason); }, 300);
     }, 200);
     return; }
 
-  console.log("trollFight3");
+  // console.log("trollFight event changed check");
   var listeners = undefined;
   //listeners = window.getEventListeners($button[0]);
   var event = "click";
@@ -1088,7 +1095,7 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     return;
   }
 
-  console.log("trollFight4");
+  // console.log("trollFight start");
   $button[0].innerHTML = "PerforM!";
   $button
     .off("click")
