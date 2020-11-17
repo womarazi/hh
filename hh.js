@@ -76,10 +76,10 @@ function autorunClick(evt) {
   var pathArray = window.location.pathname.substring(1).split('/');
   var params = getJsonFromUrl();
   var pagename = pathArray[0];
-  if (params["league_battle"] !== undefined) { pagename = "tower-of-fame2.html"; }
-  if (params["id_arena"] !== undefined) { pagename = "arena2.html"; }
-  if (params["id_season_arena"] !== undefined) { pagename = "season-arena2.html"; }
-  
+  if (params["league_battle"] !== undefined) { pagename = "tower-of-fame.html"; }
+  if (params["id_arena"] !== undefined) { pagename = "arena.html"; }
+  if (params["id_season_arena"] !== undefined) { pagename = "season-arena.html"; }
+  ////////////////
   var lskey_g = 'injectAutorun';
   var lskey_p = 'pageAutorun_' + pagename
   var lskey = '';
