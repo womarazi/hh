@@ -1030,12 +1030,15 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     // const $egoOnLeagueBattle = $('.base_block.battle_user_block.battle_opponent .bar.bar_ego_blue');
     const $enemyEgo = $('#battle .season_arena_block.battle_opponent .bar-wrap.battle-bar-ego .bar.bar_ego_blue');
     console.log('$enemyEgo:', $enemyEgo);
-    let onFightStart = () => { window.location.href = "https://www.hentaiheroes.com/season-arena.html"; }
+    let onFightStart = () => {
+      console.log('called callback: window.location.href = "https://www.hentaiheroes.com/season-arena.html"');
+      window.location.href = "https://www.hentaiheroes.com/season-arena.html"; }
     let checkFightStart = (totalWait = 0, checkDelay = 1000, callback) => {
       if (totalWait > 10 * 1000) { refreshPage(); return; }
       const battleStarted = $enemyEgo[0].style.width && $enemyEgo[0].style.width !== '100%' // $('[battle-step]:visible').length; // totalWait > 5 * 1000
       console.log('battleStarted ? ', battleStarted, $enemyEgo[0].style.width, ' totalWait:', totalWait);
       if (!battleStarted) { setTimeout( () => { checkFightStart(totalWait += checkDelay, checkDelay, callback); }, checkDelay); return; }
+      console.log('calling callback:', callback);
       callback();
     }
     checkFightStart(0, 1000, onFightStart);
