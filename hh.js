@@ -1032,6 +1032,7 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     let checkFightStart = (totalWait = 0, checkDelay = 1000, callback) => {
       if (totalWait > 10 * 1000) { refreshPage(); return; }
       const battleStarted = $enemyEgo[0].style.width !== '100%' // $('[battle-step]:visible').length; // totalWait > 5 * 1000
+      console.log('battleStarted ? ', battleStarted, $enemyEgo[0].style.width, ' totalWait:', totalWait); 
       if (!battleStarted) { setTimeout( () => { checkFightStart(totalWait += checkDelay, checkDelay); }, checkDelay); return; }
       callback();
     }
