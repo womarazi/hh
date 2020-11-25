@@ -1073,14 +1073,14 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
 
   // console.log("trollFight check energy");
   var energy = istroll ? +$(
-    '.energy_counter[type="energy_fight"] div.over > span[energy=""]'
+    '.energy_counter[type="fight"] [energy=""]'
   )[0].innerHTML : 20;
   const usekoban = canUseKoban();
   if (!usekoban && !isleague) { setTimeout(() => trollFight(isarena, istroll, isleague, isSeason), 30 * minutes); }
   if (energy === 0) {
     if (!usekoban) return;
     let $energybtn = $('[type="energy_fight"] .hudPlus_mix_icn');
-    if ($energybtn.length !== 1) { alert("found multiple energy-fight buttons"); return; }
+    if ($energybtn.length !== 1) { alert("found multiple energy-fight buttons", $energybtn); return; }
     if (!$energybtn[0].disabled) {
       $energybtn.trigger('click');
       $energybtn[0].disabled = true;
