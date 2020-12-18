@@ -1,4 +1,4 @@
-console.log("hh.js v1 6/18/2020");
+console.log("hh.js v1 18/12/2020");
 setTimeout(main0, 500);
 
 function refreshPage(){
@@ -424,8 +424,8 @@ function seasonArenaMain() {
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
     pglvhtml.innerHTML = pg.lv + ' WR: ' + (winratio * 100) + '%; avg Prize:<br>' +
-      '<div class="wrdata" style="scale: 0.8; border: 2px solid;" >' +
-      '<span class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
+      '<span class="wrdata" style="scale: 0.8; border: 2px solid;" >' +
+      '<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>' +
     '</span>';
@@ -436,7 +436,7 @@ function seasonArenaMain() {
   const bestOpponent = opponents.sort((a, b) => b.prizescore - a.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
-  //
+  //asfdghmjgfdf
 }
 
 function contestmain() {
