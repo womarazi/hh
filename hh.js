@@ -393,7 +393,7 @@ function seasonArenaMain() {
     console.log($pg);
     window['$pg'] = $pg;
     const rewardptg = $pg.find('.slot_season_xp_girl').last()[0];
-    pg.girlExpReward = rewardptg.length && +rewardptg.innerText;
+    pg.girlExpReward = rewardptg && +rewardptg.innerText;
     const pglvhtml = $pg.find('.text_hero_level')[0];
     let str = pglvhtml.innerText.replace('Level', '');
     pg.lv = +parseFloat(str);
