@@ -374,22 +374,25 @@ function seasonArenaMain() {
   const you = new cCharacter();
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
+  let scoreFunction = eval("(mojo, xp, wr) => { return wr * (" + mojo + xp * 0 + ")}");
   for (let i = 0; i < all.length; i++) {
     console.log('index:', i);
     const isYou = i === 0;
     const pg = all[i];
     pg.you = isYou;
+    pg.guiindex = i;
     const $pg = $($allpg[i]);
     console.log('$pg:', $pg);
     $pg.on('click', () => { you.fight(pg); });
     let atkarr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     console.log('setting [' + i + ']', atkarr, mainDefArr);
-    const $rewardpt = $pg.find('[cur="victory_points"]');
+    const $rewardpt = $pg.find('.slot_victory_points');
     pg.mojoReward = $rewardpt.length && +$rewardpt[0].innerText;
+    const $rewardptg = $pg.find('.slot_season_xp_girl');
+    pg.girlExpReward = $rewardptg.length && +$rewardptg[0].innerText;
     const pglvhtml = $pg.find('.text_hero_level')[0];
     let str = pglvhtml.innerText.replace('Level', '');
-    parseFloat("level 416 winratio: 100%")
     pg.lv = +parseFloat(str);
     pg.ego = +$pg.find('[carac="ego"]')[0].parentElement.innerText.replaceAll(',', '');
     const harmonyhtml = $pg.find('[hh_title="Harmony"] .pull_right')[0];
@@ -415,10 +418,19 @@ function seasonArenaMain() {
         pg.stage3.chdef = +mainDefArr[1];
         break; }
     pg.deduceMissingData();
-    pglvhtml.innerText = pg.lv + ' winratio: ' + (you.winratio(pg) * 100) + '%';
+    const winratio = you.winratio(pg);
+    pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
+    pglvhtml.innerHTML = pg.lv + ' WR: ' + (winratio * 100) + '%
+      '<div class="wrdata" style="scale: 0.8; border: 2px solid;" >' +
+      'avg Prize:<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
+      '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
+      '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>' +
+    </div>';
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
   }
   window['allpg'] = all;
+  const bestOpponent = opponents.sort((a, b) => a.prizescore - b.prizescore)[0];
+  $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
 }
 
