@@ -425,13 +425,14 @@ function seasonArenaMain() {
       'avg Prize:<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>' +
-    </div>';
+    '</div>';
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
   }
   window['allpg'] = all;
   const bestOpponent = opponents.sort((a, b) => a.prizescore - b.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
+  //aaaaaaaaaaaaaasfdgnmfdretwqfsgdtesdbfnhd
 }
 
 function contestmain() {
