@@ -435,7 +435,7 @@ function seasonArenaMain() {
     pglvhtml.parentElement.insertBefore(newblock, pglvhtml);
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
     let textheader = pglvhtml.parentElement;
-    while (textheader && !textheader.classList.contains('.center_y')) textheader = textheader.parentElement;
+    while (textheader && !textheader.classList.contains('center_y')) textheader = textheader.parentElement;
     textheader.style.flexWrap = 'wrap';
   }
   $('.opponents_arena')[0].style.marginTop = '-30px';
@@ -443,7 +443,7 @@ function seasonArenaMain() {
   const bestOpponent = opponents.sort((a, b) => b.prizescore - a.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
-  //asfdghmjgfdf asfdgfhregtwegdfnhesf
+  //
 }
 
 function contestmain() {
