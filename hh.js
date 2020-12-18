@@ -423,13 +423,19 @@ function seasonArenaMain() {
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
-    pglvhtml.innerHTML ='Lv ' + pg.lv + ' WR: ' + (winratio * 100) + '%; AVG Prize:<br>' +
+    pglvhtml.innerHTML ='Lv ' + pg.lv + ' WR: ' + (winratio * 100) + '%;<br>';
+    const newblock = document.createElement('div');
+    newblock.innerHTML = 
       '<span class="wrdata" style="scale: 0.8; border: 2px solid;">' +
       '<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>' +
     '</span>';
+    pglvhtml.parentElement.insertBefore(newblock, pglvhtml);
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
+    let textheader = pglvhtml.parentElement;
+    while (textheader && !textheader.classList.contains('.center_y')) textheader = textheader.parentElement;
+    textheader.style.flexWrap = 'wrap';
   }
   $('.opponents_arena')[0].style.marginTop = '-30px';
   window['allpg'] = all;
