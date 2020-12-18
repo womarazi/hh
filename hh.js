@@ -374,7 +374,8 @@ function seasonArenaMain() {
   const you = new cCharacter();
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
-  let scoreFunction = eval("(mojo, xp, wr) => { return wr * (" + mojo + xp * 0 + ")}");
+  const inputExpressionStr = "mojo + xp * 0";
+  let scoreFunction = eval("(mojo, xp, wr) => { return wr * ( " + inputExpressionStr + ")}");
   for (let i = 0; i < all.length; i++) {
     console.log('index:', i);
     const isYou = i === 0;
