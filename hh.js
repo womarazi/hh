@@ -423,8 +423,8 @@ function seasonArenaMain() {
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
-    pglvhtml.innerHTML = pg.lv + ' WR: ' + (winratio * 100) + '%; avg Prize:<br>' +
-      '<span class="wrdata" style="scale: 0.8; border: 2px solid;" >' +
+    pglvhtml.innerHTML ='Lv ' + pg.lv + ' WR: ' + (winratio * 100) + '%; AVG Prize:<br>' +
+      '<span class="wrdata" style="scale: 0.8; border: 2px solid;">' +
       '<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>' +
@@ -472,7 +472,7 @@ function contestmain() {
   for (let i = 1; i < ranks.length; i++) {
     if (minvalue < ranks[i]) { minvalue = ranks[i]; minindex = i; }
   }
-  //sdfghjklò
+  //sdf
   // minindex = 0; // perchè forse è "se hai una challenge non ritirata da 4 giorni" invece di "se non ritiri challenge per 4 giorni"
   console.log('collecting:', $retireButtons[minindex]);
   $($retireButtons[minindex]).trigger('click');
