@@ -390,6 +390,8 @@ function seasonArenaMain() {
     console.log('setting [' + i + ']', atkarr, mainDefArr);
     const $rewardpt = $pg.find('.slot_victory_points');
     pg.mojoReward = $rewardpt.length && +$rewardpt[0].innerText;
+    console.log($pg);
+    window['$pg'] = $pg;
     const rewardptg = $pg.find('.slot_season_xp_girl').last()[0];
     pg.girlExpReward = rewardptg.length && +rewardptg.innerText;
     const pglvhtml = $pg.find('.text_hero_level')[0];
