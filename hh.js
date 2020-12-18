@@ -432,10 +432,10 @@ function seasonArenaMain() {
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
   }
   window['allpg'] = all;
-  const bestOpponent = opponents.sort((a, b) => a.prizescore - b.prizescore)[0];
+  const bestOpponent = opponents.sort((a, b) => b.prizescore - a.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
-  //fsdghgjkl.,hmgnfbdx
+  //
 }
 
 function contestmain() {
