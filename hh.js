@@ -431,6 +431,7 @@ function seasonArenaMain() {
     '</span>';
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
   }
+  $('.opponents_arena')[0].style.marginTop = '-30px';
   window['allpg'] = all;
   const bestOpponent = opponents.sort((a, b) => b.prizescore - a.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
