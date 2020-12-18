@@ -392,7 +392,7 @@ function seasonArenaMain() {
     pg.mojoReward = $rewardpt.length && +$rewardpt[0].innerText;
     console.log($pg);
     window['$pg'] = $pg;
-    const rewardptg = $pg.find('.slot_season_xp_girl').last()[0];
+    const rewardptg = $pg.find('.slot_season_xp_girl').last()[0].lastChild;
     pg.girlExpReward = rewardptg && +rewardptg.innerText;
     const pglvhtml = $pg.find('.text_hero_level')[0];
     let str = pglvhtml.innerText.replace('Level', '');
@@ -435,7 +435,7 @@ function seasonArenaMain() {
   const bestOpponent = opponents.sort((a, b) => a.prizescore - b.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
-  //aaaaaaaaaaaaaasfdgnmfdretwqfsgdtesdbfnhd
+  //
 }
 
 function contestmain() {
