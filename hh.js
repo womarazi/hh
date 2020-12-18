@@ -387,11 +387,8 @@ function seasonArenaMain() {
     $pg.on('click', () => { you.fight(pg); });
     let atkarr = $pg.find('[carac="damage"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
     let mainDefArr = $pg.find('[carac^="def"]')[0].parentElement.innerText.replaceAll(',', '').split('-');
-    console.log('setting [' + i + ']', atkarr, mainDefArr);
     const $rewardpt = $pg.find('.slot_victory_points');
     pg.mojoReward = $rewardpt.length && +$rewardpt[0].innerText;
-    console.log($pg);
-    window['$pg'] = $pg;
     const rewardptg = $pg.find('.slot_season_xp_girl').last()[0];
     pg.girlExpReward = rewardptg && +rewardptg.lastChild.innerText;
     const pglvhtml = $pg.find('.text_hero_level')[0];
@@ -401,9 +398,9 @@ function seasonArenaMain() {
     const harmonyhtml = $pg.find('[hh_title="Harmony"] .pull_right')[0];
     pg.harmony = +parseFloat(harmonyhtml.innerText.replaceAll(',', ''));
     let classHtml = $pg.find('[carac^="class"]')[0];
-    if (classHtml.getAttribute('carac') === 'class1') { pg.type ='hk'; }
-    if (classHtml.getAttribute('carac') === 'class2') { pg.type ='ch'; }
-    if (classHtml.getAttribute('carac') === 'class3') { pg.type ='kh'; }
+    if (classHtml.getAttribute('carac') === 'class1') { pg.type = 'hk'; }
+    if (classHtml.getAttribute('carac') === 'class2') { pg.type = 'ch'; }
+    if (classHtml.getAttribute('carac') === 'class3') { pg.type = 'kh'; }
     pg.stage1.atk = +atkarr[0];
     pg.stage3.atk = +atkarr[1];
     switch (pg.type) {
@@ -423,7 +420,7 @@ function seasonArenaMain() {
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
-    pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + (winratio * 100) + '%<br>';
+    pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + (winratio * 100) + '%<br>'; // WR:
     if (i == 0) continue;
     const newblock = document.createElement('span');
     newblock.style.scale = '0.8';
@@ -441,9 +438,11 @@ function seasonArenaMain() {
   $('.opponents_arena')[0].style.marginTop = '-30px';
   window['allpg'] = all;
   const bestOpponent = opponents.sort((a, b) => b.prizescore - a.prizescore)[0];
-  $allpg[bestOpponent.guiindex].style.background = '#30601070';
+  const bestOpponentHtml = $allpg[bestOpponent.guiindex];
+  bestOpponentHtml.style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
-  //sadgfhfdsdf
+  // now autorun mode:
+  $(bestOpponentHtml).find('.btn_season_perform').text('perforM').trigger('click');
 }
 
 function contestmain() {
