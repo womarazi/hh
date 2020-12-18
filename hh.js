@@ -174,6 +174,8 @@ class cCharacter {
   stage2 = new cstage();
   stage3 = new cstage();
   mojoReward = 0;
+  girlReward = 0;
+  index = 0;
   girl1 = new cGirl();
   girl2 = new cGirl();
   girl3 = new cGirl();
@@ -238,7 +240,7 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
 
   let mystage = this['stage' + mystatus.stage];
   let enstage = enemy['stage' + mystatus.stage];
-  console.log('pg.this:', this, 'status:', mystatus, '     enemy:', enemy, ' status:', enstatus);
+  //console.log('pg.this:', this, 'status:', mystatus, '     enemy:', enemy, ' status:', enstatus);
   this.excitement += this['girl' + mystatus.stage].excitement;
   const classPoses = 4;
   const allPoses = classPoses * 3;
@@ -266,8 +268,8 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
   let dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[enemy.type + 'def'] * enstatus.chshield;
   let playerstr = this.you !== enemy.you ? (this.you ? 'YOU' : 'OPPONENT') : 'PLAYER LV' + this.lv;
   let oppstr = this.you !== enemy.you ? (enemy.you ? 'YOU' : 'OPPONENT') : 'PLAYER LV' + this.lv;
-  console.log(playerstr, 'deals dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
-  console.log(playerstr, 'deals dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
+  // console.log(playerstr, 'deals dmg = judgeBonus * orgasmBonus * hkCrit * mystage.atk - enstage[' + enemy.type + 'def' + '] * enstatus.chshield');
+  // console.log(playerstr, 'deals dmg =', dmg, ' = ',  judgeBonus, ' * ', orgasmBonus, ' * ', hkCrit, ' * ', mystage.atk, ' - ', enstage[enemy.type + 'def'], ' * ', enstatus.chshield);
   enstatus.ego -= dmg;
   mystatus.ego += dmg * khHeal;
   let outcomestr = '';
@@ -276,12 +278,12 @@ attack(enemy, mystatus, enstatus, judge = 0, out = null){
   if (enstatus.ego <= 0) {
     outcomestr = outcomestr + ' remaining ego:' + mystatus.ego + ' / ' + this.ego +  ' ( ' + (mystatus.ego / this.ego * 100) + '% )'; }
   else { outcomestr = ''; }
-  console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg / 1000, 'k = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
+  // console.info(oppstr + ' ego: ', (enstatus.ego + dmg) / 1000, 'k - ', dmg / 1000, 'k = ', enstatus.ego / 1000,  'k;      ' + outcomestr);
   
   if (!out || this.you === enemy.you) return; // do not collect statistics
   let outt = this.you ? out.you : out.enemy;
   let dmgkey = ((hkCrit !== 1 ? ' & HK_Crit' : '') + (judgeBonus !== 1 ? ' & Pose' : '') + (gotOrgasm ? ' & Orgasm' : '') + (enstatus.chshield !== 1 ? ' CH_Shield' : '')).substr(2).trim() || 'Base';
-  console.info('outt:', outt, '.stage' + mystatus.stage, outt['stage' + mystatus.stage], '.damages.', dmgkey);
+  // console.info('outt:', outt, '.stage' + mystatus.stage, outt['stage' + mystatus.stage], '.damages.', dmgkey);
   outt.poseChance = poseChance;
   outt.harmonyChance = harmonyChance;
   if (outt['stage' + mystatus.stage].damages[ dmgkey ] === dmg) { ; }
@@ -365,6 +367,7 @@ function checkRandom(percentage) { // return bool (pass or not pass)
 function seasonArenaMain() {
   const $allpg = $('#season-arena .season_arena_block');
   if ($allpg.length !== 4) { console.error('arena season character length error', $allpg); return; }
+  $allpg.find('.myaddition').remove();
   const $you = $($allpg[0]);
   const $op1 = $($allpg[1]);
   const $op2 = $($allpg[2]);
@@ -392,7 +395,7 @@ function seasonArenaMain() {
     const rewardptg = $pg.find('.slot_season_xp_girl').last()[0];
     pg.girlExpReward = rewardptg && +rewardptg.lastChild.innerText;
     const pglvhtml = $pg.find('.text_hero_level')[0];
-    let str = pglvhtml.innerText.replace('Level', '');
+    let str = pglvhtml.innerText.toLowerCase().replace('level', '').replace('lv', '');
     pg.lv = +parseFloat(str);
     pg.ego = +$pg.find('[carac="ego"]')[0].parentElement.innerText.replaceAll(',', '');
     const harmonyhtml = $pg.find('[hh_title="Harmony"] .pull_right')[0];
@@ -425,6 +428,7 @@ function seasonArenaMain() {
     const newblock = document.createElement('span');
     newblock.style.scale = '0.8';
     newblock.style.border = '2px solid';
+    newblock.classList.add('myaddition');
     newblock.innerHTML =
       '<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
@@ -442,7 +446,9 @@ function seasonArenaMain() {
   bestOpponentHtml.style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
   // now autorun mode:
-  $(bestOpponentHtml).find('.btn_season_perform').text('perforM').trigger('click');
+  const $battlebutton = $(bestOpponentHtml).find('.btn_season_perform');
+  console.log('battlebutton:', $battlebutton);
+  $battlebutton.text('perforM').trigger('click');
 }
 
 function contestmain() {
