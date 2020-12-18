@@ -496,7 +496,7 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
 }
 
 function popmain(collected = false, retrycount = 0) {
-  return; // currently disabled, update it.
+  // return; // currently disabled, update it. fghjkhjgygggygygygygyg
   const $collect = $('#pop .pop_central_part .purple_button_L:visible');
   const retry = () => setTimeout(()=>popmain(true), 1000, retrycount+1);
   if (retrycount > 5) { pageRefresh(); return; }
@@ -508,7 +508,6 @@ function popmain(collected = false, retrycount = 0) {
     retry();
     return; }
   
-
   const $autoassign = $('#pop .pop_right_part .blue_button_L[rel="pop_auto_assign"]:visible');
   console.log('pop assign check', $autoassign, 'disabled:', $autoassign[0].disabled);
   if ($autoassign.length && !$autoassign[0].disabled) { $autoassign.trigger('click'); retry(); return; }
