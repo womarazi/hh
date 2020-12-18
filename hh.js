@@ -423,12 +423,12 @@ function seasonArenaMain() {
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
-    pglvhtml.innerHTML = pg.lv + ' WR: ' + (winratio * 100) + '%' +
+    pglvhtml.innerHTML = pg.lv + ' WR: ' + (winratio * 100) + '%; avg Prize:<br>' +
       '<div class="wrdata" style="scale: 0.8; border: 2px solid;" >' +
-      'avg Prize:<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
+      '<span class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
       '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>' +
-    '</div>';
+    '</span>';
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
   }
   window['allpg'] = all;
