@@ -424,6 +424,7 @@ function seasonArenaMain() {
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
     pglvhtml.innerHTML ='Lv ' + pg.lv + ' WR: ' + (winratio * 100) + '%;<br>';
+    if (i == 0) continue;
     const newblock = document.createElement('div');
     newblock.innerHTML = 
       '<span class="wrdata" style="scale: 0.8; border: 2px solid;">' +
@@ -442,7 +443,7 @@ function seasonArenaMain() {
   const bestOpponent = opponents.sort((a, b) => b.prizescore - a.prizescore)[0];
   $allpg[bestOpponent.guiindex].style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
-  //asfdghmjgfdf
+  //asfdghmjgfdf asfdgfhregtwegdfnhesf
 }
 
 function contestmain() {
