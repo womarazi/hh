@@ -1,4 +1,4 @@
-console.log("hh.js v1 18/12/2020");
+console.log("hh.js v1 19/12/2020");
 setTimeout(main0, 500);
 
 function refreshPage(){
@@ -454,7 +454,7 @@ function seasonArenaMain() {
   // now autorun mode:
   const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.index - 1];
   const $battlebutton = $(battlebutton);
-  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.index, bestOpponent);
+  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.index, bestOpponent); // aaaaaaaaaaasdfffffffffffffffffffsagdgdgsdggd
   $battlebutton[0].text('perforM').trigger('click');
 }
 
