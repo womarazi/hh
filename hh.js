@@ -366,7 +366,7 @@ function checkRandom(percentage) { // return bool (pass or not pass)
 
 function roundFloat(number, decimals = 2) {
   const a = Math.pow(10, decimals);
-  Math.round((winratio * a)) / a;
+  Math.round((number * a)) / a;
 }
 
 function seasonArenaMain() {
