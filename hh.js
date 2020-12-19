@@ -175,7 +175,7 @@ class cCharacter {
   stage3 = new cstage();
   mojoReward = 0;
   girlReward = 0;
-  index = 0;
+  guiindex = 0;
   girl1 = new cGirl();
   girl2 = new cGirl();
   girl3 = new cGirl();
@@ -452,9 +452,9 @@ function seasonArenaMain() {
   bestOpponentHtml.style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
   // now autorun mode:
-  const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.index - 1];
+  const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.guiindex - 1]; // aaaaaasgsagsd aste tewaaaaasdffffffffff
   const $battlebutton = $(battlebutton);
-  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.index, bestOpponent); // aaaaaaaaaaasdfffffffffffffffffffsagdgdgsdggd
+  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.index, bestOpponent);
   $battlebutton[0].text('perforM').trigger('click');
 }
 
