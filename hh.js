@@ -434,7 +434,7 @@ function seasonArenaMain() {
     newblock.style.scale = '0.8';
     newblock.style.border = '2px solid';
     newblock.classList.add('myaddition');
-    const cifreDecimali = 2;
+    const cifreDecimali = 1;
     newblock.innerHTML =
       '<div class="slot slot_victory_points" cur="victory_points"><p>' + roundFloat(pg.mojoReward * winratio * 100, cifreDecimali) + '</p></div>' +
       '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' + roundFloat(pg.girlExpReward * winratio * 100, cifreDecimali) + '</p></div>' +
