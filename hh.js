@@ -423,16 +423,16 @@ function seasonArenaMain() {
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
-    pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + (winratio * 100) + '%<br>'; // WR:
+    pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + Math.round((winratio * 100 * 100)) / 100 + '%<br>'; // WR:
     if (i == 0) continue;
     const newblock = document.createElement('span');
     newblock.style.scale = '0.8';
     newblock.style.border = '2px solid';
     newblock.classList.add('myaddition');
     newblock.innerHTML =
-      '<div class="slot slot_victory_points" cur="victory_points"><p>' + (pg.mojoReward * winratio) + '</p></div>' +
-      '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  (pg.girlExpReward * winratio) + '</p></div>' +
-      '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  (pg.prizescore) + '</p></div>';
+      '<div class="slot slot_victory_points" cur="victory_points"><p>' + Math.round(pg.mojoReward * winratio * 100 * 100) / 100 + '</p></div>' +
+      '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  Math.round(pg.girlExpReward * winratio * 100 * 100) / 100 + '</p></div>' +
+      '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  Math.round(pg.prizescore * 100 * 100) / 100 + '</p></div>';
     pglvhtml.parentElement.append(newblock) // insertBefore(newblock, pglvhtml.parentElement.lastElementChild);
     harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
     let textheader = pglvhtml.parentElement;
