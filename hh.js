@@ -446,9 +446,10 @@ function seasonArenaMain() {
   bestOpponentHtml.style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
   // now autorun mode:
-  const $battlebutton = $(bestOpponentHtml).find('.btn_season_perform');
-  console.log('battlebutton:', $battlebutton);
-  $battlebutton.text('perforM').trigger('click');
+  const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.index - 1];
+  const $battlebutton = $(battlebutton);
+  console.log('battlebutton:', battlebutton);
+  $battlebutton[0].text('perforM').trigger('click');
 }
 
 function contestmain() {
