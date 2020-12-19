@@ -364,6 +364,11 @@ function checkRandom(percentage) { // return bool (pass or not pass)
   return Math.random() < percentage;
 }
 
+function roundFloat(number, decimals = 2) {
+  const a = Math.pow(10, decimals);
+  Math.round((winratio * a)) / a;
+}
+
 function seasonArenaMain() {
   const $allpg = $('#season-arena .season_arena_block');
   if ($allpg.length !== 4) { console.error('arena season character length error', $allpg); return; }
@@ -423,18 +428,19 @@ function seasonArenaMain() {
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
     pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
-    pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + Math.round((winratio * 100 * 100)) / 100 + '%<br>'; // WR:
+    pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + roundFloat(winratio * 100, 2) + '%<br>'; // WR:
     if (i == 0) continue;
     const newblock = document.createElement('span');
     newblock.style.scale = '0.8';
     newblock.style.border = '2px solid';
     newblock.classList.add('myaddition');
+    const cifreDecimali = 2;
     newblock.innerHTML =
-      '<div class="slot slot_victory_points" cur="victory_points"><p>' + Math.round(pg.mojoReward * winratio * 100 * 100) / 100 + '</p></div>' +
-      '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' +  Math.round(pg.girlExpReward * winratio * 100 * 100) / 100 + '</p></div>' +
-      '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  Math.round(pg.prizescore * 100 * 100) / 100 + '</p></div>';
+      '<div class="slot slot_victory_points" cur="victory_points"><p>' + roundFloat(pg.mojoReward * winratio * 100, cifreDecimali) + '</p></div>' +
+      '<div class="slot slot_season_xp_girl"><p>Girl</p><p>' + roundFloat(pg.girlExpReward * winratio * 100, cifreDecimali) + '</p></div>' +
+      '<div class="slot slot_season_xp_girl" style="background: goldenrod;"><p>Score</p><p>' +  roundFloat(pg.prizescore * 100, cifreDecimali) + '</p></div>';
     pglvhtml.parentElement.append(newblock) // insertBefore(newblock, pglvhtml.parentElement.lastElementChild);
-    harmonyhtml.innerText = pg.harmony + ' | ' + Math.floor(pg.harmonyRatio(you) * 100 * 100) / 100 + '% ';
+    harmonyhtml.innerText = pg.harmony + ' | ' + roundFloat(pg.harmonyRatio(you) * 100, cifreDecimali) + '% ';
     let textheader = pglvhtml.parentElement;
     while (textheader && !textheader.classList.contains('center_y')) textheader = textheader.parentElement;
     textheader.style.flexWrap = 'wrap';
@@ -447,8 +453,8 @@ function seasonArenaMain() {
   console.log('season arena script end:', all, $allpg);
   // now autorun mode:
   const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.index - 1];
-  const $battlebutton = $(battlebutton);
-  console.log('battlebutton:', battlebutton);
+  const $battlebutton = $(battlebutton); // asfassfassssdada
+  console.log('battlebutton: ', battlebutton);
   $battlebutton[0].text('perforM').trigger('click');
 }
 
