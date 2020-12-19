@@ -366,7 +366,7 @@ function checkRandom(percentage) { // return bool (pass or not pass)
 
 function roundFloat(number, decimals = 2) {
   const a = Math.pow(10, decimals);
-  Math.round(number * a) / a; // asfihasiufasiufhawiuhfiuasfiuqwiqwghiufgasifhasoifhnoiasgfas
+  return Math.round(number * a) / a;
 }
 
 function seasonArenaMain() {
@@ -452,9 +452,9 @@ function seasonArenaMain() {
   bestOpponentHtml.style.background = '#30601070';
   console.log('season arena script end:', all, $allpg);
   // now autorun mode:
-  const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.guiindex - 1]; // aaaaaasgsagsd aste tewaaaaasdffffffffff
+  const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.guiindex - 1];
   const $battlebutton = $(battlebutton);
-  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.index, bestOpponent);
+  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.guiindex, bestOpponent); //asfgdhfhdsadgnhdsbfnfdfsvcgdsxcbf dgd k
   $battlebutton[0].text('perforM').trigger('click');
 }
 
