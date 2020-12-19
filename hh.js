@@ -137,12 +137,19 @@ function championmain(){
 
 class cGirl {
   type = null; // | 'hk' | 'kh' | 'ch'
+  lv = 0;
   attack = 0;
   ego = 0;
   excitement = 0;
-  kh = 0;// at 0-star lv1
+  kh = 0; // at current star & lv for league
   hk = 0;
   ch = 0;
+
+  name = '';
+  rarity = null; // null | "legendary"
+  type = null; // null | 'kh' | 'ch' | 'kh'
+  position = 'null'; // indian | suspendedcongress | splittingbamboo | ...
+  salary_per_hour = 0;
 } // class cGirl end
 
 class cstage {
@@ -150,13 +157,27 @@ class cstage {
   hkdef = 0;
   khdef = 0;
   chdef = 0;
+  ch = 0;
+  hk = 0;
+  kh = 0;
 
 deduceMissingData() {
+  this.hk = this.hk || 0;
+  this.kh = this.kh || 0;
+  this.ch = this.ch || 0;
   this.hkdef = this.hkdef || 0;
   this.khdef = this.khdef || 0;
   this.chdef = this.chdef || 0;
-  const foundCounter = (this.hkdef ? 1 : 0) + (this.khdef ? 1 : 0) + (this.chdef ? 1 : 0);
-  const avgDef = (this.hkdef + this.chdef + this.khdef) / foundCounter;
+  const foundCounterDef = (this.hkdef ? 1 : 0) + (this.khdef ? 1 : 0) + (this.chdef ? 1 : 0);
+  const avgDef = (this.hkdef + this.chdef + this.khdef) / foundCounterDef;
+  
+  const foundCounterStat = (this.hk ? 1 : 0) + (this.kh ? 1 : 0) + (this.ch ? 1 : 0);
+  const avgStat = (this.hk + this.ch + this.kh) / foundCounterStat;
+  
+  
+  this.hk = this.hk || avgStat;
+  this.kh = this.kh || avgStat;
+  this.ch = this.ch || avgStat;
   this.hkdef = this.hkdef || avgDef;
   this.khdef = this.khdef || avgDef;
   this.chdef = this.chdef || avgDef;
@@ -634,54 +655,82 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
     msecwaiting += timeout;
     setTimeout(() => { gettoweruserinfo(userid, userList, timeout, msecwaiting)}, timeout);
     return; };
-  userList[userid] = {};
-  if (!+userList.length) userList.length = 0;
+  const pg = new cCharacter();
+  const oldpg = userList[userid];
+  userList[userid] = pg;
+  if (!+userList.length) userList.length = 0; // dizionario ma con length arraylike tenuta manualmente.
   userList.length+=1;
-  userList[userid].name = $userinfo.find('.title')[0].innerText;
-  userList[userid].lv = +$userinfo.find('.level')[0].innerText;
-  userList[userid].ishk = $userinfo.find('[carac="class1"]').length ? true : false;
-  userList[userid].isch = $userinfo.find('[carac="class2"]').length ? true : false;
-  userList[userid].iskh = $userinfo.find('[carac="class3"]').length ? true : false;
+  pg.name = $userinfo.find('.title')[0].innerText;
+  pg.lv = +$userinfo.find('.level')[0].innerText;
+  let ishk = $userinfo.find('[carac="class1"]').length ? true : false;
+  let isch = $userinfo.find('[carac="class2"]').length ? true : false;
+  let iskh = $userinfo.find('[carac="class3"]').length ? true : false;
+  pg.type = ishk ? 'hk' : isch ? 'ch' : 'kh';
+  pg.you = false;
   // console.log('debuggg', userList[userid], $userinfo, $userinfo.find('.lead_ego'));
   // userList['error']['error']['error'] = 'error';
-    let tonum = (str) => {
+  let tonum = (str) => {
+    str = str.toLowerCase();
     let num = parseFloat(str);
-    if (str.indexOf('K') > 0) return num*1000;
-    if (str.indexOf('M') > 0) return num*1000*1000;
     if (str.indexOf('k') > 0) return num*1000;
     if (str.indexOf('m') > 0) return num*1000*1000;
     return num; };
   tmp = $userinfo.find('.lead_ego')[0].children[1].innerText;
-  userList[userid].hp = +replaceCharAt(tmp, tmp.indexOf(','), '');
+  pg.ego = +replaceCharAt(tmp, tmp.indexOf(','), ''); // total ego
+  let $stat = $userinfo.find('.stats_wrap');
+  pg.pureEgo = tonum($stat.find('[carac="endurance"]')[0].nextSibling.innerText); // ego without girls?
   
   // console.log('debuggg', userList[userid], $userinfo, $userinfo.find('.lead_ego'));
   // userList['error']['error']['error'] = 'error';
   
-  let $girllevels = $userinfo.find('.girls_wrapper .level');
-  userList[userid].girls = [];
-  userList[userid].girls[0] = +$girllevels[0].innerText;
-  userList[userid].girls[1] = +$girllevels[1].innerText;
-  userList[userid].girls[2] = +$girllevels[2].innerText;
-  let $stat = $userinfo.find('.stats_wrap');
 
-  userList[userid].hk = tonum($stat.find('[carac="1"]')[0].nextSibling.innerText);
-  userList[userid].ch = tonum($stat.find('[carac="2"]')[0].nextSibling.innerText);
-  userList[userid].kh = tonum($stat.find('[carac="3"]')[0].nextSibling.innerText);
-  userList[userid].defhk = tonum($stat.find('[carac="def1"]')[0].nextSibling.innerText);
-  userList[userid].defch = tonum($stat.find('[carac="def2"]')[0].nextSibling.innerText);
-  userList[userid].defkh = tonum($stat.find('[carac="def3"]')[0].nextSibling.innerText);
-  userList[userid].hp = tonum($stat.find('[carac="endurance"]')[0].nextSibling.innerText);
-  userList[userid].atk = tonum($stat.find('[carac="damage"]')[0].nextSibling.innerText);
-  userList[userid].excit = tonum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
-  userList[userid].chance = tonum($stat.find('[carac="chance"]')[0].nextSibling.innerText);
-  userList[userid].win = $userinfo.find('.challenge .result.won').length;
-  userList[userid].loses = $userinfo.find('.challenge .result.lost').length;
-  userList[userid].fought = userList[userid].win + userList[userid].loses;
-  /*if (userList[userid].name === 'rocken') { 
-    console.log('debug:', $userinfo);
-    return; }*/
-  if (singleupdate) return;
+  pg.stage1.hk = tonum($stat.find('[carac="1"]')[0].nextSibling.innerText);
+  pg.stage1.ch = tonum($stat.find('[carac="2"]')[0].nextSibling.innerText);
+  pg.stage1.kh = tonum($stat.find('[carac="3"]')[0].nextSibling.innerText);
+  pg.stage1.hkdef = tonum($stat.find('[carac="def1"]')[0].nextSibling.innerText);
+  pg.stage1.chdef = tonum($stat.find('[carac="def2"]')[0].nextSibling.innerText);
+  pg.stage1.khdef = tonum($stat.find('[carac="def3"]')[0].nextSibling.innerText);
+  pg.stage1.atk = tonum($stat.find('[carac="damage"]')[0].nextSibling.innerText);
+  pg.excitement = tonum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
+  pg.harmony = tonum($stat.find('[carac="chance"]')[0].nextSibling.innerText);
+  pg.win = $userinfo.find('.challenge .result.won').length;
+  pg.loses = $userinfo.find('.challenge .result.lost').length;
+  pg.fought = userList[userid].win + userList[userid].loses;
+  
+  const $girls = $userinfo.find('.girls_wrapper .team_girl');
+  let g1 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
+  let g2 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
+  let g3 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
+
+  const setGirlStat = (myGirlObj, girlNativeObj) => {
+    let mg = myGirlObj;
+    let ng = girlNativeObj;
+    mg.rarity = ng.rarity;
+    switch(+ng.class) {
+      default: mg.type = null; break;
+      case 1: mg.type = 'hk'; break;
+      case 2: mg.type = 'ch'; break;
+      case 3: mg.type = 'kh'; break; }
+    mg.position = ng.position_img.replace('.png', '');
+    mg.name = ng.Name;
+    mg.hk = ng.caracs.carac1;
+    mg.ch = ng.caracs.carac2;
+    mg.kh = ng.caracs.carac3;
+    mg.salary_per_hour = mg.salary_per_hour;
+  };
+  setGirlStat(pg.girl1, g1);
+  setGirlStat(pg.girl2, g2);
+  setGirlStat(pg.girl3, g3);
+  let $girllevels = $girls.find('.level');
+  pg.girl1.lv = +$girllevels[0].innerText;
+  pg.girl2.lv = +$girllevels[1].innerText;
+  pg.girl3.lv = +$girllevels[2].innerText;
+  
+  const isChanged = JSON.stringify(oldpg) !== JSON.stringify(pg);
+  const updateAll = !singleupdate; // || (isChanged && pg.fought !== 3);
+  if (!updateAll) return isChanged;
   maketoweruserlist(userList);
+  return isChanged;
 }
 
 function replaceCharAt(string, index, replacestr) {
