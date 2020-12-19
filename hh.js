@@ -660,6 +660,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   userList[userid] = pg;
   if (!+userList.length) userList.length = 0; // dizionario ma con length arraylike tenuta manualmente.
   userList.length+=1;
+  pg.id = userid;
   pg.name = $userinfo.find('.title')[0].innerText;
   pg.lv = +$userinfo.find('.level')[0].innerText;
   let ishk = $userinfo.find('[carac="class1"]').length ? true : false;
