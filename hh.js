@@ -185,6 +185,9 @@ deduceMissingData() {
 } // class cstage end
 
 class cCharacter {
+  id = 0; // unique hh user id
+  name = '';
+  club = '';
   type = null; // | 'hk' | 'kh' | 'ch'
   you = null;
   lv = 0;
@@ -662,6 +665,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   userList.length+=1;
   pg.id = userid;
   pg.name = $userinfo.find('.title')[0].innerText;
+  pg.club = $userinfo.find('.clubs_title')[0].innerText;
   pg.lv = +$userinfo.find('.level')[0].innerText;
   let ishk = $userinfo.find('[carac="class1"]').length ? true : false;
   let isch = $userinfo.find('[carac="class2"]').length ? true : false;
