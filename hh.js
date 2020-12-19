@@ -454,8 +454,8 @@ function seasonArenaMain() {
   // now autorun mode:
   const battlebutton = $(document).find('.btn_season_perform')[bestOpponent.guiindex - 1];
   const $battlebutton = $(battlebutton);
-  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.guiindex, bestOpponent); //asfgdhfhdsadgnhdsbfnfdfsvcgdsxcbf dgd k
-  $battlebutton[0].text('perforM').trigger('click');
+  console.log('battlebutton: ', battlebutton,  $(document).find('.btn_season_perform'), bestOpponent.guiindex, bestOpponent);
+  $battlebutton.text('perforM').trigger('click'); // uydsgoizdsngoxdngosdghodnsgoi adoigd gdfg 
 }
 
 function contestmain() {
