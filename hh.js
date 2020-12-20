@@ -658,7 +658,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
     setTimeout(() => { gettoweruserinfo(userid, userList, timeout, msecwaiting)}, timeout);
     return; };
   const pg = new cCharacter();
-  const oldpg = JSON.parse(JSON.stringify(userList[userid] || {});
+  const oldpg = JSON.parse(JSON.stringify(userList[userid] || {})); // forcecommit sbhgbksgnangoasngoiast
   userList[userid] = pg;
   if (!+userList.length) userList.length = 0; // dizionario ma con length arraylike tenuta manualmente.
   userList.length+=1;
