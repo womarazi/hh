@@ -395,7 +395,7 @@ function roundFloat(number, decimals = 2) {
   return Math.round(number * a) / a;
 }
 function getScoreFunction(isLeague = true) {
-  const key = 'myhh_scorefunction_" + (isLeague ? "league" : "season");
+  const key = "myhh_scorefunction_" + (isLeague ? "league" : "season");
   let expression = localStorage.getItem(key);
   if (!expression) {
     const defaultExpression = isLeague ? "weakness*1000 + points*wr*0 - boosted*1000" : " wr * (mojo + xp * 0)";
