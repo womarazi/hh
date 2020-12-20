@@ -203,6 +203,9 @@ class cCharacter {
   girl1 = new cGirl();
   girl2 = new cGirl();
   girl3 = new cGirl();
+  leaguePoints = 0;
+  isWeak = 0;
+  isBoosted = 0;
 
 deduceMissingData() {
   this.stage1.deduceMissingData();
@@ -391,7 +394,16 @@ function roundFloat(number, decimals = 2) {
   const a = Math.pow(10, decimals);
   return Math.round(number * a) / a;
 }
-function getScoreFunction() { return eval("(mojo, xp, wr) => { return wr * ( " + inputExpressionStr + ")}"); }
+function getScoreFunction(isLeague = true) {
+  const key = 'myhh_scorefunction_" + (isLeague ? "league" : "season");
+  let expression = localStorage.getItem(key);
+  if (!expression) {
+    const defaultExpression = isLeague ? "weakness*1000 + points*wr*0 - boosted*1000" : " wr * (mojo + xp * 0)";
+    localStorage.setItem(key, defaultExpression);
+    expression = defaultExpression; }
+  let parameters = isLeague ? "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
+  return eval("(" + parameters + ") => { return " + expression + "; }"); }
+
 function seasonArenaMain() {
   const $allpg = $('#season-arena .season_arena_block');
   if ($allpg.length !== 4) { console.error('arena season character length error', $allpg); return; }
@@ -405,7 +417,6 @@ function seasonArenaMain() {
   const you = new cCharacter();
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
-  const inputExpressionStr = "mojo + xp * 0";
   for (let i = 0; i < all.length; i++) {
     console.log('index:', i);
     const isYou = i === 0;
@@ -737,7 +748,8 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   
   const winratio = you ? you.winratio(pg) : 1;
   const scorefunction = getScoreFunction();
-  pg.prizescore = scorefunction(pg.mojoReward, pg.girlExpReward, winratio);
+  // parameters: "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
+  pg.prizescore = scorefunction(winratio, pg.leaguePoints, pg.isWeak, pg.isBoosted);
   pg.winratio = winration;
   
   const updateAll = !singleupdate; // || (isChanged && pg.fought !== 3);
