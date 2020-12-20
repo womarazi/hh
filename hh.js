@@ -748,6 +748,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   
   const winratio = you ? you.winratio(pg) : 1;
   const scorefunction = getScoreFunction();
+  console.log("scorefunction", scorefunction);
   // parameters: "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
   pg.prizescore = scorefunction(winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);//fghujidfghghjk
   pg.winratio = winration;
