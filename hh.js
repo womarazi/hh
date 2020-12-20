@@ -372,7 +372,6 @@ fromBattleBlock($battleBlock, isYou) {
   this.excitement = +$pg.find('[carac="excit"]')[0].parentElement.innerText.replaceAll(',', '');
   this.harmony = parseFloat($pg.find('[carac="chance"]')[0].parentElement.innerText.replaceAll(',', ''));
   this.deduceMissingData();
-  //  this.deduceMissingData(); usseless to force commit
 }
 
 } // class cCharacter end
@@ -392,7 +391,7 @@ function roundFloat(number, decimals = 2) {
   const a = Math.pow(10, decimals);
   return Math.round(number * a) / a;
 }
-
+function getScoreFunction() { return eval("(mojo, xp, wr) => { return wr * ( " + inputExpressionStr + ")}"); }
 function seasonArenaMain() {
   const $allpg = $('#season-arena .season_arena_block');
   if ($allpg.length !== 4) { console.error('arena season character length error', $allpg); return; }
@@ -407,7 +406,6 @@ function seasonArenaMain() {
   const opponents = [new cCharacter(), new cCharacter(), new cCharacter()];
   const all = [you, ...opponents];
   const inputExpressionStr = "mojo + xp * 0";
-  let scoreFunction = eval("(mojo, xp, wr) => { return wr * ( " + inputExpressionStr + ")}");
   for (let i = 0; i < all.length; i++) {
     console.log('index:', i);
     const isYou = i === 0;
@@ -451,7 +449,8 @@ function seasonArenaMain() {
         break; }
     pg.deduceMissingData();
     const winratio = you.winratio(pg);
-    pg.prizescore = scoreFunction(pg.mojoReward, pg.girlExpReward, winratio);
+    const scorefunction = getScoreFunction();
+    pg.prizescore = scorefunction(pg.mojoReward, pg.girlExpReward, winratio);
     pglvhtml.innerHTML ='Lv ' + pg.lv + ' - ' + roundFloat(winratio * 100, 2) + '%<br>'; // WR:
     if (i == 0) continue;
     const newblock = document.createElement('span');
@@ -646,7 +645,7 @@ function maketoweruserlist(userlist = null) {
   $('#buttonmakeuserlist')[0].style.backgroundColor = 'white';
   return userlist; }
 
-function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, singleupdate = false) {
+function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, singleupdate = false, you = null) {
   let $userinfo = $('#leagues_right');
   let tmp;
   
@@ -659,7 +658,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
     setTimeout(() => { gettoweruserinfo(userid, userList, timeout, msecwaiting)}, timeout);
     return; };
   const pg = new cCharacter();
-  const oldpg = userList[userid];
+  const oldpg = JSON.parse(JSON.stringify(userList[userid] || {});
   userList[userid] = pg;
   if (!+userList.length) userList.length = 0; // dizionario ma con length arraylike tenuta manualmente.
   userList.length+=1;
@@ -704,8 +703,8 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   
   const $girls = $userinfo.find('.girls_wrapper .team_girl');
   let g1 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
-  let g2 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
-  let g3 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
+  let g2 =  $girls[1] && JSON.parse(    ( $girls[1].getAttribute('girl-tooltip-data')  )    );
+  let g3 =  $girls[2] && JSON.parse(    ( $girls[2].getAttribute('girl-tooltip-data')  )    );
 
   const setGirlStat = (myGirlObj, girlNativeObj) => {
     let mg = myGirlObj;
@@ -730,8 +729,17 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   pg.girl1.lv = +$girllevels[0].innerText;
   pg.girl2.lv = +$girllevels[1].innerText;
   pg.girl3.lv = +$girllevels[2].innerText;
+  pg.deduceMissingData(); // wr2:
   
+  oldpg.winratio = pg.winratio = null;
+  oldpg.prizescore = pg.prizescore = null;
   const isChanged = JSON.stringify(oldpg) !== JSON.stringify(pg);
+  
+  const winratio = you ? you.winratio(pg) : 1;
+  const scorefunction = getScoreFunction();
+  pg.prizescore = scorefunction(pg.mojoReward, pg.girlExpReward, winratio);
+  pg.winratio = winration;
+  
   const updateAll = !singleupdate; // || (isChanged && pg.fought !== 3);
   if (!updateAll) return isChanged;
   maketoweruserlist(userList);
