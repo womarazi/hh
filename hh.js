@@ -401,7 +401,7 @@ function getScoreFunction(isLeague = true) {
     const defaultExpression = isLeague ? "weakness*1000 + points*wr*0 - boosted*1000" : " wr * (mojo + xp * 0)";
     localStorage.setItem(key, defaultExpression);
     expression = defaultExpression; }
-  let parameters = isLeague ? "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
+  let parameters = isLeague ? "wr=1, points=0, weakness=0, boosted=0" : "mojo=0, xp=0, wr=1"; // asfgdhfdsgadfhjkhgfdgfc
   return eval("(" + parameters + ") => { return " + expression + "; }"); }
 
 function seasonArenaMain() {
