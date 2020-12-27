@@ -885,18 +885,32 @@ function towerOfFameMain(autorefill = true){
     userlist = null;
     localStorage.setItem('_hhtowerlist', null);
     break; }
+
   if (!userlist) {
     $('#buttonmakeuserlist')[0].style.backgroundColor = 'black';
     return; }
+
   // actually do fights
-  for (let key in userlist) {
-    if (key === 'length') continue;
-    if (key === null || key === undefined || isNaN(+key)) continue;
-    const user = userlist[key];
-    if (+user.fought === 3) continue;
-    if (!(user.isch && doch || user.iskh && dokh || user.ishk && dohk)) continue;
-    if (mustStopToRefill()) return;
-    setUrl('https://www.hentaiheroes.com/battle.html?league_battle=1&id_member=' + key);
+  delete userlist.length;
+  let sortedUserList = Object.values(userlist);
+  const scorefunction = getScoreFunction(true);
+  console.log("scorefunction", scorefunction);
+  window.scorefunction = scorefunction;
+  for (let pg of sortedUserList) {
+    // parameters: "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
+    pg.prizescore = scorefunction(pg.winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);
+  }
+  sortedUserList = sortedUserList.sort((e1, e2) => { return e1.prizescore - e2.prizescore; });
+
+  for (let user of sortedUserList) {
+    if (+user.fought === 3) {
+      // console.log("fought 3 times:", user.fought, user);
+      continue; }
+    if (!(user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk)) {
+      console.log("wrong type:", user, user.type);
+      continue; }
+    if (mustStopToRefill()) { console.log("must stop to refill"); return; }
+    setUrl('https://www.hentaiheroes.com/battle.html?league_battle=1&id_member=' + user.id);
     // let html = $leagues.find('[sorting_id="' + key + '"]')[0];
     // if (!html) { alert('html not found codeline 171'); return; }
     // $(html).trigger('click');
