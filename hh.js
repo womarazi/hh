@@ -900,7 +900,7 @@ function towerOfFameMain(autorefill = true){
     // parameters: "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
     pg.prizescore = scorefunction(pg.winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);
   }
-  sortedUserList = sortedUserList.filter( (x) => { return user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk; }
+  sortedUserList = sortedUserList.filter( (x) => { return user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk; } );
   sortedUserList = sortedUserList.sort((e1, e2) => { return e1.prizescore - e2.prizescore; });
 
   console.log('toweroffamemain: sorted userlist:', sortedUserList);
