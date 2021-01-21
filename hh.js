@@ -720,6 +720,10 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   const setGirlStat = (myGirlObj, girlNativeObj) => {
     let mg = myGirlObj;
     let ng = girlNativeObj;
+    if(!ng) {
+    console.error('girl html is null:', girlNativeObj, $girls);
+      return;
+    }
     mg.rarity = ng.rarity;
     switch(+ng.class) {
       default: mg.type = null; break;
@@ -733,6 +737,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
     mg.kh = ng.caracs.carac3;
     mg.salary_per_hour = mg.salary_per_hour;
   };
+
   setGirlStat(pg.girl1, g1);
   setGirlStat(pg.girl2, g2);
   setGirlStat(pg.girl3, g3);
