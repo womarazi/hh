@@ -547,6 +547,7 @@ function popmain(collected = false, retrycount = 0) {
   const $collect = $('#pop .pop_central_part .purple_button_L:visible');
   const retry = () => setTimeout(()=>popmain(true), 1000, retrycount+1);
   if (retrycount > 5) { pageRefresh(); return; }
+  let indexCount = $('[pop_id]').map( (i, e) => e.getAttribute("pop_id")); // todo: prendi solo indici non in progress
   
   console.log('pop collect check');
   if ($collect.length) {
