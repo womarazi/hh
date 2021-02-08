@@ -542,13 +542,24 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
   setTimeout( () => closeRewardPopup(retrycount++, afterSuccessFunc), 1000);
 }
 
-function popmain(collected = false, retrycount = 0) {
-  // return; // currently disabled, update it. fghjkhjgygggygygygygyg
+function popmain() {
+  let $popinfo = $('#pop_info');
+  // let $completi = $popinfo.find('[pop_id]:has(.pop_thumb_progress_bar:visible)').map( (i, e) => e.getAttribute("pop_id"));
+  let times = $('[pop_id] .pop_thumb_progress_bar:visible .pop_thumb_remaining').map( (i, e) => timeparse(e.lastElementChild.innerText));
+  let $incompleti = $popinfo.find('[pop_id]:not(:has(.pop_thumb_progress_bar:visible))').map( (i, e) => e.getAttribute("pop_id"));
+  if ($incompleti.length) {
+    setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
+    return;
+  }
+  console.log('times:', times, ' todo: setta timeout per andare sulla prima pagina popSingle navigando by url');
+}
+
+function popSingle(collected = false, retrycount = 0){
+  console.log('popSingle() collected:', collected, ' count:', retrycount);
   const $collect = $('#pop .pop_central_part .purple_button_L:visible');
-  const retry = () => setTimeout(()=>popmain(true), 1000, retrycount+1);
+  const retry = () => setTimeout(()=>popSingle(true), 1000, retrycount+1);
   if (retrycount > 5) { pageRefresh(); return; }
-  let indexCount = $('[pop_id]').map( (i, e) => e.getAttribute("pop_id")); // todo: prendi solo indici non in progress
-  
+  let indexCount = $('[pop_id]').map( (i, e) => e.getAttribute("pop_id"));
   console.log('pop collect check');
   if ($collect.length) {
     if (!collected) $collect.trigger('click');
@@ -573,9 +584,7 @@ function popmain(collected = false, retrycount = 0) {
   if (!$kobanend.length || !$trackbar.length || !$timeleft.length) { retry(); return; }
   const percent = +$trackbar[0].style.width.replaceAll('\%', '') /100; // tra 0 e 1
   retrycount = 0;
-  setTimeout(()=>popmain(true), (timeleft_num * 1 + 1) *1000, retrycount);
-  
-  
+  setTimeout(()=>popSingle(true), (timeleft_num * 1 + 1) *1000, retrycount);
 }
 
 function hhmain() {
@@ -600,10 +609,14 @@ function hhmain() {
       break;
     case "harem": harem0(); break;
     case "activities":
-      // if (window.location.pathname.indexOf('tab=contests') > 0) return;
       missionmain();
       contestmain();
-      popmain();
+      if (window.location.pathname.indexOf('&index=') > 0) {
+         popSingle();
+      } else {
+         popmain();
+      }
+      
       break;
 
     case "battle":
