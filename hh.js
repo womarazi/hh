@@ -547,8 +547,10 @@ function popmain() {
   // let $completi = $popinfo.find('[pop_id]:has(.pop_thumb_progress_bar:visible)').map( (i, e) => e.getAttribute("pop_id"));
   let times = $('[pop_id] .pop_thumb_progress_bar:visible .pop_thumb_remaining').map( (i, e) => timeparse(e.lastElementChild.innerText));
   let $incompleti = $popinfo.find('[pop_id]:not(:has(.pop_thumb_progress_bar:visible))').map( (i, e) => e.getAttribute("pop_id"));
+  console.log('pop main times:', times, '$incom:', $incompleti);
   if ($incompleti.length) {
-    setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
+    // setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
+    console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
     return;
   }
   console.log('times:', times, ' todo: setta timeout per andare sulla prima pagina popSingle navigando by url');
@@ -611,7 +613,9 @@ function hhmain() {
     case "activities":
       missionmain();
       contestmain();
-      if (window.location.pathname.indexOf('&index=') > 0) {
+      console.clear();
+      console.log('pop index:', params["index"]);
+      if (params["index"] !== undefined) { // window.location.pathname.indexOf('&index=') > 0
          popSingle();
       } else {
          popmain();
