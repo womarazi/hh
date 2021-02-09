@@ -687,14 +687,18 @@ function hhmain() {
 }
 
 function pachinkoMain() {
+  $(".girls_reward.girl_shards").on('mouseenter', () => setTimeout(pachinkoshards, 100));
+}
+
+function pachinkoshards(){
   let shardsstr = localStorage.getItem('womarazi_shards');
   let shards = shardsstr && JSON.parse(shardsstr);
-  var $pacgirlsimg = $('.rewards_tooltip .girl_ico [src]');
   let girlShardMap = {};
   for (let val of shards) { girlShardMap[val.gid] = val.shards; }
   const findStr = "pictures/girls/";
   const style = "margin:auto;position: absolute;top: 25px;width: 100%;color: white;background: #77777777;";
   let totalPendingShards = 0;
+  var $pacgirlsimg = $('.rewards_tooltip .girl_ico [src]');
   for (let i = 0; i < $pacgirlsimg.length; i++) {
         const isrc = $pacgirlsimg[i].src;
         let pos = isrc.indexOf(findStr);
