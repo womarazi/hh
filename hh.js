@@ -593,6 +593,8 @@ function hhmain() {
   console.log("hhMain");
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
+  
+  var params = getJsonFromUrl();
   switch (pathArray[0]) {
     case "tower-of-fame":
       towerOfFameMain();
@@ -624,7 +626,6 @@ function hhmain() {
       break;
 
     case "battle":
-      var params = getJsonFromUrl();
       if (params["id_arena"] !== undefined) {
         return trollFight(true, false, false);
       }
