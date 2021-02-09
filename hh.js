@@ -620,7 +620,6 @@ function hhmain() {
     case "hero":
     case "world":
     case "champions-map":
-    case "pachinko": break;
     case "season-arena":
       seasonArenaMain();
       break;
@@ -687,10 +686,13 @@ function hhmain() {
 }
 
 function pachinkoMain() {
-  $(".girls_reward.girl_shards").on('mouseenter', () => setTimeout(pachinkoshards, 100));
+  console.log('pachinkomain:', 
+     $(".girls_reward.girl_shards").on('mouseenter', () => setTimeout(pachinkoshards, 100))
+  );
 }
 
 function pachinkoshards(){
+  console.log('pachinkoshards:'); 
   let shardsstr = localStorage.getItem('womarazi_shards');
   let shards = shardsstr && JSON.parse(shardsstr);
   let girlShardMap = {};
