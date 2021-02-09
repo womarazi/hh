@@ -135,7 +135,7 @@ function championmain(){
   setTimeout(refreshPage, 3*1000);
 }
 
-class cGirl {
+class ccGirl {
   type = null; // | 'hk' | 'kh' | 'ch'
   lv = 0;
   attack = 0;
@@ -150,7 +150,7 @@ class cGirl {
   type = null; // null | 'kh' | 'ch' | 'kh'
   position = 'null'; // indian | suspendedcongress | splittingbamboo | ...
   salary_per_hour = 0;
-} // class cGirl end
+} // class ccGirl end
 
 class cstage {
   atk = 0;
@@ -200,9 +200,9 @@ class cCharacter {
   mojoReward = 0;
   girlReward = 0;
   guiindex = 0;
-  girl1 = new cGirl();
-  girl2 = new cGirl();
-  girl3 = new cGirl();
+  girl1 = new ccGirl();
+  girl2 = new ccGirl();
+  girl3 = new ccGirl();
   leaguePoints = 0;
   isWeak = 0;
   isBoosted = 0;
