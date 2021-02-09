@@ -704,11 +704,11 @@ function pachinkoMain() {
 function pachinkoshards(){
   console.log('pachinkoshards:'); 
   let shardsstr = localStorage.getItem('womarazi_shards');
-  let shards = shardsstr && JSON.parse(shardsstr);
+  let shardarr = shardsstr && JSON.parse(shardsstr);
   let girlShardMap = {};
-  for (let val of shards) { girlShardMap[val.gid] = val.shards; }
+  for (let val of shardarr) { girlShardMap[val.gid] = val.shards; }
   const findStr = "pictures/girls/";
-  const style = "margin:auto;position: absolute;top: 25px;width: 100%;color: white;background: #77777777;";
+  const style = "margin:auto; top:25px; width:100%; color:white; background:#77777777;";
   let totalPendingShards = 0;
   var $pacgirlsimg = $('.rewards_tooltip .girl_ico [src]');
   for (let i = 0; i < $pacgirlsimg.length; i++) {
@@ -719,9 +719,10 @@ function pachinkoshards(){
         let gid = Number.parseInt(istr);
         pe(!gid, "pachinko main to fix2, girl image path changed");
         const shards = girlShardMap[gid] && girlShardMap[gid].shards;
+        console.log('shards:', shards, 'shardmap:', girlShardMap, 'sarr:', shardarr); 
         if (shards) {
            totalPendingShards += shards; // vgbhjzsxdcfgvrdfvgbhnjdfgbhnjk684684kjh k
-           $($pacgirlsimg[i]).append('<div style="' + style + '">' + shards + '</div>');
+           $($pacgirlsimg[i]).append('<div style="position:absolute; ' + style + '">' + shards + '</div>');
         }
   }
 
