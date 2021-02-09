@@ -545,8 +545,8 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
 function popmain() {
   let $popinfo = $('#pop_info');
   // let $completi = $popinfo.find('[pop_id]:has(.pop_thumb_progress_bar:visible)').map( (i, e) => e.getAttribute("pop_id"));
-  let times = $('[pop_id].pop_thumb_expanded')
-      .map( (i, e) => timeparse(e.lastElementChild.innerText));
+  let times = $('[pop_id].pop_thumb_expanded .pop_thumb_remaining span')
+      .map( (i, e) => timeparse(e.innerText));
   let $incompleti = $popinfo.find('[pop_id].pop_thumb_active')
       .map( (i, e) => e.getAttribute("pop_id"));
   console.log('pop main times:', times, '$incom:', $incompleti);
