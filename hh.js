@@ -624,7 +624,10 @@ function hhmain() {
     case "season-arena":
       seasonArenaMain();
       break;
-    case "harem": harem0(); break;
+    case "harem":
+      let shards = Object.values(girls).filter( (e, i) => !!e.gData.shards ).map( (e, i)=> { return {gid: e.gId, shards: e.gData.shards}; } )
+      localStorage.setItem('womarazi_shards', JSON.stringify(shards));
+      harem0(); break;
     case "activities":
       
       switch(params["tab"]) {
@@ -673,12 +676,40 @@ function hhmain() {
       championmain();
       break;
       
+    case "pachinko":
+      pachinkoMain();
     default:
       switch(pathArray[1]){
         default: break;
       }
 
   }
+}
+
+function pachinkoMain() {
+  let shardsstr = localStorage.getItem('womarazi_shards');
+  let shards = shardsstr && JSON.parse(shardsstr);
+  var $pacgirlsimg = $('.rewards_tooltip .girl_ico [src]');
+  let girlShardMap = {};
+  for (let val of shards) { girlShardMap[val.gid] = val.shards; }
+  const findStr = "pictures/girls/";
+  const style = "margin:auto;position: absolute;top: 25px;width: 100%;color: white;background: #77777777;";
+  let totalPendingShards = 0;
+  for (let i = 0; i < $pacgirlsimg.length; i++) {
+        const isrc = $pacgirlsimg[i].src;
+        let pos = isrc.indexOf(findStr);
+        pe(pos == -1, "pachinko main to fix1, girl image path changed");
+        var istr = isrc.substring(pos+findStr.length);
+        let gid = Number.parseInt(istr);
+        pe(!gid, "pachinko main to fix2, girl image path changed");
+        const shards = girlShardMap[gid] && girlShardMap[gid].shards;
+        if (shards) {
+           let totalPendingShards += shards;
+           $($pacgirlsimg[i]).append('<div style="' + style + '">' + shards + '</div>');
+        }
+  }
+
+  $('.rewards_tooltip').append('<div style="' + style + '">' + totalPendingShards + '</div>');
 }
 
 function maketoweruserlist(userlist = null) {
