@@ -608,6 +608,7 @@ function hhmain() {
   // ri-esegui main se cambia url senza vero refresh
   
   var params = getJsonFromUrl();
+  console.log("hhMain url:", pathArray, params);
   switch (pathArray[0]) {
     case "tower-of-fame":
       towerOfFameMain();
