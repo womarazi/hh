@@ -545,9 +545,9 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
 function popmain() {
   let $popinfo = $('#pop_info');
   // let $completi = $popinfo.find('[pop_id]:has(.pop_thumb_progress_bar:visible)').map( (i, e) => e.getAttribute("pop_id"));
-  let times = $('[pop_id].pop_thumb_active')
+  let times = $('[pop_id].pop_thumb_expanded')
       .map( (i, e) => timeparse(e.lastElementChild.innerText));
-  let $incompleti = $popinfo.find('[pop_id].pop_thumb_expanded')
+  let $incompleti = $popinfo.find('[pop_id].pop_thumb_active')
       .map( (i, e) => e.getAttribute("pop_id"));
   console.log('pop main times:', times, '$incom:', $incompleti);
   if ($incompleti.length) {
@@ -604,6 +604,8 @@ function hhmain() {
   console.log("hhMain");
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
+  // ri-esegui main se cambia url senza vero refresh
+  $('.tabs > h4').off('click').on('click' => setTimeout( hhmain, 100);
   
   var params = getJsonFromUrl();
   switch (pathArray[0]) {
@@ -624,15 +626,27 @@ function hhmain() {
       break;
     case "harem": harem0(); break;
     case "activities":
-      missionmain();
-      contestmain();
-      console.clear();
-      console.log('pop index:', params["index"]);
-      if (params["index"] !== undefined) { // window.location.pathname.indexOf('&index=') > 0
-         popSingle();
-      } else {
-         popmain();
+      
+      switch(params["tab"]) {
+         default:
+            missionmain();
+            contestmain();
+            console.clear();
+            console.log('pop index:', params["index"]);
+            if (params["index"] !== undefined) { // window.location.pathname.indexOf('&index=') > 0
+               popSingle();
+            } else {
+               popmain();
+            }
+            break;
+         case "pop": break;
+         case "missions": break;
+         case "contests": break;
       }
+      
+     
+    
+
       
       break;
 
