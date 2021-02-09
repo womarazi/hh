@@ -687,18 +687,18 @@ function hhmain() {
 
 function pachinkoMain() {
   let rewards;
-  console.log('pachinkomain:', 
-     $(".girls_reward.girl_shards")
-              .on('mouseenter',
-                  () => setTimeout(
-                        () => { rewards = $('.rewards_tooltip')[0]; pachinkoshards(); }
-                 , 100)//timeout
-              )//on
-  );// clog
-  
-     $(".girls_reward.girl_shards").on('mouseleave', () => setTimeout(()=>{
-         document.body.append(rewards);
-     }, 100));
+  pachinkoMainOnClick();
+  $(window.document).off('wjs.click').on('wjs.click', () => pachinkoMainOnClick);
+}
+
+function pachinkoMainOnClick() {
+  $(".girls_reward.girl_shards")
+           .on('mouseenter',
+               () => setTimeout(
+                     () => { rewards = $('.rewards_tooltip')[0]; pachinkoshards(); }
+             , 100)//timeout
+           );//on
+  // $(".girls_reward.girl_shards").on('mouseleave', () => setTimeout(()=>{ document.body.append(rewards); }, 100));
 }
 
 function pachinkoshards(){
