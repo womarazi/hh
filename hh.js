@@ -590,12 +590,13 @@ function popSingle(collected = false, retrycount = 0){
   // retrycount = 0;
   // setTimeout(()=>popSingle(true), (timeleft_num * 1 + 1) *1000, retrycount);
   
+  let $popinfo = $('#pop_info');
   let $incompleti = $popinfo.find('[pop_id].pop_thumb_expanded')
       .map( (i, e) => e.getAttribute("pop_id"));
-  console.log('pop single times:', times, '$incom:', $incompleti);
+  console.log('pop single next $incom:', $incompleti);
   if ($incompleti.length) {
-    setTimeout( () => setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]), 10000)
-    // console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=', $incompleti);
+    // setTimeout( () => setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]), 10000)
+    console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=', $incompleti);
     return;
   }
 }
