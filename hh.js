@@ -545,8 +545,10 @@ function closeRewardPopup(retrycount = 0, afterSuccessFunc = null) {
 function popmain() {
   let $popinfo = $('#pop_info');
   // let $completi = $popinfo.find('[pop_id]:has(.pop_thumb_progress_bar:visible)').map( (i, e) => e.getAttribute("pop_id"));
-  let times = $('[pop_id] .pop_thumb_progress_bar:visible .pop_thumb_remaining').map( (i, e) => timeparse(e.lastElementChild.innerText));
-  let $incompleti = $popinfo.find('[pop_id]:not(:has(.pop_thumb_progress_bar:visible))').map( (i, e) => e.getAttribute("pop_id"));
+  let times = $('[pop_id].pop_thumb_active')
+      .map( (i, e) => timeparse(e.lastElementChild.innerText));
+  let $incompleti = $popinfo.find('[pop_id].pop_thumb_expanded')
+      .map( (i, e) => e.getAttribute("pop_id"));
   console.log('pop main times:', times, '$incom:', $incompleti);
   if ($incompleti.length) {
     // setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
@@ -588,11 +590,12 @@ function popSingle(collected = false, retrycount = 0){
   // retrycount = 0;
   // setTimeout(()=>popSingle(true), (timeleft_num * 1 + 1) *1000, retrycount);
   
-  let $incompleti = $popinfo.find('[pop_id]:not(:has(.pop_thumb_progress_bar:visible))').map( (i, e) => e.getAttribute("pop_id"));
-  console.log('pop main times:', times, '$incom:', $incompleti);
+  let $incompleti = $popinfo.find('[pop_id].pop_thumb_expanded')
+      .map( (i, e) => e.getAttribute("pop_id"));
+  console.log('pop single times:', times, '$incom:', $incompleti);
   if ($incompleti.length) {
-    // setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
-    console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti);
+    setTimeout( () => setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]), 10000)
+    // console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=', $incompleti);
     return;
   }
 }
