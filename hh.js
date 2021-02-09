@@ -722,8 +722,8 @@ function pachinkoshards(){
         console.log('gid:', gid, 'istr:', istr); 
         console.log('shards:', shards, 'shardmap:', girlShardMap, 'sarr:', shardarr); 
         if (shards) {
-           totalPendingShards += shards; // vgbhjzsxdcfgvrdfvgbhnjdfgbhnjk684684kjh k
-           $($pacgirlsimg[i]).append('<div style="position:absolute; ' + style + '">' + shards + '</div>');
+           totalPendingShards += shards;
+           $($pacgirlsimg[i].parentElement).append('<div style="position:absolute; ' + style + '">' + shards + '</div>'); // asfdgasgsdfsfasfasf asf wef as fasaaa
         }
   }
 
