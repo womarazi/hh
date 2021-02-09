@@ -584,9 +584,17 @@ function popSingle(collected = false, retrycount = 0){
 
   console.log('$collect', $collect, '$autoassign', $autoassign, '$depart', $depart, '$kobanend', $kobanend, '$trackbar', $trackbar, '$timeleft', $timeleft);
   if (!$kobanend.length || !$trackbar.length || !$timeleft.length) { retry(); return; }
-  const percent = +$trackbar[0].style.width.replaceAll('\%', '') /100; // tra 0 e 1
-  retrycount = 0;
-  setTimeout(()=>popSingle(true), (timeleft_num * 1 + 1) *1000, retrycount);
+  // const percent = +$trackbar[0].style.width.replaceAll('\%', '') /100; // tra 0 e 1
+  // retrycount = 0;
+  // setTimeout(()=>popSingle(true), (timeleft_num * 1 + 1) *1000, retrycount);
+  
+  let $incompleti = $popinfo.find('[pop_id]:not(:has(.pop_thumb_progress_bar:visible))').map( (i, e) => e.getAttribute("pop_id"));
+  console.log('pop main times:', times, '$incom:', $incompleti);
+  if ($incompleti.length) {
+    // setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
+    console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti);
+    return;
+  }
 }
 
 function hhmain() {
