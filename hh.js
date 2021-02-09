@@ -604,7 +604,7 @@ function hhmain() {
   console.log("hhMain");
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
-  $('.tabs > h4').off('click').on('click',  (e) => setTimeout(hhmain, 100); //asfdfzcwa 56a04f68as4f as40f9 8aws4f98aw4wd94qw84df9q wr qwiubikbiki ivivbivbiviuvb
+  $('.tabs > h4').off('click').on('click', () => setTimeout(hhmain, 100));
   // ri-esegui main se cambia url senza vero refresh
   
   var params = getJsonFromUrl();
