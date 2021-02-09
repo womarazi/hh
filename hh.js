@@ -686,9 +686,14 @@ function hhmain() {
 }
 
 function pachinkoMain() {
+  let rewards;
   console.log('pachinkomain:', 
-     $(".girls_reward.girl_shards").on('mouseenter', () => setTimeout(pachinkoshards, 100))
+     $(".girls_reward.girl_shards").on('mouseenter', () => setTimeout(()=> { rewards = $('.rewards_tooltip')[0]; pachinkoshards(); }, 100));
   );
+  
+     $(".girls_reward.girl_shards").on('mouseleave', () => setTimeout(()=>{
+         document.body.append(rewards);
+     }, 100));
 }
 
 function pachinkoshards(){
