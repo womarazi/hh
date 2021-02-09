@@ -605,7 +605,7 @@ function hhmain() {
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
   // ri-esegui main se cambia url senza vero refresh
-  $('.tabs > h4').off('click').on('click' => setTimeout( hhmain, 100);
+  $('.tabs > h4').off('click').on('click', () => setTimeout(hhmain, 100);
   
   var params = getJsonFromUrl();
   switch (pathArray[0]) {
