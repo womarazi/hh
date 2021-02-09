@@ -601,7 +601,6 @@ function popSingle(collected = false, retrycount = 0){
 }
 
 function hhmain() {
-  console.log("hhMain");
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
   $('.tabs > h4').off('click').on('click', () => setTimeout(hhmain, 100));
@@ -640,9 +639,9 @@ function hhmain() {
                popmain();
             }
             break;
-         case "pop": break;
-         case "missions": break;
-         case "contests": break;
+         // case "pop": break;
+         // case "missions": break;
+         // case "contests": break;
       }
       
      
