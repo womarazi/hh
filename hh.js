@@ -718,7 +718,7 @@ function pachinkoshards(){
         var istr = isrc.substring(pos+findStr.length);
         let gid = Number.parseInt(istr);
         pe(!gid, "pachinko main to fix2, girl image path changed");
-        const shards = girlShardMap[gid] && girlShardMap[gid].shards;
+        const shards = girlShardMap[gid]; // iygiuguihunou
         console.log('gid:', gid, 'istr:', istr); 
         console.log('shards:', shards, 'shardmap:', girlShardMap, 'sarr:', shardarr); 
         if (shards) {
