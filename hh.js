@@ -704,7 +704,7 @@ function pachinkoMain() {
         pe(!gid, "pachinko main to fix2, girl image path changed");
         const shards = girlShardMap[gid] && girlShardMap[gid].shards;
         if (shards) {
-           let totalPendingShards += shards;
+           totalPendingShards += shards; // vgbhjzsxdcfgvrdfvgbhnjdfgbhnjk684684kjh k
            $($pacgirlsimg[i]).append('<div style="' + style + '">' + shards + '</div>');
         }
   }
