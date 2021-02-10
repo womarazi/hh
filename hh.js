@@ -551,8 +551,8 @@ function popmain() {
       .map( (i, e) => e.getAttribute("pop_id"));
   console.log('pop main times:', times, '$incom:', $incompleti);
   if ($incompleti.length) {
-    // setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
     console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
+    setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]);
     return;
   }
   console.log('times:', times, ' todo: setta timeout per andare sulla prima pagina popSingle navigando by url');
@@ -594,11 +594,15 @@ function popSingle(collected = false, retrycount = 0){
   let $incompleti = $popinfo.find('[pop_id].pop_thumb_active')
       .map( (i, e) => e.getAttribute("pop_id"));
   console.log('pop single next $incom:', $incompleti);
-  if ($incompleti.length) {
-    // setTimeout( () => setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[0]), 10000)
-    console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=', $incompleti);
+  if ($incompleti.length > 1) {
+    console.log('popmain goto: https://www.hentaiheroes.com/activities.html?tab=pop&index=', $incompleti[1], $incompleti);
+    setUrl('https://www.hentaiheroes.com/activities.html?tab=pop&index=' + $incompleti[1]);
     return;
   }
+  else {
+    setUrl("https://www.hentaiheroes.com/activities.html?tab=pop");
+  }
+
 }
 
 function hhmain() {
