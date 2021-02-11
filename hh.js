@@ -677,6 +677,7 @@ function hhmain() {
       break;
       
     case "champions":
+    case "club-champion":
       championmain();
       break;
       
