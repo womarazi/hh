@@ -608,7 +608,7 @@ function popSingle(collected = false, retrycount = 0){
 function hhmain() {
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
-  $('.tabs > h4').off('click').on('click', () => setTimeout(hhmain, 100));
+  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => setTimeout(hhmain, 100));
   // ri-esegui main se cambia url senza vero refresh
   
   var params = getJsonFromUrl();
