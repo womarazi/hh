@@ -117,12 +117,12 @@ function autorunClick(evt) {
   if (localStorage[lskey_g] === 'true' && localStorage[lskey_p] === 'true') $startButton.trigger("click");
 }
 
-function makeRunButton() {
+function makeRunButton(size = 30) {
   var btn = document.createElement("button");
-  btn.style.borderRadius = "15px";
-  btn.style.border = "3px solid black";
-  btn.style.width = "30px";
-  btn.style.height = "30px";
+  btn.style.borderRadius = (size/2) + "px";
+  btn.style.border = (size/10) + "px solid black";
+  btn.style.width = size + "px";
+  btn.style.height = size + "px";
   buttonContainer.append(btn);
   return btn;
 }
@@ -130,11 +130,12 @@ function makeRunButton() {
 function pachinkoSetup() {
   let separator = document.createElement('br');
   buttonContainer.append(separator);
-  const btnGreat1 = makeRunButton();
-  const btnGreat10 = makeRunButton();
-  const btnMythic1 = makeRunButton();
-  const btnEpic1 = makeRunButton();
-  const btnEpic10 = makeRunButton();
+  const size = 40;
+  const btnGreat1 = makeRunButton(size);
+  const btnGreat10 = makeRunButton(size);
+  const btnMythic1 = makeRunButton(size);
+  const btnEpic1 = makeRunButton(size);
+  const btnEpic10 = makeRunButton(size);
   btnGreat1.style.backgroundColor = "lime";
   btnGreat10.style.backgroundColor = "lime";
   btnMythic1.style.backgroundColor = "wheat";
@@ -147,6 +148,7 @@ function pachinkoSetup() {
   btnEpic10.innerHTML = "E10";
   let separator2 = document.createElement('br');
   const playCounter = document.createElement('input');
+  playCounter.style.width = '85%';
   buttonContainer.append(separator2);
   buttonContainer.append(playCounter);
   playCounter.type="number";
