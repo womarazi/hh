@@ -142,7 +142,7 @@ function pachinkoSetup() {
   btnEpic1.style.backgroundColor = "orange";
   btnEpic10.style.backgroundColor = "orange";
   btnGreat1.innerHTML = "G1";
-  btnGreat1.innerHTML = "G10";
+  btnGreat10.innerHTML = "G10"; // uygyugyugigiig  ino
   btnMythic1.innerHTML = "My1";
   btnEpic1.innerHTML = "E1";
   btnEpic10.innerHTML = "E10";
