@@ -181,8 +181,8 @@ function pachinkoSetup() {
 }
 
 function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
-    const retry = (place) => {
-        setTimeout(() => { console.log("retry |" + place +"|"); mythic1loop(playCounter, buttonselector, onEnd); }, 100); // asofuhzoufshaosfhasiofh sai aos
+    const retry = (place, timeout = 100) => {
+        setTimeout(() => { console.log("retry |" + place +"|"); pachinkoPlayloop(playCounter, buttonselector, onEnd); }, timeout); // asofuhzoufshaosfhasiofh sai aos
     }
     var $pachinkoMithyc1 = $(buttonselector);
     var blackScreen = $('#black_screen:visible');
@@ -191,7 +191,8 @@ function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
     if (playCounter == 0 || $confirmNoGirlBackground.length) { console.log('no girls or count off'); onEnd(); return; }
     if (!blackScreen.length && $rewardButton.length) { $rewardButton.trigger('click'); retry("reward accept"); return; }
     $pachinkoMithyc1.trigger('click');
-    mythic1loop(playCounter - 1, buttonselector, onEnd);
+    playConter--;
+    retry("1 game done", 300);
 }
 
 var $startButton;
