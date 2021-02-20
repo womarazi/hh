@@ -56,11 +56,19 @@ function main0() {
   start.style.height = autorun.style.height = autorunp.style.height = "30px";
   start.innerHTML = "->";
   autorun.innerHTML = 'G';
-  switch (window.location.pathname) {
-    case "battle.html":
-    case "/tower-of-fame.html":
+  
+  const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
+  // window.is_cheat_click = () => false;
+  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => setTimeout(hhmain, 100));
+  // ri-esegui main se cambia url senza vero refresh
+  
+  var params = getJsonFromUrl();
+  console.log("hhMain url:", pathArray, params);
+  switch (pathArray[0]) {
+    case "tower-of-fame":
       towerOfFameSetup();
       break;
+    case "pachinko": pachinkoSetup(); break;
   }
   $startButton = $(start).on("click", hhmain);
   $autorunButton = $(autorun).on("click", autorunClick);
