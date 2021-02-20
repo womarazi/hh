@@ -131,6 +131,7 @@ function makeRunButton(size = 30) {
   btn.style.border = (size/10) + "px solid black";
   btn.style.width = size + "px";
   btn.style.height = size + "px";
+  btn.padding = '0px';
   buttonContainer.append(btn);
   return btn;
 }
@@ -190,7 +191,7 @@ function pachinkoSetup() {
 
 function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
     const retry = (place, timeout = 100) => {
-        setTimeout(() => { console.log("retry |" + place +"|"); pachinkoPlayloop(playCounter, buttonselector, onEnd); }, timeout); // asofuhzoufshaosfhasiofh sai aos
+        setTimeout(() => { console.log("retry |" + place +"|"); pachinkoPlayloop(playCounter, buttonselector, onEnd); }, timeout);
     }
     var $pachinkoMithyc1 = $(buttonselector);
     var blackScreen = $('#black_screen:visible');
@@ -199,7 +200,7 @@ function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
     if (playCounter == 0 || $confirmNoGirlBackground.length) { console.log('no girls or count off'); onEnd(); return; }
     if (!blackScreen.length && $rewardButton.length) { $rewardButton.trigger('click'); retry("reward accept"); return; }
     $pachinkoMithyc1.trigger('click');
-    playConter--;
+    playCounter--; // astgsdtaar sets rsf sdfgsdf sdgsdgsd
     retry("1 game done", 300);
 }
 
