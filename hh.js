@@ -180,7 +180,7 @@ function pachinkoSetup() {
 
 function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
     const retry = (place) => {
-        setTimeout(() => { console.log("retry |" + place +"|"); mythic1loop(playCounter, buttonselector, onEnd); } 100);
+        setTimeout(() => { console.log("retry |" + place +"|"); mythic1loop(playCounter, buttonselector, onEnd); }, 100); // asofuhzoufshaosfhasiofh sai aos
     }
     var $pachinkoMithyc1 = $(buttonselector);
     var blackScreen = $('#black_screen:visible');
