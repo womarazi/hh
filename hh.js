@@ -5,6 +5,7 @@ function refreshPage(){
   setUrl(document.location.href);
 }
 
+var buttonContainer;
 function addKobanAutoButton() {
   let kobanbtn = document.createElement("button");
   buttonContainer.append(kobanbtn);
@@ -19,7 +20,6 @@ function addKobanAutoButton() {
     kobanbtn.style.backgroundColor == !b ? "green" : "red";
   });
 }
-var buttonContainer;
 
 var start = document.createElement("button");
 var autorun = document.createElement("button");
@@ -115,6 +115,81 @@ function autorunClick(evt) {
   }
   
   if (localStorage[lskey_g] === 'true' && localStorage[lskey_p] === 'true') $startButton.trigger("click");
+}
+
+function makeRunButton() {
+  var btn = document.createElement("button");
+  btn.style.borderRadius = "15px";
+  btn.style.border = "3px solid black";
+  btn.style.width = "30px";
+  btn.style.height = "30px";
+  buttonContainer.append(btn);
+  return btn;
+}
+
+function pachinkoSetup() {
+  let separator = document.createElement('br');
+  buttonContainer.append(separator);
+  const btnGreat1 = makeRunButton();
+  const btnGreat10 = makeRunButton();
+  const btnMythic1 = makeRunButton();
+  const btnEpic1 = makeRunButton();
+  const btnEpic10 = makeRunButton();
+  btnGreat1.style.backgroundColor = "lime";
+  btnGreat10.style.backgroundColor = "lime";
+  btnMythic1.style.backgroundColor = "wheat";
+  btnEpic1.style.backgroundColor = "orange";
+  btnEpic10.style.backgroundColor = "orange";
+  btnGreat1.innerHTML = "G1";
+  btnGreat1.innerHTML = "G10";
+  btnMythic1.innerHTML = "My1";
+  btnEpic1.innerHTML = "E1";
+  btnEpic10.innerHTML = "E10";
+  let separator2 = document.createElement('br');
+  const playCounter = document.createElement('input');
+  buttonContainer.append(separator2);
+  buttonContainer.append(playCounter);
+  playCounter.type="number";
+  playCounter.value = 10;
+  
+  function pachinkoPlayStartCommon(btn){
+    btn.style.opacity = '1';
+    btn.width = btn.height = '60px';
+  }
+  function pachinkoPlayEndCommon(btn){
+    btn.style.opacity = '0.5';
+    btn.width = btn.height = '30px';
+  }
+  function getPlayCount(){ return playCounter.value; }
+  function play(selector, button){
+    const count = getPlayCount();
+    if (count < 0) return;
+    pachinkoPlayStartCommon(button);
+    pachinkoPlayloop(count, selector, () => pachinkoPlayEndCommon(button));
+  }
+
+  $(btnMythic1).on('click', () => { play('.blue_button_L[play="pachinko5|150|hard_currency"][orbs="1"]', btnMythic1); });
+  // $(btnMythic3).on('click', () => { play('.blue_button_L[play="pachinko5|840|hard_currency"][orbs="1"]', btnMythic3); });
+  // $(btnMythic6).on('click', () => { play('.blue_button_L[play="pachinko5|1980|hard_currency"][orbs="1"]', btnMythic6); });
+  $(btnGreat1).on('click', () => { play('.blue_button_L[play*="pachinko1"][nb_games="1"]', btnGreat1); });
+  $(btnGreat10).on('click', () => { play('.blue_button_L[play*="pachinko1"][nb_games="10"]', btnGreat10); });
+  $(btnEpic1).on('click', () => { play('.orange_button_L[play*="pachinko2"][nb_games="1"][orbs="1"]', btnEpic1); });
+  $(btnEpic10).on('click', () => { play('.orange_button_L[play*="pachinko2"][nb_games="10"]', btnEpic10); });
+  
+}
+
+function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
+    const retry = (place) => {
+        setTimeout(() => { console.log("retry |" + place +"|"); mythic1loop(playCounter, buttonselector, onEnd); } 100);
+    }
+    var $pachinkoMithyc1 = $(buttonselector);
+    var blackScreen = $('#black_screen:visible');
+    var $rewardButton = $('#popups #rewards_popup .blue_button_L [confirm_blue_button]:visible');
+    var $confirmNoGirlBackground = $('#confirm_pachinko_background:visible');
+    if (playCounter == 0 || $confirmNoGirlBackground.length) { console.log('no girls or count off'); onEnd(); return; }
+    if (!blackScreen.length && $rewardButton.length) { $rewardButton.trigger('click'); retry("reward accept"); return; }
+    $pachinkoMithyc1.trigger('click');
+    mythic1loop(playCounter - 1, buttonselector, onEnd);
 }
 
 var $startButton;
