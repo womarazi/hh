@@ -222,6 +222,40 @@ function championmain(){
   setTimeout(refreshPage, 3*1000);
 }
 
+
+
+
+function getChampGirls() {
+    const $root = $('.champions-middle__girl-selection');
+    const $girls = $root.find('.girl-selection__girl-box');
+    console.log($root, $girls);
+    const arr = $girls.toArray().map( (e) => parseChampionGirl($(e)));
+    return arr;
+};
+
+function parseChampionGirl($html){
+    const ret = {};
+    let tmp = $html.find('[id_girl]')[0];
+    ret.id = tmp.getAttribute('id_girl');
+    console.log('tmp:', tmp);
+    ret.rarity = tmp.firstElementChild.getAttribute('rarity');
+    tmp = $html.find('span[carac]')[0].getAttribute('carac');
+    switch(+tmp) {
+        default: ret.type = '??' + tmp; break;
+        case 3: ret.type = 'kh'; break;
+        case 2: ret.type = 'ch'; break;
+        case 1: ret.type = 'hk'; break;
+    }
+  tmp = $html.find('[carac="damage"][hh_title]')[0];
+  ret.damage = +tmp.getAttribute("hh_title").replaceAll(',', '');
+  tmp = $html.find('img.girl-box__pose')[0];
+  const start = 'https://hh2.hh-content.com/pictures/design/battle_positions/'.length;
+  ret.pose = tmp.src.substring(start).replaceAll('\.png', '');
+  return ret;
+}
+
+
+
 class ccGirl {
   type = null; // | 'hk' | 'kh' | 'ch'
   lv = 0;
