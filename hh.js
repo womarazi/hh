@@ -201,6 +201,7 @@ function pachinkoPlayloop(playCounter = 10, buttonselector, onEnd){
     if (!blackScreen.length && $rewardButton.length) { $rewardButton.trigger('click'); retry("reward accept"); return; }
     $pachinkoMithyc1.trigger('click');
     playCounter--; // astgsdtaar sets rsf sdfgsdf sdgsdgsd
+    console.log('btn', $pachinkoMithyc1, 'selector', buttonselector);
     retry("1 game done", 300);
 }
 
