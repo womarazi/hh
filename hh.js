@@ -145,6 +145,8 @@ function pachinkoSetup() {
   const btnMythic1 = makeRunButton(size);
   const btnEpic1 = makeRunButton(size);
   const btnEpic10 = makeRunButton(size);
+  
+  btnGreat1.style.opacity = btnGreat10.style.opacity = btnMythic1.style.opacity = btnEpic1.style.opacity = btnEpic10.style.opacity = '0.5';
   btnGreat1.style.backgroundColor = "lime";
   btnGreat10.style.backgroundColor = "lime";
   btnMythic1.style.backgroundColor = "wheat";
