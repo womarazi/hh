@@ -176,15 +176,16 @@ function pachinkoSetup() {
   }
   function getPlayCount(){ return playCounter.value; }
   function play(selector, button){
+    selector += ', ' + selector.replace('orange', 'blue').replace('green', 'blue');
     const count = getPlayCount();
     if (count < 0) return;
     pachinkoPlayStartCommon(button);
     pachinkoPlayloop(count, selector, () => pachinkoPlayEndCommon(button));
   }
 
-  $(btnMythic1).on('click', () => { play('.blue_button_L[play="pachinko5|150|hard_currency"][orbs="1"]', btnMythic1); });
-  // $(btnMythic3).on('click', () => { play('.blue_button_L[play="pachinko5|840|hard_currency"][orbs="1"]', btnMythic3); });
-  // $(btnMythic6).on('click', () => { play('.blue_button_L[play="pachinko5|1980|hard_currency"][orbs="1"]', btnMythic6); });
+  $(btnMythic1).on('click', () => { play('.orange_button_L[play="pachinko5|150|hard_currency"][orbs="1"]', btnMythic1); });
+  // $(btnMythic3).on('click', () => { play('.orange_button_L[play="pachinko5|840|hard_currency"][orbs="1"]', btnMythic3); });
+  // $(btnMythic6).on('click', () => { play('.orange_button_L[play="pachinko5|1980|hard_currency"][orbs="1"]', btnMythic6); });
   $(btnGreat1).on('click', () => { play('.green_button_L[play*="pachinko1"][nb_games="1"]', btnGreat1); });
   $(btnGreat10).on('click', () => { play('.green_button_L[play*="pachinko1"][nb_games="10"]', btnGreat10); });
   $(btnEpic1).on('click', () => { play('.orange_button_L[play*="pachinko2"][nb_games="1"][orbs="1"]', btnEpic1); });
