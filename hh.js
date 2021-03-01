@@ -236,9 +236,8 @@ function championSetup(){
   buttonContainer.append(separator);
   const size = 40;
   const btnPicker = makeRunButton(size);
-  
-  btnPicker.style.opacity = btnGreat10.style.opacity = btnMythic1.style.opacity = btnEpic1.style.opacity = btnEpic10.style.opacity = '0.99';
-  btnPicker.style.padding = btnGreat10.style.padding = btnMythic1.style.padding = btnEpic1.style.padding = btnEpic10.style.padding = '0px';
+  btnPicker.style.opacity = '0.99';
+  btnPicker.style.padding = '0px';
   btnPicker.style.backgroundColor = "wheat";
   btnPicker.innerHTML = "Pick";
   let separator2 = document.createElement('br');
