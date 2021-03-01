@@ -241,6 +241,7 @@ function championSetup(){
   btnPicker.style.backgroundColor = "wheat";
   btnPicker.innerHTML = "Pick";
   let separator2 = document.createElement('br');
+  buttonContainer.append(separator2);
   const scoreFuncString = document.createElement('input');
   const pickScore = document.createElement('input');
   const scorefunckey = '_hhjs_champpick_scorefunction';
@@ -251,6 +252,8 @@ function championSetup(){
     localStorage.setItem(scorefunckey, tmp);
   }
   scoreFuncString.value = tmp;
+  let separator3 = document.createElement('br');
+  buttonContainer.append(separator3);
   tmp = localStorage.getItem(scorereqkey);
   if (!tmp){
     tmp = '100000000';
@@ -300,7 +303,7 @@ function pickGirls(scoreFuncString, pickScore){
     g.$html.trigger('click');
   }
   function loopDelayed() {
-    if (!pickGirlloopInner(champion, scoreGirl, pickGirl, pickScore)) {
+    if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, pickScore)) {
       champion.$confirmbtn.trigger('click');
       return; }
       champion.$changebtn.trigger('click');
@@ -309,7 +312,7 @@ function pickGirls(scoreFuncString, pickScore){
   loopDelayed();
 }
 
-function pickGirlloopInner(champion, scoreGirl, pickGirl, unpickGirl, pickScore){
+function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unpickGirl, pickScore){
   let girls = parseChampionGirl($html);
   for (let girl of girls) { unpickGirl(girl); scoreGirl(girl); }
   girls.sort((g1, g2) => { return g2.score - g1.score;} );
