@@ -265,12 +265,20 @@ function championSetup(){
   pickScore.type="text";
   $(scoreFuncString).on('input', () => { localStorage.setItem(scorefunckey, scoreFuncString.value); });
   $(pickScore).on('input', () => { localStorage.setItem(scorereqkey, scoreFuncString.value); });
-  $(btnPicker).on('click', ()=> { pickgirls(scoreFuncString, pickScore); });
+  $(btnPicker).on('click', ()=> { pickGirls(scoreFuncString, pickScore); });
 }
 
 function pickGirls(scoreFuncString, pickScore){
   const $html = $('#contains_all');
   let girlsPicked = $html.find('.girl-box__index.green-tick-icon').length;
+  const $startDraft = $html.find('.champions-bottom__draft-box .champions-bottom__draft-team');
+  if ($startDraft.length) {
+     $startDraft.trigger('click');
+     console.log('choose girl interface was not open');
+     setTimeout(() => pickGirls(scoreFuncString, pickScore), 1000);
+    return;
+  }
+
   let champion = parseChampion($html);
   let c = champion; // viene letto dentro l'eval
   const scoreGirl = (g) => {
@@ -296,7 +304,7 @@ function pickGirls(scoreFuncString, pickScore){
       champion.$confirmbtn.trigger('click');
       return; }
       champion.$changebtn.trigger('click');
-      setTimeout(loopDelayed, 500);
+      setTimeout(loopDelayed, 2000);
   }
   loopDelayed();
 }
@@ -324,7 +332,7 @@ function parseChampion($html) {
     case 3: champ.kind = 'kh'; break;
   }
   champ.positions = $htmltop.find('.champion-pose').toArray().map( (e) => e.src.substring( "https://hh2.hh-content.com/pictures/design/battle_positions/".length).replace("\.png", ""));
-  let $btns = $('.champions-bottom__draft-box');
+  let $btns = $html.find('.champions-bottom__draft-box');
   champ.$confirmbtn = $btns.find('.champions-bottom__confirm-team');
   champ.$changebtn = $btns.find('.champions-bottom__make-draft');
   champ.tryleft = Number.parseInt($changebtn[0].getAttribute('hh_title'));
