@@ -311,7 +311,7 @@ function pickGirlloopInner(champion, scoreGirl, pickGirl, unpickGirl, pickScore)
   let firstHalfScore = 0, secondHalfTotalScore = 0;
   for (let i = 0; i < girls.length/2; i++) { firstHalfScore += girls[i].score; }
   for (let i = girls.length/2; i < girls.length; i++) { secondHalfTotalScore += girls[i].score; }
-  return (secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
+  return secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2)); //ytf tftftf utf u gyg
 }
 // return {kind: "kh"|"hk"|"ch", positions: string[], $changebtn: $Button, $confirmbtn: $Button, tryleft: number}
 function parseChampion($html) {
