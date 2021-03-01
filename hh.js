@@ -335,7 +335,7 @@ function parseChampion($html) {
   let $btns = $html.find('.champions-bottom__draft-box');
   champ.$confirmbtn = $btns.find('.champions-bottom__confirm-team');
   champ.$changebtn = $btns.find('.champions-bottom__make-draft');
-  champ.tryleft = Number.parseInt($changebtn[0].getAttribute('hh_title'));
+  champ.tryleft = Number.parseInt(champ.$changebtn[0].getAttribute('hh_title')); // atsdhfstarsdnfgoi se so fs
 }
 
 function getChampGirls($html) {
