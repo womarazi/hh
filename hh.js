@@ -69,6 +69,8 @@ function main0() {
       towerOfFameSetup();
       break;
     case "pachinko": pachinkoSetup(); break;
+    case "club-champion": case "champions":
+      championSetup();
   }
   $startButton = $(start).on("click", hhmain);
   $autorunButton = $(autorun).on("click", autorunClick);
@@ -229,9 +231,108 @@ function championmain(){
 
 
 
+function championSetup(){
+  let separator = document.createElement('br');
+  buttonContainer.append(separator);
+  const size = 40;
+  const btnPicker = makeRunButton(size);
+  
+  btnPicker.style.opacity = btnGreat10.style.opacity = btnMythic1.style.opacity = btnEpic1.style.opacity = btnEpic10.style.opacity = '0.99';
+  btnPicker.style.padding = btnGreat10.style.padding = btnMythic1.style.padding = btnEpic1.style.padding = btnEpic10.style.padding = '0px';
+  btnPicker.style.backgroundColor = "wheat";
+  btnPicker.innerHTML = "Pick";
+  let separator2 = document.createElement('br');
+  const scoreFuncString = document.createElement('input');
+  const pickScore = document.createElement('input');
+  const scorefunckey = '_hhjs_champpick_scorefunction';
+  const scorereqkey = 'hhjs_champpick_scorereq';
+  let tmp = localStorage.getItem(scorefunckey);
+  if (!tmp){
+    tmp = 'g.atk * (1 + 0.5*posebonus) * (1 + 0.5*( girl.type == "kh" ? 1 : 0))';
+    localStorage.setItem(scorefunckey, tmp);
+  }
+  scoreFuncString.value = tmp;
+  tmp = localStorage.getItem(scorereqkey);
+  if (!tmp){
+    tmp = '100000000';
+    localStorage.setItem(scorereqkey, tmp);
+  }
+  pickScore.value = tmp;
+  buttonContainer.append(btnPicker);
+  buttonContainer.append(separator2);
+  buttonContainer.append(scoreFuncString);
+  buttonContainer.append(pickScore);
+  scoreFuncString.type="text";
+  pickScore.type="text";
+  $(scoreFuncString).on('input', () => { localStorage.setItem(scorefunckey, scoreFuncString.value); });
+  $(pickScore).on('input', () => { localStorage.setItem(scorereqkey, scoreFuncString.value); });
+  $(btnPicker).on('click', ()=> { pickgirls(scoreFuncString, pickScore); });
+}
 
-function getChampGirls() {
-    const $root = $('.champions-middle__girl-selection');
+function pickGirls(scoreFuncString, pickScore){
+  const $html = $('#contains_all');
+  let girlsPicked = $html.find('.girl-box__index.green-tick-icon').length;
+  let champion = parseChampion($html);
+  let c = champion; // viene letto dentro l'eval
+  const scoreGirl = (g) => {
+    let ret = false;
+    let poseBonus = champion.positions.indexOf(g.pose) >= 0 ? 1 : 0;//var da usare nella condizione
+    console.log('pre eval check girl', c, g);
+    g.score = eval(scoreFuncString);
+    console.log('post eval check girl', g.score);
+  }
+  const isPicked = (g) => {
+    return g.$html.find('.girl-box__index.green-tick-icon').length;
+  }
+  const pickGirl = (g) => {
+    if (isPicked(g)) return;
+    g.$html.trigger('click');
+  }
+  const unPickGirl = (g) => {
+    if (!isPicked(g)) return;
+    g.$html.trigger('click');
+  }
+  function loopDelayed() {
+    if (!pickGirlloopInner(champion, scoreGirl, pickGirl, pickScore)) {
+      champion.$confirmbtn.trigger('click');
+      return; }
+      champion.$changebtn.trigger('click');
+      setTimeout(loopDelayed, 500);
+  }
+  loopDelayed();
+}
+
+function pickGirlloopInner(champion, scoreGirl, pickGirl, unpickGirl, pickScore){
+  let girls = parseChampionGirl($html);
+  for (let girl of girls) { unpickGirl(girl); scoreGirl(girl); }
+  girls.sort((g1, g2) => { return g2.score - g1.score;} );
+  
+  for (let girl of girls) { if (girl.score > pickScore) pickGirl(girl); }
+  let firstHalfScore = 0, secondHalfTotalScore = 0;
+  for (let i = 0; i < girls.length/2; i++) { firstHalfScore += girls[i].score; }
+  for (let i = girls.length/2; i < girls.length; i++) { secondHalfTotalScore += girls[i].score; }
+  return (secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
+}
+// return {kind: "kh"|"hk"|"ch", positions: string[], $changebtn: $Button, $confirmbtn: $Button, tryleft: number}
+function parseChampion($html) {
+  if (!$html) $html = $;
+  let champ = {};
+  let $htmltop = $html.find('.champions-over__champion-wrapper');
+  switch ($htmltop.find('.champion-class[carac]')[0].getAttribute('carac')){
+    default: champ.kind = null; break;
+    case 1: champ.kind = 'hk'; break;
+    case 2: champ.kind = 'ch'; break;
+    case 3: champ.kind = 'kh'; break;
+  }
+  champ.positions = $htmltop.find('.champion-pose').toArray().map( (e) => e.src.substring( "https://hh2.hh-content.com/pictures/design/battle_positions/".length).replace("\.png", ""));
+  let $btns = $('.champions-bottom__draft-box');
+  champ.$confirmbtn = $btns.find('.champions-bottom__confirm-team');
+  champ.$changebtn = $btns.find('.champions-bottom__make-draft');
+  champ.tryleft = Number.parseInt($changebtn[0].getAttribute('hh_title'));
+}
+
+function getChampGirls($html) {
+    const $root = $html.find('.champions-middle__girl-selection');
     const $girls = $root.find('.girl-selection__girl-box');
     console.log($root, $girls);
     const arr = $girls.toArray().map( (e) => parseChampionGirl($(e)));
@@ -239,6 +340,7 @@ function getChampGirls() {
 };
 
 function parseChampionGirl($html){
+    if (!$html) $html = $;
     const ret = {};
     let tmp = $html.find('[id_girl]')[0];
     ret.id = tmp.getAttribute('id_girl');
@@ -256,6 +358,8 @@ function parseChampionGirl($html){
   tmp = $html.find('img.girl-box__pose')[0];
   const start = 'https://hh2.hh-content.com/pictures/design/battle_positions/'.length;
   ret.pose = tmp.src.substring(start).replaceAll('\.png', '');
+  ret.$html = $html;
+  ret.html = html[0];
   return ret;
 }
 
