@@ -248,8 +248,7 @@ function championSetup(){
   const scorereqkey = 'hhjs_champpick_scorereq';
   let tmp = localStorage.getItem(scorefunckey);
   if (!tmp){
-    // tmp = 'g.atk * (1 + 0.5*posebonus) * (1 + 0.5*( g.type == "kh" ? 1 : 0))'; // jgg uyguyg uyguyg ug uguy
-    tmp = '' + 'g.atk * (1 + 0.5*posebonus) * (1 + 0.5*( g.type == "kh" ? 1 : 0))';
+    tmp = '()=> { return g.atk * (1 + 0.5*posebonus) * (1 + 0.5*(g.type == "kh" ? 1 : 0)); }'; // kghiuguyg yuguy guut uyguy uy
     localStorage.setItem(scorefunckey, tmp);
   }
   scoreFuncString.value = tmp;
@@ -292,6 +291,8 @@ function pickGirls(scoreFuncString, pickScore){
     let posebonus = poseBonus;
     console.log('pre eval check girl', c, g, scoreFuncString.value);
     g.score = eval(scoreFuncString.value);
+    console.log('mid eval check girl', g.score);
+    g.score = g.score();
     console.log('post eval check girl', g.score);
   }
   const isPicked = (g) => {
