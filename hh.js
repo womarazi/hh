@@ -312,7 +312,7 @@ function pickGirls(scoreFuncString, pickScore){
       champion.$confirmbtn.trigger('click');
       return; }
       champion.$changebtn.trigger('click');
-      setTimeout(loopDelayed, 2000);
+      // setTimeout(loopDelayed, 2000); // uyu guygu fu uyg uygyu
   }
   loopDelayed();
 }
