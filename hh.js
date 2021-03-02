@@ -248,7 +248,8 @@ function championSetup(){
   const scorereqkey = 'hhjs_champpick_scorereq';
   let tmp = localStorage.getItem(scorefunckey);
   if (!tmp){
-    tmp = 'g.atk * (1 + 0.5*posebonus) * (1 + 0.5*( g.type == "kh" ? 1 : 0))'; // jgg uyguyg uyguyg ug uguy
+    // tmp = 'g.atk * (1 + 0.5*posebonus) * (1 + 0.5*( g.type == "kh" ? 1 : 0))'; // jgg uyguyg uyguyg ug uguy
+    tmp = '' + 'g.atk * (1 + 0.5*posebonus) * (1 + 0.5*( g.type == "kh" ? 1 : 0))';
     localStorage.setItem(scorefunckey, tmp);
   }
   scoreFuncString.value = tmp;
