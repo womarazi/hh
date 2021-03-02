@@ -303,7 +303,7 @@ function pickGirls(scoreFuncString, pickScore){
     g.$html.trigger('click');
   }
   function loopDelayed() {
-    if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, pickScore)) {
+    if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unpickGirl, pickScore)) {
       champion.$confirmbtn.trigger('click');
       return; }
       champion.$changebtn.trigger('click');
@@ -317,12 +317,16 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unpickGirl, pic
   for (let girl of girls) { unpickGirl(girl); scoreGirl(girl); }
   girls.sort((g1, g2) => { return g2.score - g1.score;} );
   
-  for (let girl of girls) { if (girl.score > pickScore) pickGirl(girl); }
+  for (let girl of girls) {
+    console.log('pickgirlloop', girl.score, '>',  pickScore.value);
+    if (girl.score > pickScore.value) pickGirl(girl);
+}
   let firstHalfScore = 0, secondHalfTotalScore = 0;
   for (let i = 0; i < girls.length/2; i++) { firstHalfScore += girls[i].score; }
   for (let i = girls.length/2; i < girls.length; i++) { secondHalfTotalScore += girls[i].score; }
   return secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2)); //ytf tftftf utf u gyg
 }
+
 // return {kind: "kh"|"hk"|"ch", positions: string[], $changebtn: $Button, $confirmbtn: $Button, tryleft: number}
 function parseChampion($html) {
   if (!$html) $html = $;
