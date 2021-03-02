@@ -313,7 +313,7 @@ function pickGirls(scoreFuncString, pickScore){
 }
 
 function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unpickGirl, pickScore){
-  let girls = parseChampionGirl($html);
+  let girls = getChampGirls($html); /// uyguyg uyg yug uyguyg uyg yug u
   for (let girl of girls) { unpickGirl(girl); scoreGirl(girl); }
   girls.sort((g1, g2) => { return g2.score - g1.score;} );
   
