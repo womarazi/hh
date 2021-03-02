@@ -288,6 +288,7 @@ function pickGirls(scoreFuncString, pickScore){
   const scoreGirl = (g) => {
     let ret = false;
     let poseBonus = champion.positions.indexOf(g.pose) >= 0 ? 1 : 0;//var da usare nella condizione
+    let posebonus = poseBonus;
     console.log('pre eval check girl', c, g, scoreFuncString.value);
     g.score = eval(scoreFuncString.value);
     console.log('post eval check girl', g.score);
