@@ -325,7 +325,7 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pic
   let firstHalfScore = 0, secondHalfTotalScore = 0;
   for (let i = 0; i < girls.length/2; i++) { firstHalfScore += girls[i].score; }
   for (let i = girls.length/2; i < girls.length; i++) { secondHalfTotalScore += girls[i].score; }
-  return secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2)); //ytf tftftf utf u gyg
+  return secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
 }
 
 // return {kind: "kh"|"hk"|"ch", positions: string[], $changebtn: $Button, $confirmbtn: $Button, tryleft: number}
@@ -344,6 +344,7 @@ function parseChampion($html) {
   champ.$confirmbtn = $btns.find('.champions-bottom__confirm-team');
   champ.$changebtn = $btns.find('.champions-bottom__make-draft');
   champ.tryleft = Number.parseInt(champ.$changebtn[0].getAttribute('hh_title')); // atsdhfstarsdnfgoi se so fs
+  return champ; // h fu guygyugnyg uyg uygutfytfhgfygkuhoiu
 }
 
 function getChampGirls($html) {
