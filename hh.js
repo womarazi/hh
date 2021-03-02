@@ -369,7 +369,7 @@ function parseChampionGirl($html){
   const start = 'https://hh2.hh-content.com/pictures/design/battle_positions/'.length;
   ret.pose = tmp.src.substring(start).replaceAll('\.png', '');
   ret.$html = $html;
-  ret.html = html[0];
+  ret.html = $html[0]; // asofigjsaipogdja ois jriosa
   return ret;
 }
 
