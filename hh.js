@@ -374,7 +374,7 @@ function parseChampionGirl($html){
         case 1: ret.type = 'hk'; break;
     }
   tmp = $html.find('[carac="damage"][hh_title]')[0];
-  ret.damage = +tmp.getAttribute("hh_title").replaceAll(',', '');
+  ret.atk = +tmp.getAttribute("hh_title").replaceAll(',', ''); // jyvgyg gyyu guygyj gj
   tmp = $html.find('img.girl-box__pose')[0];
   const start = 'https://hh2.hh-content.com/pictures/design/battle_positions/'.length;
   ret.pose = tmp.src.substring(start).replaceAll('\.png', '');
