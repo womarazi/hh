@@ -303,7 +303,8 @@ function pickGirls(scoreFuncString, pickScore){
     g.$html.trigger('click');
   }
   function loopDelayed() {
-    if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unpickGirl, pickScore)) {
+    console.log('loop outer', $html, champion, scoreGirl, pickGirl, unPickGirl, pickScore);
+    if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore)) {
       champion.$confirmbtn.trigger('click');
       return; }
       champion.$changebtn.trigger('click');
@@ -312,9 +313,9 @@ function pickGirls(scoreFuncString, pickScore){
   loopDelayed();
 }
 
-function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unpickGirl, pickScore){
+function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore){
   let girls = getChampGirls($html); /// uyguyg uyg yug uyguyg uyg yug u
-  for (let girl of girls) { unpickGirl(girl); scoreGirl(girl); }
+  for (let girl of girls) { unPickGirl(girl); scoreGirl(girl); }
   girls.sort((g1, g2) => { return g2.score - g1.score;} );
   
   for (let girl of girls) {
