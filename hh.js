@@ -283,12 +283,13 @@ function pickGirls(scoreFuncString, pickScore){
   }
 
   let champion = parseChampion($html);
+  console.log('parsechamp(', $html, ') = ', champion);
   let c = champion; // viene letto dentro l'eval
   const scoreGirl = (g) => {
     let ret = false;
     let poseBonus = champion.positions.indexOf(g.pose) >= 0 ? 1 : 0;//var da usare nella condizione
-    console.log('pre eval check girl', c, g);
-    g.score = eval(scoreFuncString);
+    console.log('pre eval check girl', c, g, scoreFuncString.value);
+    g.score = eval(scoreFuncString.value);
     console.log('post eval check girl', g.score);
   }
   const isPicked = (g) => {
