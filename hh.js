@@ -323,7 +323,7 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pic
   girls.sort((g1, g2) => { return g2.score - g1.score;} );
   
   for (let girl of girls) {
-    console.log('pickgirlloop', girl.score, '>',  pickScore.value);
+    console.log('pickgirlloop', girl.score, '>',  pickScore.value, 'girl:', girl, girls);
     if (girl.score > pickScore.value) pickGirl(girl);
 }
   let firstHalfScore = 0, secondHalfTotalScore = 0;
