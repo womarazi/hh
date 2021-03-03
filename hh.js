@@ -311,7 +311,7 @@ function pickGirls(scoreFuncString, pickScore){
     if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore)) {
       champion.$confirmbtn.trigger('click');
       return; }
-      champion.$changebtn.trigger('click');
+      // champion.$changebtn.trigger('click'); // asdhfa a akjdsahkfas  dfslgd
       // setTimeout(loopDelayed, 2000); // uyu guygu fu uyg uygyu
   }
   loopDelayed();
