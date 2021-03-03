@@ -301,10 +301,14 @@ function pickGirls(scoreFuncString, pickScore){
   const pickGirl = (g) => {
     if (isPicked(g)) return;
     g.$html.trigger('click');
+    g.$html.find('.girl-box__draggable')[0].classList.add('selected');
+    g.$html.find('.girl-box__index')[0].classList.add('green-tick-icon');
   }
   const unPickGirl = (g) => {
     if (!isPicked(g)) return;
     g.$html.trigger('click');
+    g.$html.find('.girl-box__draggable')[0].classList.remove('selected');
+    g.$html.find('.girl-box__index')[0].classList.remove('green-tick-icon');
   }
   function loopDelayed() {
     console.log('loop outer', $html, champion, scoreGirl, pickGirl, unPickGirl, pickScore);
