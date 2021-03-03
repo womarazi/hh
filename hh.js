@@ -335,7 +335,7 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pic
   for (let i = girls.length/2; i < girls.length; i++) { secondHalfScore += girls[i].score; }
   let pickAll = secondHalfScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
   console.log('pick all? ', pickAll, ', first half score:', firstHalfScore, ', second:', secondHalfScore,
-              '(1/ Math.pow(champion.tryleft,2) = ', (1/ Math.pow(champion.tryleft,2), 'tryleft:', champion.tryleft);
+              '(1/ Math.pow(champion.tryleft,2) = ', (1/ Math.pow(champion.tryleft,2)), 'tryleft:', champion.tryleft); // uygyu uyg uygguguvtyvut vyt guygyu uy
   return pickAll;
 }
 
