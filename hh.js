@@ -267,7 +267,7 @@ function championSetup(){
   scoreFuncString.type="text";
   pickScore.type="text";
   $(scoreFuncString).on('input', () => { localStorage.setItem(scorefunckey, scoreFuncString.value); });
-  $(pickScore).on('input', () => { localStorage.setItem(scorereqkey, scoreFuncString.value); });
+  $(pickScore).on('input', () => { localStorage.setItem(scorereqkey, pickScore.value); }); // buigiuui kjbo ijb  kj
   $(btnPicker).on('click', ()=> { pickGirls(scoreFuncString, pickScore); });
 }
 
