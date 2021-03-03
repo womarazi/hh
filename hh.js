@@ -330,10 +330,13 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pic
     console.log('pickgirlloop', girl.score, '>',  pickScore.value, 'girl:', girl, girls);
     if (girl.score > pickScore.value) pickGirl(girl);
 }
-  let firstHalfScore = 0, secondHalfTotalScore = 0;
+  let firstHalfScore = 0, secondHalfScore = 0;
   for (let i = 0; i < girls.length/2; i++) { firstHalfScore += girls[i].score; }
-  for (let i = girls.length/2; i < girls.length; i++) { secondHalfTotalScore += girls[i].score; }
-  return secondHalfTotalScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
+  for (let i = girls.length/2; i < girls.length; i++) { secondHalfScore += girls[i].score; }
+  let pickAll = secondHalfScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
+  console.log('pick all? ', pickAll, ', first half score:', firstHalfScore, ', second:', secondHalfScore,
+              '(1/ Math.pow(champion.tryleft,2) = ', (1/ Math.pow(champion.tryleft,2), 'tryleft:', champion.tryleft);
+  return pickAll;
 }
 
 // return {kind: "kh"|"hk"|"ch", positions: string[], $changebtn: $Button, $confirmbtn: $Button, tryleft: number}
@@ -1809,3 +1812,4 @@ function error(condition, message, printobjects) {
 function float(string) {
   return float.parse(string);
 }
+s
