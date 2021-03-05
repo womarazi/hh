@@ -313,6 +313,7 @@ function pickGirls(scoreFuncString, pickScore){
   function loopDelayed() {
     console.log('loop outer', $html, champion, scoreGirl, pickGirl, unPickGirl, pickScore);
     if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore)) {
+      console.log('pick end!');
       champion.$confirmbtn.trigger('click');
       return; }
       // champion.$changebtn.trigger('click'); // asdhfa a akjdsahkfas  dfslgd
@@ -325,17 +326,27 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pic
   let girls = getChampGirls($html); /// uyguyg uyg yug uyguyg uyg yug u
   for (let girl of girls) { unPickGirl(girl); scoreGirl(girl); }
   girls.sort((g1, g2) => { return g2.score - g1.score;} );
-  
+  let pickedarr = [], unpickedarr = [];
+  let pickedAvg = 0, unpickedAvg = 0;
   for (let girl of girls) {
     console.log('pickgirlloop', girl.score, '>',  pickScore.value, 'girl:', girl, girls);
-    if (girl.score > pickScore.value) pickGirl(girl);
-}
-  let firstHalfScore = 0, secondHalfScore = 0;
-  for (let i = 0; i < girls.length/2; i++) { firstHalfScore += girls[i].score; }
-  for (let i = girls.length/2; i < girls.length; i++) { secondHalfScore += girls[i].score; }
-  let pickAll = secondHalfScore >= 0.5 * firstHalfScore * (1/ Math.pow(champion.tryleft,2));
-  console.log('pick all? ', pickAll, ', first half score:', firstHalfScore, ', second:', secondHalfScore,
-              '(1/ Math.pow(champion.tryleft,2) = ', (1/ Math.pow(champion.tryleft,2)), 'tryleft:', champion.tryleft); // uygyu uyg uygguguvtyvut vyt guygyu uy
+    if (pickedarr.length >= 5 || girl.score <= pickScore.value) {
+      unpickedarr.push(girl);
+      unpickedAvg += girl.score;
+      continue; }
+    pickGirl(girl);
+    pickedarr.push(girl);
+    pickedAvg += girl.score;
+  }
+  pickedAvg /= pickedarr.length;
+  unpickedAvg /= unpickedarr.length;
+  let minpick = 0.25 * pickedAvg, instapick = 0.75 * unpickedAvg;
+  let maxTry = 34; // todo, quanti ne hai massimi prima di iniziare.
+  let tryfactor = maxTry / champion.tryleft;
+  let pickreq = minpick + instapick * tryfactor;
+  let pickAll = unpickedAvg >= pickreq;
+  console.log('pick all? ', pickAll, ', pickedAvg:', pickedAvg, ', unpickedAvg:', unpickedAvg,
+              'tryfactor:', tryfactor, 'tryleft:', champion.tryleft, 'minpick', minpick, 'instapick', instapick);
   return pickAll;
 }
 
