@@ -314,7 +314,7 @@ function pickGirls(scoreFuncString, pickScore){
     console.log('loop outer', $html, champion, scoreGirl, pickGirl, unPickGirl, pickScore);
     if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore)) {
       console.log('pick end!');
-      champion.$confirmbtn.trigger('click');
+      // champion.$confirmbtn.trigger('click'); // ygyu uyggu ygyg ug yugyu gyugyuuygb
       return; }
       // champion.$changebtn.trigger('click'); // asdhfa a akjdsahkfas  dfslgd
       // setTimeout(loopDelayed, 2000); // uyu guygu fu uyg uygyu
@@ -1823,4 +1823,4 @@ function error(condition, message, printobjects) {
 function float(string) {
   return float.parse(string);
 }
-s
+// oiuhuohu hig iy giyg uguyg yig iygh iuhiuh iu
