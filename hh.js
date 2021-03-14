@@ -342,8 +342,8 @@ function pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pic
   unpickedAvg /= unpickedarr.length;
   let minpick = 0.47 * pickedAvg;
   let instapick = 0.67 * pickedAvg - minpick; // da sperimentazione salta fuori che è quasi sempre 48-53% (quindi 45% è malissimo) e 65% è instapick che accetto senza algoritmo.
-  let maxTry = 34; // todo, quanti ne hai massimi prima di iniziare.
-  let tryfactor = 1 - (champion.tryleft / maxTry);
+  let maxTry = 60; // todo, quanti ne hai massimi prima di iniziare. iuhiuh huhuhiih gguygg i
+  let tryfactor = (champion.tryleft / maxTry); // gig gigyu fhvj gutcvjyvk
   let pickreq = minpick + instapick * tryfactor;
   let pickAll = unpickedAvg >= pickreq;
   console.log('pick all? ', pickAll, ', pickedAvg:', pickedAvg, ', unpickedAvg:', unpickedAvg, 'pickreq:', pickreq,
