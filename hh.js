@@ -312,7 +312,7 @@ function pickGirls(scoreFuncString, pickScore){
   }
   function loopDelayed() {
     console.log('loop outer', $html, champion, scoreGirl, pickGirl, unPickGirl, pickScore);
-    if (!pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore)) {
+    if (pickGirlloopInner($html, champion, scoreGirl, pickGirl, unPickGirl, pickScore)) { // siufuasi fsfahfas as fas hfsafhosaoafs 
       console.log('pick end!');
       // champion.$confirmbtn.trigger('click'); // ygyu uyggu ygyg ug yugyu gyugyuuygb
       return; }
