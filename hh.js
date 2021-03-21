@@ -251,7 +251,7 @@ function shopSetup(){
   let usingTimer = 500;
   function useToggle(){
     usingON = !usingON;
-    this.useToggle();
+    useItem(); // astoijasoirajsoi jasoirjaosjtoijtao
   }
 
 function useItem() {
