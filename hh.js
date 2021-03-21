@@ -71,12 +71,15 @@ function main0() {
     case "pachinko": pachinkoSetup(); break;
     case "club-champion": case "champions":
       championSetup();
+    case "shop": shopSetup();
   }
   $startButton = $(start).on("click", hhmain);
   $autorunButton = $(autorun).on("click", autorunClick);
   $pageautorunButton = $(autorunp).on("click", autorunClick);
   autorunClick();
 }
+
+function shopMain() {}
 
 function autorunClick(evt) {
   var realClick = evt ? true : false;
@@ -230,7 +233,36 @@ function championmain(){
 }
 
 
+function shopSetup(){
+  let separator = document.createElement('br');
+  buttonContainer.append(separator);
+  const size = 40;
+  const btnBuy = makeRunButton(size);
+  const btnUse = makeRunButton(size);
+  btnBuy.style.opacity = btnUse.style.opacity = '0.99';
+  btnBuy.style.padding = btnUse.style.padding = '0px';
+  btnBuy.style.backgroundColor = btnUse.style.backgroundColor = "red";
+  btnBuy.innerHTML = "Buy";
+  btnUse.innerHTML = "Use";
+  ////////// done creating buttons
+  
+  const $nativeBtnUse = $('#inventory .blue_text_button[rel="use"]');
+  let usingON = false;
+  let usingTimer = 500;
+  function useToggle(){
+    usingON = !usingON;
+    this.useToggle();
+  }
 
+function useItem() {
+    if (!usingON) { btnUse.style.backgroundColor = 'red'; return; }
+    btnUse.style.backgroundColor = 'green';
+    $nativeBtnUse.trigger('click');
+    setTimeout(useItem, usingTimer);
+  }
+  $(btnUse).on('click', useToggle);
+
+}
 function championSetup(){
   let separator = document.createElement('br');
   buttonContainer.append(separator);
@@ -888,12 +920,15 @@ function hhmain() {
       break;
       
     case "home":
-    case "shop":
     case "quest":
     case "":
     case "hero":
     case "world":
-    case "champions-map":
+    case "champions-map": break;
+      
+    case "shop":
+      shopMain();
+      break;
     case "season-arena":
       seasonArenaMain();
       break;
@@ -902,7 +937,6 @@ function hhmain() {
       localStorage.setItem('womarazi_shards', JSON.stringify(shards));
       harem0(); break;
     case "activities":
-      
       switch(params["tab"]) {
          default:
             missionmain();
