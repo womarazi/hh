@@ -255,6 +255,7 @@ function shopSetup(){
   }
 
 function useItem() {
+   console.log('useItem', usingON, $nativeBtnUse);
     if (!usingON) { btnUse.style.backgroundColor = 'red'; return; }
     btnUse.style.backgroundColor = 'green';
     $nativeBtnUse.trigger('click');
@@ -262,6 +263,7 @@ function useItem() {
   }
   $(btnUse).on('click', useToggle);
 
+window.hhjs_useItem = useItem;
 }
 function championSetup(){
   let separator = document.createElement('br');
