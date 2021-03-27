@@ -3,6 +3,7 @@ function shownsfw(){
     let wholepagensfw = document.querySelector('[data-testid="emptyState"] [role="button"] div[dir="auto"]');
     wholepagensfw?.click();
     for(let e of a) {
+      console.log('showing nsfw:', e);
       e.click();
       while(e) {
         if (e.tagName !== "ARTICLE") { e = e.parentElement; continue; }
@@ -12,4 +13,4 @@ function shownsfw(){
       }
     }
 }
-setInterval(shownsfw, 500);
+// setInterval(shownsfw, 500);
