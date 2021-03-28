@@ -14,4 +14,4 @@ function shownsfw(){
       }
     }
 }
-// setInterval(shownsfw, 500);
+setInterval(shownsfw, 500); // ytftufufguy
