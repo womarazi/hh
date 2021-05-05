@@ -143,7 +143,7 @@ function makeRunButton(size = 30) {
 
 function getvar(name) { return localStorage.getItem(name); }
 function setvar(name) { return localStorage.setItem(name); }
-function shopitemsetup(buttonContainer) {
+function shopitemsetup() {
   for (let i = 0; i < 24; i++) {
     let btn = makeVarButton(buttonContainer, '_hhjs_equip-' + i, 40, true);
     btn.backgroundImage = 'https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png';
@@ -269,6 +269,7 @@ function shopSetup(){
   btnBuy.style.backgroundColor = btnUse.style.backgroundColor = "red";
   btnBuy.innerHTML = "Buy";
   btnUse.innerHTML = "Use";
+  
   ////////// done creating buttons
   
   const $nativeBtnUse = $('#inventory .blue_text_button[rel="use"]');
@@ -287,8 +288,8 @@ function useItem() {
     setTimeout(useItem, usingTimer);
   }
   $(btnUse).on('click', useToggle);
-
-window.hhjs_useItem = useItem;
+  shopitemsetup();
+  window.hhjs_useItem = useItem;
 }
 function championSetup(){
   let separator = document.createElement('br');
