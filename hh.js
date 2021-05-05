@@ -311,7 +311,7 @@ function shopSetup(){
   }
   let oldSelectedItemInventory = null;
   let failureCounter = 0, failureMax = 20;
-  let parseSelectedItem(item) {
+  function parseSelectedItem (item){
     const $item = $(item);
     const ret = {type: null};
     
@@ -319,8 +319,8 @@ function shopSetup(){
     let start = typeurl.lastIndexOf('/') + 1;
     let end = typeurl.lastIndexOf('.');
     ret.type = typeurl.substring(start, end);
-    return ret;
-  }
+    return ret; }
+
   function canBeSelled(parsedItem) {
     const byType = eval(localStorage.getItem('_hhjs_equip_' + type));
     if (!byType) return false;
@@ -333,7 +333,13 @@ function shopSetup(){
     const selected = getSelectedItem(true);
     if (selected === oldSelectedItemInventory) { if (failureCounter++ > failureMax) refreshPage(); return; }
     oldSelectedItemInventory = selected;
-    $nativeBtnSell.trigger('click');
+    
+    let parseditem = parseSelectedItem(selected);
+    if ( canBeSelled(parseditem) ) $nativeBtnSell.trigger('click');
+    else {
+      let next = selected.nextElementSibling;
+      if (!next) { btnSell.style.backgroundColor = 'red'; return; }
+      $(next).trigger('click'); }
     setTimeout(sellItem, sellTimer);
   }
   function useToggle(){
