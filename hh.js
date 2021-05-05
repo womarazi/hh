@@ -145,12 +145,13 @@ function getvar(name) { return localStorage.getItem(name); }
 function setvar(name) { return localStorage.setItem(name); }
 function shopitemsetup(buttonContainer) {
   for (let i = 0; i < 24; i++) {
-    let btn = makeVarButton('_hhjs_equip-' + i, 40, true);
+    let btn = makeVarButton(buttonContainer, '_hhjs_equip-' + i, 40, true);
     btn.backgroundImage = 'https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png';
+   
   }
 }
 
-function makeVarButton(name, size = 40, colorBorder = false, colorOn = 'green', colorOff='red') {
+function makeVarButton(container, name, size = 40, colorBorder = false, colorOn = 'green', colorOff='red') {
   const btn = makeRunButton(size);
   let val = !!localStorage.getItem(name);
   function updateColor(){
@@ -162,6 +163,7 @@ function makeVarButton(name, size = 40, colorBorder = false, colorOn = 'green', 
     localStorage.setItem(name, val = !val);
     updateColor();
   });
+  if (container) container.append(btn);
 }
 
 function pachinkoSetup() {
