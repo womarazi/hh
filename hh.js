@@ -162,7 +162,7 @@ function shopitemsetup(container) {
 
 function makeVarButton(container, name, size = 40, colorBorder = false, colorOn = 'green', colorOff='red') {
   const btn = makeRunButton(size);
-  let val = !!localStorage.getItem(name);
+  let val = eval(localStorage.getItem(name));
   function updateColor(){
     if (colorBorder) btn.style.borderColor = val ? colorOn : colorOff;
     else btn.style.backgroundColor = val ? colorOn : colorOff;
