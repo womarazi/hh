@@ -322,7 +322,8 @@ function shopSetup(){
     return ret; }
 
   function canBeSelled(parsedItem) {
-    const byType = eval(localStorage.getItem('_hhjs_equip_' + type));
+    console.log('canBeSelled() ? ', parsedItem);
+    const byType = eval(localStorage.getItem('_hhjs_equip_' + parsedItem.type));
     if (!byType) return false;
     // todo: by stats
   }
