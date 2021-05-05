@@ -146,6 +146,7 @@ function setvar(name) { return localStorage.setItem(name); }
 function shopitemsetup(container) {
   container = container || document.createElement('div');
   buttonContainer.append(container);
+  container.style.display = 'flex';
   container.style.maxWidth = '200px';
   container.style.flexWrap = 'wrap';
   container.style.justifyContent = 'space-evenly';
@@ -153,10 +154,10 @@ function shopitemsetup(container) {
     let btn = makeVarButton(container, '_hhjs_equip-' + i, 40, false);
     btn.style.backgroundImage = 'url(https://hh2.hh-content.com/pictures/misc/items_icons/' + i + ( i === 16 ? '.svg' : '.png') + ')';
     // btn.style.backgroundRepeat = 'round';
-    btn.style.backgroundSize = '25px';
     btn.style.backgroundRepeat = 'no-repeat';
     btn.style.backgroundPosition = 'center';
-    btn.style.border = 'none';
+    btn.style.border = 'none'; 
+    btn.style.backgroundSize = (i === 16) ? '25px' : '32px';
   }
 }
 
