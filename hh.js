@@ -148,7 +148,7 @@ function shopitemsetup(container) {
   for (let i = 0; i < 24; i++) {
     let btn = makeVarButton(container, '_hhjs_equip-' + i, 40, false);
     btn.backgroundImage = 'url(https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png)';
-    btn.backgroundRepeat: 'round';
+    btn.backgroundRepeat = 'round'; // ygutftfu futfiut  fi iktfyftyt fy ykk
    
   }
 }
