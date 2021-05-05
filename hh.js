@@ -157,11 +157,13 @@ function shopitemsetup(container) {
   let colors = ['#8d8e9f', '#23b56b', '#ffb244', '#9150bf', '#ec0039']; // mythic bg: transparent radial-gradient(closest-side at 50% 50%,#f5a866 0,#ec0039 51%,#9e0e27 100%) 0 0 no-repeat padding-box
   for (let i = 0; i < rarities.length; i++) {
     const rarity = rarities[i];
-    const color = colors[i];
-    const btn = makeVarButton(container, '_hhjs_equip-' + rarity, 40, false, color, 'black');
+    const colorOn = colors[i];
+    const colorOff = 'black';
+    const btn = makeVarButton(container, '_hhjs_equip-' + rarity, 40, false, colorOn, colorOff);
     btn.innerText = rarity[0].toUpperCase(); // as das fdgdf gfd gdf gdf
-    btn.style.borderColor = color; // asfasfas gffd
+    btn.style.borderColor = colorOn; // asfasfas gffd
     btn.style.color = btn.style.borderColor;
+    btn.style.color = btn.style.backgroundColor === colorOn ? colorOn : colorOff;
     if (i === rarities.length -1) { btn.style.marginBottom = '15px'; }
   }
   container.append(document.createElement('br'));
@@ -173,7 +175,6 @@ function shopitemsetup(container) {
     btn.style.backgroundPosition = 'center';
     btn.style.border = 'none'; 
     btn.style.backgroundSize = (i === 16) ? '25px' : '32px';
-    btn.style.color = btn.style.borderColor;
   }
 
 
@@ -185,7 +186,7 @@ function makeVarButton(container, name, size = 40, colorBorder = false, colorOn 
   function updateColor(){
     if (colorBorder) btn.style.borderColor = val ? colorOn : colorOff;
     else btn.style.backgroundColor = val ? colorOn : colorOff;
-    btn.style.color = btn.style.borderColor;
+    btn.style.color = btn.style.backgroundColor === colorOn ? colorOn : colorOff;
   }
   $(btn).on('click', () => {
     localStorage.setItem(name, val = !val);
