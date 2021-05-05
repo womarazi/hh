@@ -143,9 +143,10 @@ function makeRunButton(size = 30) {
 
 function getvar(name) { return localStorage.getItem(name); }
 function setvar(name) { return localStorage.setItem(name); }
-function shopitemsetup() {
+function shopitemsetup(container) {
+  container = container || buttonContainer;
   for (let i = 0; i < 24; i++) {
-    let btn = makeVarButton(buttonContainer, '_hhjs_equip-' + i, 40, false);
+    let btn = makeVarButton(container, '_hhjs_equip-' + i, 40, false);
     btn.backgroundImage = 'url(https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png)';
     btn.backgroundRepeat: 'round';
    
@@ -290,8 +291,11 @@ function useItem() {
     setTimeout(useItem, usingTimer);
   }
   $(btnUse).on('click', useToggle);
-  shopitemsetup();
   window.hhjs_useItem = useItem;
+  buttonContainer.append(separator);
+  const itemContainer = document.createElement('div');
+  buttonContainer.append(itemContainer);
+  shopitemsetup(itemContainer);
 }
 function championSetup(){
   let separator = document.createElement('br');
