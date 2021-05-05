@@ -151,6 +151,8 @@ function shopitemsetup(container) {
   container.style.maxWidth = '200px';
   container.style.flexWrap = 'wrap';
   container.style.justifyContent = 'space-evenly';
+  container.style.marginTop = '15px';
+  container.style.marginBottom = '15px';
   let rarities = ["common", "rare", "epic", "legendary", "mythic"];
   let colors = ['#8d8e9f', '#23b56b', '#ffb244', '#9150bf', '#ec0039']; // mythic bg: transparent radial-gradient(closest-side at 50% 50%,#f5a866 0,#ec0039 51%,#9e0e27 100%) 0 0 no-repeat padding-box
   for (let i = 0; i < rarities.length; i++) {
@@ -160,6 +162,7 @@ function shopitemsetup(container) {
     btn.innerText = rarity[0].toUpperCase();
     btn.style.backgroundColor = color;
     btn.style.borderColor = color;
+    if (i === rarities.length -1) { btn.style.marginBottom = '15px'; }
   }
   container.append(document.createElement('br'));
   for (let i = 1; i <= 16; i++) {
@@ -182,13 +185,13 @@ function makeVarButton(container, name, size = 40, colorBorder = false, colorOn 
     if (colorBorder) btn.style.borderColor = val ? colorOn : colorOff;
     else btn.style.backgroundColor = val ? colorOn : colorOff;
   }
-  updateColor();
   $(btn).on('click', () => {
     localStorage.setItem(name, val = !val);
     updateColor();
   });
   if (container) container.append(btn);
-  return btn; // ygihuyvuy ih i
+  updateColor();
+  return btn;
 }
 
 function pachinkoSetup() {
