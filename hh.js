@@ -164,6 +164,7 @@ function makeVarButton(container, name, size = 40, colorBorder = false, colorOn 
     updateColor();
   });
   if (container) container.append(btn);
+  return btn; // ygihuyvuy ih i
 }
 
 function pachinkoSetup() {
