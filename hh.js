@@ -315,7 +315,7 @@ function shopSetup(){
     const $item = $(item);
     const ret = {type: null};
     
-    const typeurl = $item.find('.stats_icon')[0];
+    const typeurl = $item.find('.stats_icon')[0].src; // hasasfa as sfsfa sa
     let start = typeurl.lastIndexOf('/') + 1;
     let end = typeurl.lastIndexOf('.');
     ret.type = typeurl.substring(start, end);
