@@ -350,6 +350,10 @@ function shopSetup(){
     buyingOn = !buyingOn;
     buyItem();
   }
+  function sellToggle() {
+    sellingOn = !sellingOn;
+    sellItem();
+  }
   $(btnUse).on('click', useToggle);
   $(btnBuy).on('click', buyToggle);
   $(btnSell).on('click', sellToggle);
