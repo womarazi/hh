@@ -339,6 +339,7 @@ function shopSetup(){
     if ( canBeSelled(parseditem) ) $nativeBtnSell.trigger('click');
     else {
       let next = selected.nextElementSibling;
+      console.log('sellitem: ', selected, '-->', next);
       if (!next) { btnSell.style.backgroundColor = 'red'; return; }
       $(next).trigger('click'); }
     setTimeout(sellItem, sellTimer);
