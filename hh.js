@@ -414,7 +414,7 @@ function shopSetup(){
     invIsExpand = !invIsExpand;
     if (invIsExpand) expandInventory(); else collapseInventory();
   }
-  inventory.on('contextmenu', toggleInventory);
+  $inventory.on('contextmenu', toggleInventory);
 }
 function championSetup(){
   let separator = document.createElement('br');
