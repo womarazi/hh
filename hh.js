@@ -183,6 +183,7 @@ function makeVarButton(container, name, size = 40, colorBorder = false, colorOn 
   function updateColor(){
     if (colorBorder) btn.style.borderColor = val ? colorOn : colorOff;
     else btn.style.backgroundColor = val ? colorOn : colorOff;
+    btn.style.color = btn.style.borderColor;
   }
   $(btn).on('click', () => {
     localStorage.setItem(name, val = !val);
