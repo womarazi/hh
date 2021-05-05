@@ -159,9 +159,8 @@ function shopitemsetup(container) {
     const rarity = rarities[i];
     const color = colors[i];
     const btn = makeVarButton(container, '_hhjs_equip-' + rarity, 40, false, color, 'black');
-    btn.innerText = rarity[0].toUpperCase();
-    btn.style.backgroundColor = color;
-    btn.style.borderColor = color;
+    btn.innerText = rarity[0].toUpperCase(); // as das fdgdf gfd gdf gdf
+    btn.style.borderColor = color; // asfasfas gffd
     if (i === rarities.length -1) { btn.style.marginBottom = '15px'; }
   }
   container.append(document.createElement('br'));
