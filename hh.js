@@ -145,8 +145,9 @@ function getvar(name) { return localStorage.getItem(name); }
 function setvar(name) { return localStorage.setItem(name); }
 function shopitemsetup() {
   for (let i = 0; i < 24; i++) {
-    let btn = makeVarButton(buttonContainer, '_hhjs_equip-' + i, 40, true);
-    btn.backgroundImage = 'https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png';
+    let btn = makeVarButton(buttonContainer, '_hhjs_equip-' + i, 40, false);
+    btn.backgroundImage = 'url(https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png)';
+    btn.backgroundRepeat: 'round';
    
   }
 }
