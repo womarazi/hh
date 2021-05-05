@@ -153,9 +153,9 @@ function shopitemsetup(container) {
     let btn = makeVarButton(container, '_hhjs_equip-' + i, 40, false);
     btn.style.backgroundImage = 'url(https://hh2.hh-content.com/pictures/misc/items_icons/' + i + ( i === 16 ? '.svg' : '.png') + ')';
     // btn.style.backgroundRepeat = 'round';
-    btn.style.backgroundSize: '25px';
-    btn.style.backgroundRepeat: 'no-repeat';
-    btn.style.backgroundPosition: 'center';
+    btn.style.backgroundSize = '25px';
+    btn.style.backgroundRepeat = 'no-repeat';
+    btn.style.backgroundPosition = 'center';
     btn.style.border = 'none';
   }
 }
