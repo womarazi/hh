@@ -141,6 +141,29 @@ function makeRunButton(size = 30) {
   return btn;
 }
 
+function getvar(name) { return localStorage.getItem(name); }
+function setvar(name) { return localStorage.setItem(name); }
+function shopitemsetup(buttonContainer) {
+  for (let i = 0; i < 24; i++) {
+    let btn = makeVarButton('_hhjs_equip-' + i, 40, true);
+    btn.backgroundImage = 'https://hh2.hh-content.com/pictures/misc/items_icons/' + i + '.png';
+  }
+}
+
+function makeVarButton(name, size = 40, colorBorder = false, colorOn = 'green', colorOff='red') {
+  const btn = makeRunButton(size);
+  let val = !!localStorage.getItem(name);
+  function updateColor(){
+    if (colorBorder) btn.style.borderColor = val ? colorOn : colorOff;
+    else btn.style.backgroundColor = val ? colorOn : colorOff;
+  }
+  updateColor();
+  $(btn).on('click', () => {
+    localStorage.setItem(name, val = !val);
+    updateColor();
+  });
+}
+
 function pachinkoSetup() {
   let separator = document.createElement('br');
   buttonContainer.append(separator);
