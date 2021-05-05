@@ -151,8 +151,10 @@ function shopitemsetup(container) {
   container.style.maxWidth = '200px';
   container.style.flexWrap = 'wrap';
   container.style.justifyContent = 'space-evenly';
-  for (let i = 1; i <= 16; i++) {
-    let btn = makeVarButton(container, '_hhjs_equip-' + i, 40, false);
+  let rarities = ["common", "rare", "epic", "legendary", "mythic"];
+  let colors = ['#8d8e9f', '#23b56b', '#ffb244', '#9150bf', '#ec0039']; // mythic bg: transparent radial-gradient(closest-side at 50% 50%,#f5a866 0,#ec0039 51%,#9e0e27 100%) 0 0 no-repeat padding-box
+   for (let i = 1; i <= 16; i++) {
+    const btn = makeVarButton(container, '_hhjs_equip-' + i, 40, false);
     btn.style.backgroundImage = 'url(https://hh2.hh-content.com/pictures/misc/items_icons/' + i + ( i === 16 ? '.svg' : '.png') + ')';
     // btn.style.backgroundRepeat = 'round';
     btn.style.backgroundRepeat = 'no-repeat';
@@ -160,6 +162,16 @@ function shopitemsetup(container) {
     btn.style.border = 'none'; 
     btn.style.backgroundSize = (i === 16) ? '25px' : '32px';
   }
+  container.append(document.createElement('br'));
+  for (let i = 0; i < rarities.length; i++) {
+    const rarity = rarities[i];
+    const color = colors[i];
+    const btn = makeVarButton(container, '_hhjs_equip-' + rarity, 40, false, color, 'black');
+    btn.innerText = rarity[0].toUpperCase();
+    btn.style.backgroundColor = color;
+    btn.style.borderColor = color;
+  }
+
 }
 
 function makeVarButton(container, name, size = 40, colorBorder = false, colorOn = 'green', colorOff='red') {
@@ -314,18 +326,21 @@ function shopSetup(){
   function parseSelectedItem (item){
     const $item = $(item);
     const ret = {type: null};
-    
     const typeurl = $item.find('.stats_icon')[0].src; // hasasfa as sfsfa sa
     let start = typeurl.lastIndexOf('/') + 1;
     let end = typeurl.lastIndexOf('.');
     ret.type = typeurl.substring(start, end);
+    ret.rarity = item.getAttribute('rarity');
     return ret; }
 
   function canBeSelled(parsedItem) {
     console.log('canBeSelled() ? ', parsedItem);
-    const byType = eval(localStorage.getItem('_hhjs_equip_' + parsedItem.type));
+    const byType = eval(localStorage.getItem('_hhjs_equip-' + parsedItem.type));
+    const byRarity = eval(localStorage.getItem('_hhjs_equip-' + parsedItem.rarity));
     if (!byType) return false;
+    if (!byRarity) return false;
     // todo: by stats
+    return true;
   }
   function sellItem() {
    console.log('sellItem()', sellingOn, $nativeBtnSell);
@@ -339,7 +354,7 @@ function shopSetup(){
     if ( canBeSelled(parseditem) ) $nativeBtnSell.trigger('click');
     else {
       let next = selected.nextElementSibling;
-      console.log('sellitem: ', selected, '-->', next);
+      // console.log('sellitem: ', selected, '-->', next);
       if (!next) { btnSell.style.backgroundColor = 'red'; return; }
       $(next).trigger('click'); }
     setTimeout(sellItem, sellTimer);
