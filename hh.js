@@ -386,6 +386,31 @@ function shopSetup(){
   const itemContainer = document.createElement('div');
   buttonContainer.append(itemContainer);
   shopitemsetup(itemContainer);
+  const inventory = ...;
+  function expandInventory() {
+    inventory.style.position = 'absolute';
+    inventory.style.left = '-45vw';
+    inventory.style.top = '-25vh';
+    inventory.style.width = '90vw';
+    inventory.style.height = '50vh';
+    inventory.style.zIndex = '100';
+    inventory.style.background = 'gray';
+  }
+  function collapseInventory() {
+    inventory.style.removeProperty('position');
+    inventory.style.removeProperty('left');
+    inventory.style.removeProperty('top');
+    inventory.style.removeProperty('width');
+    inventory.style.removeProperty('height');
+    inventory.style.removeProperty('zIndex');
+    inventory.style.removeProperty('background');
+  }
+  invIsExpand = false;
+  function toggleInventory() {
+    invIsExpand = !invIsExpand;
+    if (invIsExpand) expandInventory(); else collapseInventory();
+  }
+  inventory.on('contextmenu', toggleInventory);
 }
 function championSetup(){
   let separator = document.createElement('br');
