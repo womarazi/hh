@@ -1,4 +1,5 @@
 console.log("hh.js v1 19/12/2020");
+// window.Hero.infos, window.Hero.energies
 setTimeout(main0, 500);
 
 function refreshPage(){
@@ -273,32 +274,79 @@ function shopSetup(){
   let separator = document.createElement('br');
   buttonContainer.append(separator);
   const size = 40;
-  const btnBuy = makeRunButton(size);
   const btnUse = makeRunButton(size);
-  btnBuy.style.opacity = btnUse.style.opacity = '0.99';
-  btnBuy.style.padding = btnUse.style.padding = '0px';
-  btnBuy.style.backgroundColor = btnUse.style.backgroundColor = "red";
-  btnBuy.innerHTML = "Buy";
+  const btnBuy = makeRunButton(size);
+  const btnSell = makeRunButton(size);
+  btnSell.style.backgroundColor = btnBuy.style.opacity = btnUse.style.opacity = '0.99';
+  btnSell.style.backgroundColor = btnBuy.style.padding = btnUse.style.padding = '0px';
+  btnSell.style.backgroundColor = btnBuy.style.backgroundColor = btnUse.style.backgroundColor = "red";
+  
   btnUse.innerHTML = "Use";
+  btnBuy.innerHTML = "Buy";
+  btnSell.innerHTML = "Sell";
   
   ////////// done creating buttons
   
   const $nativeBtnUse = $('#inventory .blue_text_button[rel="use"]');
-  let usingON = false;
-  let usingTimer = 500;
-  function useToggle(){
-    usingON = !usingON;
-    useItem(); // astoijasoirajsoi jasoirjaosjtoijtao
-  }
+  const $nativeBtnBuy = $('#inventory .blue_text_button[rel="buy"]');
+  const $nativeBtnSell = $('#inventory .green_text_button[rel="sell"]');
+  let usingON = false, buyingOn = false, sellingOn = false;
+  let usingTimer = 500, buyTimer = 500, sellTimer = 500;
+  // for any category, but only in your inventory if true, or only on shop to buy if false
+  function getSelectedItem(myInventory = true) { return $( (myInventory ? '#inventory .inventory_slots' : '#shop') + ' .slot.selected')[0]; } // for item, gift, book, boost... any
 
-function useItem() {
-   console.log('useItem', usingON, $nativeBtnUse);
-    if (!usingON) { btnUse.style.backgroundColor = 'red'; return; }
+  function useItem() {
+   console.log('useItem()', usingON, $nativeBtnUse);
+    if (!usingON || btnUse.disabled) { btnUse.style.backgroundColor = 'red'; return; }
     btnUse.style.backgroundColor = 'green';
     $nativeBtnUse.trigger('click');
     setTimeout(useItem, usingTimer);
   }
+  function buyItem() {
+   console.log('buyItem()', buyingOn, $nativeBtnBuy);
+    if (!buyingOn || btnBuy.disabled) { btnBuy.style.backgroundColor = 'red'; return; }
+    btnBuy.style.backgroundColor = 'green';
+    $nativeBtnBuy.trigger('click');
+    setTimeout(buyItem, buyTimer);
+  }
+  let oldSelectedItemInventory = null;
+  let failureCounter = 0, failureMax = 20;
+  let parseSelectedItem(item) {
+    const $item = $(item);
+    const ret = {type: null};
+    
+    const typeurl = $item.find('.stats_icon')[0];
+    let start = typeurl.lastIndexOf('/') + 1;
+    let end = typeurl.lastIndexOf('.');
+    ret.type = typeurl.substring(start, end);
+    return ret;
+  }
+  function canBeSelled(parsedItem) {
+    const byType = eval(localStorage.getItem('_hhjs_equip_' + type));
+    if (!byType) return false;
+    // todo: by stats
+  }
+  function sellItem() {
+   console.log('sellItem()', sellingOn, $nativeBtnSell);
+    if (!sellingOn || btnSell.disabled) { btnSell.style.backgroundColor = 'red'; return; }
+    btnSell.style.backgroundColor = 'green';
+    const selected = getSelectedItem(true);
+    if (selected === oldSelectedItemInventory) { if (failureCounter++ > failureMax) refreshPage(); return; }
+    oldSelectedItemInventory = selected;
+    $nativeBtnSell.trigger('click');
+    setTimeout(sellItem, sellTimer);
+  }
+  function useToggle(){
+    usingON = !usingON;
+    useItem();
+  }
+  function buyToggle() {
+    buyingOn = !buyingOn;
+    buyItem();
+  }
   $(btnUse).on('click', useToggle);
+  $(btnBuy).on('click', buyToggle);
+  $(btnSell).on('click', sellToggle);
   window.hhjs_useItem = useItem;
   buttonContainer.append(separator);
   const itemContainer = document.createElement('div');
