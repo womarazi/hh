@@ -17,10 +17,10 @@
 
     function showImage(e){
       console.log('show image', e);
-      if (e.target.src === img.src) return;
-      container.style.display = 'block';
-      img.src = e.target.src;
       for(let timer of timers) clearTimeout(timer);
+      if (e.target.src === img.src) return;
+      img.src = e.target.src;
+      container.style.display = 'block';
       timers = [];
     }
     function hideImage(e){
