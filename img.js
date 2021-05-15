@@ -1,4 +1,4 @@
-function imgmain(){
+  function imgmain(){
     if (excludeDomains.indexOf(location.host) >= 0) return;
     const container = document.createElement('div');
     document.body.append(container);
@@ -14,7 +14,7 @@ function imgmain(){
     const img = document.createElement('img');
     container.append(img);
     let timers = [];
-   
+
     function showImage(e){
       console.log('show image', e);
       if (e.target.tagName !== 'IMG' || e.target.src === img.src) return;
@@ -33,7 +33,7 @@ function imgmain(){
       if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
       timers.push(setTimeout(()=>hideImage(e), 500));
     }
-    function moveContainer(){
+    function moveContainer(e){
       console.log('move container', e);
       if (container.dataset.position === 'left') {
         container.dataset.position = 'right';
@@ -48,8 +48,8 @@ function imgmain(){
     document.body.addEventListener('mouseenter', showImage);
     document.body.addEventListener('mouseleave', hideImageDelay);
 
-}
+  }
 
-const excludeDomains = [];
+  const excludeDomains = [];
 
-document.addEventListener("DOMContentLoaded", imgmain);
+  document.addEventListener("DOMContentLoaded", imgmain);
