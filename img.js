@@ -2,7 +2,8 @@ function imgmain(){
     if (excludeDomains.indexOf(location.host) >= 0) return;
     const container = document.createElement('div');
     document.body.append(container);
-    container.style.display = 'absolute';
+    container.style.position = 'absolute';
+    container.style.display = 'none';
     container.style.zIndex = '100000';
     container.style.width = 'auto';
     container.style.height = 'auto';
