@@ -16,7 +16,7 @@
     let timers = [];
 
     function showImage(e){
-      console.log('show image', e);
+      console.log('show image', {e, timers});
       for(let timer of timers) clearTimeout(timer);
       if (e.target.src === img.src) return;
       img.src = e.target.src;
@@ -24,18 +24,18 @@
       timers = [];
     }
     function hideImage(e){
-      console.log('hide image', e);
+      console.log('hide image', {e, timers});
       // if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
       container.style.display = 'none';
     }
     function hideImageDelay(e) {
-      console.log('hide image delay', e);
+      console.log('hide image delay', {e, timers});
       // if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
       if (timers.length) return;
       timers.push(setTimeout(()=>hideImage(e), 500));
     }
     function moveContainer(e){
-      console.log('move container', e);
+      console.log('move container', {e, timers});
       if (container.dataset.position === 'left') {
         container.dataset.position = 'right';
         container.style.right = '0';
