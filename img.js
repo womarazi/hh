@@ -11,6 +11,7 @@ function imgmain(){
     container.style.left = '0';
     container.dataset.position = 'left';
     const img = document.createElement('img');
+    container.append(img);
    
     function showImage(e){
       if (e.target.tagName !== 'IMG' || e.target.src === img.src) return;
