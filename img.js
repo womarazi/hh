@@ -10,6 +10,7 @@
     container.style.overflow = 'auto';
     container.style.maxWidth = '50%';
     container.style.left = '0';
+    container.style.top = '0';
     container.dataset.position = 'left';
     const img = document.createElement('img');
     container.append(img);
