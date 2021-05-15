@@ -18,6 +18,12 @@ function imgmain(){
       if (e.target.tagName !== 'IMG' || e.target.src === img.src) return;
       container.style.display = 'block';
       img.src = e.target.src;
+      for(let timer of timers) clearTimeout(timer);
+    }
+    const timers = [];
+    function hideImageDelay(e) {
+      if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
+      timers.push(setTimeout(()=>hideImage(e), 500);
     }
     function hideImage(e){
       if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
