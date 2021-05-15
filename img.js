@@ -8,7 +8,8 @@
     container.style.width = 'auto';
     container.style.height = 'auto';
     container.style.overflow = 'auto';
-    container.style.maxWidth = '50%';
+    container.style.maxWidth = '33vw';
+    container.style.maxHeight = '100vh';
     container.style.left = '0';
     container.style.top = '0';
     container.dataset.position = 'left';
