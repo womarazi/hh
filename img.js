@@ -32,7 +32,7 @@
       console.log('hide image delay', {e, timers});
       // if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
       if (timers.length) return;
-      timers.push(setTimeout(()=>hideImage(e), 500));
+      timers.push(setTimeout(()=>hideImage(e), 1000));
     }
     function moveContainer(e){
       console.log('move container', {e, timers});
