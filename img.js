@@ -17,7 +17,7 @@
 
     function showImage(e){
       console.log('show image', e);
-      if (e.target.tagName !== 'IMG' || e.target.src === img.src) return;
+      if (e.target.src === img.src) return;
       container.style.display = 'block';
       img.src = e.target.src;
       for(let timer of timers) clearTimeout(timer);
@@ -25,12 +25,13 @@
     }
     function hideImage(e){
       console.log('hide image', e);
-      if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
+      // if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
       container.style.display = 'none';
     }
     function hideImageDelay(e) {
       console.log('hide image delay', e);
-      if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
+      // if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
+      if (timers.length) return;
       timers.push(setTimeout(()=>hideImage(e), 500));
     }
     function moveContainer(e){
@@ -44,9 +45,14 @@
         container.style.right = '';
         container.style.left = '0'; }
     }
+    function mouseover(e){
+      console.log('mouseover');
+      if (e.target.tagName !== 'IMG') showImage(e); else hideImageDelay(e);
+    }
     container.addEventListener('click', moveContainer);
-    document.body.addEventListener('mouseenter', showImage);
-    document.body.addEventListener('mouseleave', hideImageDelay);
+    document.body.addEventListener('mouseover', mouseover);
+    // document.body.addEventListener('mouseenter', showImage);
+    // document.body.addEventListener('mouseleave', hideImageDelay);
 
   }
 
