@@ -18,10 +18,10 @@
     function showImage(e){
       console.log('show image', {e, timers});
       for(let timer of timers) clearTimeout(timer);
-      if (e.target.src === img.src) return;
+      timers = [];
+      // if (e.target.src === img.src) return;
       img.src = e.target.src;
       container.style.display = 'block';
-      timers = [];
     }
     function hideImage(e){
       console.log('hide image', {e, timers});
