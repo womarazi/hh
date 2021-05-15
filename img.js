@@ -26,7 +26,7 @@
     function hideImage(e){
       console.log('hide image', e);
       // if (e.target.tagName !== 'IMG' || e.target.src !== img.src) return;
-      container.style.display = 'none';
+      // container.style.display = 'none';
     }
     function hideImageDelay(e) {
       console.log('hide image delay', e);
