@@ -1727,10 +1727,6 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
       console.log('calling callback:', callback);
       callback();
     }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     checkFightStart(0, 1000, onFightStart);
     return;
   }
@@ -1743,19 +1739,6 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     console.log('timeouttrollFight 100');
     setTimeout(() => trollFight(isarena, istroll, isleague, isSeason), 100);
     return; }
-  
-  // console.log("trollFight check troll && girl");
-  if (istroll && $girls.length === 0) {
-    let favBoss = +localStorage.getItem('favBoss');
-    let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
-    let forceFight = localStorage.getItem('forceFight');
-    if (forceFight === 'true') { forceFight = true; }
-    else if (forceFight === 'false') { farceFight = false; }
-    else { forceFight = !!+forceFight; }
-    console.log('forceFight? ', forceFight, document.location.href, favurl);
-    if (isNaN(favBoss) || favBoss <= 0) return;
-    if (document.location.href !== favurl || !forceFight) { setUrl(favurl); }
-  }
 
   // console.log("trollFight check energy");
   var energy = istroll ? +$(
@@ -1776,7 +1759,18 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
       setTimeout( () => { trollFight(isarena, istroll, isleague, isSeason); }, 300);
     }, 200);
     return; }
-
+  // console.log("trollFight check troll && girl");
+  if (istroll && $girls.length === 0) {
+    let favBoss = +localStorage.getItem('favBoss');
+    let favurl = "https://www.hentaiheroes.com/battle.html?id_troll="+favBoss;
+    let forceFight = localStorage.getItem('forceFight');
+    if (forceFight === 'true') { forceFight = true; }
+    else if (forceFight === 'false') { farceFight = false; }
+    else { forceFight = !!+forceFight; }
+    console.log('forceFight? ', forceFight, document.location.href, favurl);
+    if (isNaN(favBoss) || favBoss <= 0) return;
+    if (document.location.href !== favurl || !forceFight) { setUrl(favurl); return; }
+  }
   // console.log("trollFight event changed check");
   var listeners = undefined;
   //listeners = window.getEventListeners($button[0]);
@@ -1794,7 +1788,7 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     return;
   }
 
-  // console.log("trollFight start");
+  console.log("trollFight start");
   $button[0].innerHTML = "PerforM!";
   $button
     .off("click")
