@@ -65,6 +65,7 @@ couldMoveInto(x, y){
   // NB: una delle gemme vicine è questa stessa gemma ancora nella sua posizione originale invece che il vicino a cui si sta sostituendo, ma è corretto comunque. può far parte del tris solo se sono stesso colore e allora non cambia quale delle 2 uso nel confronto.
   if (this.isIce) return false;
   let leftFit1 = false, rightFit1 = false;
+  const board = this.board.gem;
   if (board[x-1] && board[x-1][y].color === this.color) {
     // ooX
     if (board[x-2] && board[x-2][y].color === this.color) return true;
