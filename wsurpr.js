@@ -150,6 +150,10 @@ function _wmain() {
   matchbtn.setAttribute('title', "calculate best matches and highlight");
   matchbtn.style.borderColor='green';
   matchbtn.addEventListener("click", calculateMatches);
+ 
+ const style = document.createElement('style');
+ style.innerHTML = '._wswappable{ border: 2px solid red; }';
+ document.appendElement(style);
 }
 
 document.addEventListener("DOMContentLoaded", _wmain);
