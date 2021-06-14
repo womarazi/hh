@@ -98,6 +98,7 @@ class _wGem{
   if (this.y < other.y) ret += 't';
   else if (this.y == other.y) ret += 'c';
   else if (this.y > other.y) ret += 'b';
+  return ret;
  }
 
  isInMatch(){
