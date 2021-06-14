@@ -58,61 +58,77 @@ class _wGem{
     console.log('board:', board, this);
     board.addGem(this); }
   }
-  canSwap(other, mark = true){
-    const ret = this.couldMoveInto(other.x, other.y) || other.couldMoveInto(this.x, this.y);
-    if (mark && ret) { this.html.classList.add('_wswappable'); other.html.classList.add('_wswappable'); }
-  }
-couldMoveInto(x, y){
-  // NB: una delle gemme vicine è questa stessa gemma ancora nella sua posizione originale invece che il vicino a cui si sta sostituendo, ma è corretto comunque. può far parte del tris solo se sono stesso colore e allora non cambia quale delle 2 uso nel confronto.
-  if (this.isIce) return false;
-  let leftFit1 = false, rightFit1 = false;
-  const board = this.board.gem;
-  console.log({board});
- this.html.removeAttribute('data-swappablewith');
-  if (board[x-1] && board[x-1][y].color === this.color) {
-    if (board[x-2] && board[x-2][y].color === this.color) {
-     this.html.dataset.swappablewith = 'ooX';
-     console.log('swappable ooX', [board[x-1][y], board[x-2][y], this]);
-     return true; }
-    leftFit1 = true;
-  }
-  if (board[x+1] && board[x+1][y].color === this.color) {
-    // Xoo
-    if (board[x+2] && board[x+2][y].color === this.color) {
-     this.html.dataset.swappablewith = 'Xoo';
-     console.log('swappable ooX', [this, board[x+1][y], board[x+2][y]]);
-     return true; }
-    rightFit1 = true;
-  }
-  // oXo
-  if (leftFit1 && rightFit1) {
-     this.html.dataset.swappablewith = 'oXo';
-     console.log('swappable oXo', [board[x-1][y], this, board[x+1][y]]);
-     return true; }
 
- let topFit1 = false, botFit1 = false;
-  if (board[x][y-1] && board[x][y-1].color === this.color) {
-    // °°X
-    if (board[x][y-2] && board[x][y-2].color === this.color) {
-     this.html.dataset.swappablewith = '°°x';
-     console.log('swappable °°x', [board[x][y-2], board[x][y-1], this]);
-     return true; }
-    topFit1 = true;
-  }
-  if (board[x][y+1] && board[x][y+1].color === this.color) {
-    if (board[x][y+2] && board[x][y+2].color === this.color) {
-     this.html.dataset.swappablewith = 'X..';
-     console.log('swappable X..', [this, board[x][y+1], board[x][y+2]]);
-     return true; }
-    botFit1 = true;
-  }
+  doSwap(other) {
+   let x = this.x;
+   let y = this.y;
+   this.x = other.x;
+   this.y = other.y;
+   other.x = x;
+   other.y = y;
+   this.board[this.x][this.y] = this;
+   this.board[other.x][other.y] = other; }
 
-  if (topFit1 && botFit1) {
-     this.html.dataset.swappablewith = '°x.';
-     console.log('swappable °x.', [board[x][y-1], this, board[x][y+1]]);
-     return true; }
-  return false;
-}
+ canSwap(other, mark = true){
+   this.doSwap(other);
+   const ret = this.isInMatch() || other.isInMatch();
+   if (mark && ret) { this.html.classList.add('_wswappable'); other.html.classList.add('_wswappable'); }
+   this.doSwap(other);
+   return ret; }
+
+ isInMatch(){
+   // NB: una delle gemme vicine è questa stessa gemma ancora nella sua posizione originale invece che il vicino a cui si sta sostituendo, ma è corretto comunque. può far parte del tris solo se sono stesso colore e allora non cambia quale delle 2 uso nel confronto.
+   if (this.isIce) return false;
+   let leftFit1 = false, rightFit1 = false;
+   const board = this.board.gem;
+   console.log({board});
+   const x = this.x;
+   const y = this.y;
+   this.html.removeAttribute('data-swappablewith');
+    if (board[x-1] && board[x-1][y].color === this.color) {
+      if (board[x-2] && board[x-2][y].color === this.color) {
+       this.html.dataset.swappablewith = 'ooX';
+       console.log('swappable ooX', [board[x-1][y], board[x-2][y], this]);
+       return true; }
+      leftFit1 = true;
+    }
+    if (board[x+1] && board[x+1][y].color === this.color) {
+      // Xoo
+      if (board[x+2] && board[x+2][y].color === this.color) {
+       this.html.dataset.swappablewith = 'Xoo';
+       console.log('swappable ooX', [this, board[x+1][y], board[x+2][y]]);
+       return true; }
+      rightFit1 = true;
+    }
+    // oXo
+    if (leftFit1 && rightFit1) {
+       this.html.dataset.swappablewith = 'oXo';
+       console.log('swappable oXo', [board[x-1][y], this, board[x+1][y]]);
+       return true; }
+
+   let topFit1 = false, botFit1 = false;
+    if (board[x][y-1] && board[x][y-1].color === this.color) {
+      // °°X
+      if (board[x][y-2] && board[x][y-2].color === this.color) {
+       this.html.dataset.swappablewith = '°°x';
+       console.log('swappable °°x', [board[x][y-2], board[x][y-1], this]);
+       return true; }
+      topFit1 = true;
+    }
+    if (board[x][y+1] && board[x][y+1].color === this.color) {
+      if (board[x][y+2] && board[x][y+2].color === this.color) {
+       this.html.dataset.swappablewith = 'X..';
+       console.log('swappable X..', [this, board[x][y+1], board[x][y+2]]);
+       return true; }
+      botFit1 = true;
+    }
+
+    if (topFit1 && botFit1) {
+       this.html.dataset.swappablewith = '°x.';
+       console.log('swappable °x.', [board[x][y-1], this, board[x][y+1]]);
+       return true; }
+    return false;
+  }
   duplicate(){
     new Gem(this.board, this.html, this.i);
   }
