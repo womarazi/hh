@@ -35,7 +35,7 @@ class _wGem{
   // board;
   constructor(board, html, i){
     if (html){ // if not html is constructor for clone
-    board = board;
+    this.board = board;
     this.html = html;
     this.i = i;
     this.x = i%8;
@@ -54,7 +54,8 @@ class _wGem{
     if (this.isBlue) this.color = Color.blue;
     if (this.isOrange) this.color = Color.green;
     if (this.isYellow) this.color = Color.yellow;
-    board.addGem(this);}
+    console.log('board:', board, this);
+    board.addGem(this); }
   }
   canSwap(other, mark = true){
     const ret = this.couldMoveInto(other.x, other.y) || other.couldMoveInto(this.x, this.y);
@@ -128,6 +129,6 @@ function _wmain() {
   const matchbtn = makeButton(buttoncontainer);
   matchbtn.setAttribute('title', "calculate best matches and highlight");
   matchbtn.style.borderColor='green';
-  matchbtn.addEventListener("click", calculateMataches);
+  matchbtn.addEventListener("click", calculateMatches);
 }
 _wmain();
