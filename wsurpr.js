@@ -109,7 +109,7 @@ function makeButton(container) {
   btn.style.height = '30px';
   btn.style.border = '2px solid black';
   btn.style.backgroundColor = 'white';
-  btn.borderRadius = '9999px';
+  btn.style.borderRadius = '9999px';
   container.append(btn);
   return btn;
 }
@@ -123,6 +123,8 @@ function _wmain() {
   const buttoncontainer = document.createElement('div');
   buttoncontainer.style.position='absolute';
   buttoncontainer.style.display='inline-flex';
+  buttoncontainer.style.zIndex='10000';
+  buttoncontainer.style.right='15px';
   
   document.body.append(buttoncontainer);
   const matchbtn = makeButton(buttoncontainer);
