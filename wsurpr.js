@@ -49,7 +49,7 @@ class _wGem{
  
     // missing [32, ...512] left just in case
     this.isSphere = html.classList.contains('gemM') ? 1024 : 0;
-    this.isIce = !![...this.html.parent.children].filter( e => e.classList.contains('mIce')).length ? 2048 : 0;
+    this.isIce = !![...this.html.parentElement.children].filter( e => e.classList.contains('mIce')).length ? 2048 : 0;
     this.colorBinary = this.isRed + this.isGreen + this.isBlue + this.isOrange + this.isYellow + this.isPurple + this.isSphere + this.isIce;
     if (this.isRed) this.color = Color.red;
     if (this.isGreen) this.color = Color.green;
