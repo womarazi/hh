@@ -39,8 +39,8 @@ class _wGem{
     this.html = html;
     this.i = +html.dataset.id;
     if (!html.dataset.id) console.warn('wrong id index:', {html, indexSbagliato});
-    this.x = i%8;
-    this.y = Math.floor(i/8);
+    this.x = this.i%8;
+    this.y = Math.floor(this.i/8);
     this.isRed = html.classList.contains('gemR') ? 1 : 0;
     this.isGreen = html.classList.contains('gemG') ? 2 : 0;
     this.isBlue = html.classList.contains('gemB') ? 4 : 0;
