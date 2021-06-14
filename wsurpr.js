@@ -1,5 +1,3 @@
-function parseBoard() {
-}
 class _wGemBoard{
  // gems;// Gem[8][8]
   constructor(isClone = false){
@@ -7,7 +5,7 @@ class _wGemBoard{
     if (!this.isClone){
       let preselect = '.matchField > .cells-container.matchFieldCells ';
       let gems = document.querySelectorAll(preselect+'.theGem');
-      gems = gems.map( (g, i) => new _wGem(this, g, i));
+      gems = [...gems].map( (g, i) => new _wGem(this, g, i));
     }
   }
 
@@ -107,7 +105,7 @@ function makeButton(container) {
   const btn = document.createElement('button');
   btn.style.width = '30px';
   btn.style.height = '30px';
-  btn.style.border = '2px solid black';
+  btn.style.border = '5px solid black';
   btn.style.backgroundColor = 'white';
   btn.style.borderRadius = '9999px';
   container.append(btn);
@@ -130,6 +128,6 @@ function _wmain() {
   const matchbtn = makeButton(buttoncontainer);
   matchbtn.setAttribute('title', "calculate best matches and highlight");
   matchbtn.style.borderColor='green';
-  matchbtn.onClick = calculateMatches;
+  matchbtn.addEventListener("click", calculateMataches);
 }
 _wmain();
