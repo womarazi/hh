@@ -20,7 +20,7 @@ class _wGemBoard{
   }
   calculateSwapScores(){
    
-   let board = document.querySelectorAll(this.boardSelector);
+   let board = document.querySelector(this.boardSelector);
    let xdirections = ['l', 'c', 'r'], ydirections = ['t', 'c', 'b'];
    let directions = [];
    for (let xdir of xdirections) for (let ydir of ydirections) directions.push('.', xdir + ydir);
