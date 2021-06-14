@@ -103,11 +103,12 @@ couldMoveInto(x, y){
     const board = this.board.duplicate();
   }
 }
-function makeButton() {
+function makeButton(container) {
   const btn = document.createElement('button');
   btn.style.width = '30px';
   btn.style.height = '30px';
   btn.style.borderWidth = '2px';
+  container.append(btn);
   return btn;
 }
 function calculateMatches(){
@@ -118,7 +119,7 @@ function calculateMatches(){
 }
 function _wmain() {
   const buttoncontainer = document.createElement('div');
-  const matchbtn = makeButton();
+  const matchbtn = makeButton(buttoncontainer);
   matchbtn.setAttribute('title', "calculate best matches and highlight");
   matchbtn.style.borderColor='green';
   matchbtn.onClick = calculateMatches;
