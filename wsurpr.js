@@ -172,7 +172,7 @@ function _wmain() {
  
  const style = document.createElement('style');
  style.innerHTML = '._wswappable{ border: 2px solid red; }';
- document.appendElement(style);
+ document.append(style);
 }
 
 document.addEventListener("DOMContentLoaded", _wmain);
