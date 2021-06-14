@@ -4,13 +4,10 @@ class _wGemBoard{
     this.gem = [];               
     if (!this.isClone){
       let preselect = '.matchField > .cells-container.matchFieldCells ';
-      let gems = document.querySelectorAll(preselect+'.theGem');
+      let gems = document.querySelectorAll(preselect+'.m3-pic.theGem');
       gems = [...gems].map( (g, i) => new _wGem(this, g, i));
     }
   }
- problema 1: il ghiaccio è un elemento separato. devo fare select su notice e fare isIce = !![...this.html.parent.children].filter( e => e.classList.contains('mIce')).length;
-problema2: adda gemP purple
-
   duplicate() {
     const board = new _wGemBoard(true);
     board.gem = board.gem.map(g=>g.duplicate());
@@ -30,8 +27,8 @@ problema2: adda gemP purple
     }
   }
 }
-const knownGems = {R:{color: 'red'}, G:{color: 'green'}, B:{color: 'blue'}, W:{color: 'orange'}, O:{color: 'yellow'}, M:{color:'sphere'}, Ice:{color:'ice'}};
-const Color = {red: 'red', green:'green', blue: 'blue', orange:'orange', yellow:'yellow'};
+const knownGems = {R:{color: 'red'}, G:{color: 'green'}, B:{color: 'blue'}, W:{color: 'orange'}, O:{color: 'yellow'}, M:{color:'sphere'}, Ice:{color:'ice'}, P:{color:'purple'}};
+const Color = {red: 'red', green:'green', blue: 'blue', orange:'orange', yellow:'yellow', purple: 'purple'};
 class _wGem{
   // html;
   // board;
@@ -48,15 +45,19 @@ class _wGem{
     this.isBlue = html.classList.contains('gemB') ? 4 : 0;
     this.isOrange = html.classList.contains('gemW') ? 8 : 0;
     this.isYellow = html.classList.contains('gemO') ? 16 : 0;
+    this.isPurple = html.classList.contains('gemP') ? 32 : 0; 
+ 
     // missing [32, ...512] left just in case
     this.isSphere = html.classList.contains('gemM') ? 1024 : 0;
-    this.isIce = html.classList.contains('gemIce') ? 2048 : 0;
-    this.colorBinary = this.isRed + this.isGreen + this.isBlue + this.isOrange + this.isYellow + this.isSphere + this.isIce;
+    this.isIce = !![...this.html.parent.children].filter( e => e.classList.contains('mIce')).length ? 2048 : 0;
+    this.colorBinary = this.isRed + this.isGreen + this.isBlue + this.isOrange + this.isYellow + this.isPurple + this.isSphere + this.isIce;
     if (this.isRed) this.color = Color.red;
     if (this.isGreen) this.color = Color.green;
     if (this.isBlue) this.color = Color.blue;
     if (this.isOrange) this.color = Color.orange;
     if (this.isYellow) this.color = Color.yellow;
+    if (this.isPurple) this.color = Color.purple;
+    if (!this.color) console.error('unrecognized gem color:, this, html);
     console.log('board:', board, this);
     board.addGem(this); }
   }
