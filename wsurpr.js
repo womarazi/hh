@@ -1,10 +1,11 @@
 class _wGemBoard{
  // gem;// Gem[8][8]
   constructor(isClone = false){
+    this.boardSelector = '.matchField > .cells-container.matchFieldCells';
+    this.gemSelector = this.boardSelector + ' .m3-pic.theGem';
     this.gem = [];               
     if (!this.isClone){
-      let preselect = '.matchField > .cells-container.matchFieldCells ';
-      let gems = document.querySelectorAll(preselect+'.m3-pic.theGem');
+      let gems = document.querySelectorAll(this.gemSelector);
       gems = [...gems].map( (g, i) => new _wGem(this, g, i));
     }
   }
@@ -18,6 +19,13 @@ class _wGemBoard{
     gem.board = this;
   }
   calculateSwapScores(){
+   
+   let board = document.querySelectorAll(this.boardSelector);
+   let xdirections = ['l', 'c', 'r'], ydirections = ['t', 'c', 'b'];
+   let directions = [];
+   for (let xdir of xdirections) for (let ydir of ydirections) directions.push('.', xdir + ydir);
+   [...board.querySelectorAll(directions.join(', ')].forEach( (e, i) => e.classList.remove.apply(e.classList, directions))
+   
     for(let x = 0; x < 7; x++){
       for(let y = 0; y < 7; y++){
         // simulo swap right e bottom di tutti
@@ -75,9 +83,22 @@ class _wGem{
  canSwap(other, mark = true){
    this.doSwap(other);
    const ret = this.isInMatch() || other.isInMatch();
-   if (mark && ret) { this.html.classList.add('_wswappable'); other.html.classList.add('_wswappable'); }
    this.doSwap(other);
+   if (ret) {
+     this.html.classList.add( this.getRelativeDirection(other) );
+     other.html.classList.add( other.getRelativeDirection(this) );
+   }
    return ret; }
+
+ getRelativeDirection(other){
+  let ret = '?';
+  if (this.x < other.x) ret = 'l';
+  else if (this.x == other.x) ret = 'c';
+  else if (this.x > other.x) ret = 'r';
+  if (this.y < other.y) ret += 't';
+  else if (this.y == other.y) ret += 'c';
+  else if (this.y > other.y) ret += 'b';
+ }
 
  isInMatch(){
    // NB: una delle gemme vicine è questa stessa gemma ancora nella sua posizione originale invece che il vicino a cui si sta sostituendo, ma è corretto comunque. può far parte del tris solo se sono stesso colore e allora non cambia quale delle 2 uso nel confronto.
@@ -172,7 +193,7 @@ function _wmain() {
  
  const style = document.createElement('style');
  style.innerHTML = '._wswappable{ border: 2px solid red; }';
- document.append(style);
+ document.body.append(style);
 }
 
 document.addEventListener("DOMContentLoaded", _wmain);
