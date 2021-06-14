@@ -107,7 +107,9 @@ function makeButton(container) {
   const btn = document.createElement('button');
   btn.style.width = '30px';
   btn.style.height = '30px';
-  btn.style.borderWidth = '2px';
+  btn.style.border = '2px solid black';
+  btn.style.backgroundColor = 'white';
+  btn.borderRadius = '9999px';
   container.append(btn);
   return btn;
 }
@@ -119,10 +121,13 @@ function calculateMatches(){
 }
 function _wmain() {
   const buttoncontainer = document.createElement('div');
+  buttoncontainer.style.position='absolute';
+  buttoncontainer.style.display='inline-flex';
+  
+  document.body.append(buttoncontainer);
   const matchbtn = makeButton(buttoncontainer);
   matchbtn.setAttribute('title', "calculate best matches and highlight");
   matchbtn.style.borderColor='green';
   matchbtn.onClick = calculateMatches;
-  document.body.append(buttoncontainer);
 }
 _wmain();
