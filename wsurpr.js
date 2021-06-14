@@ -13,7 +13,7 @@ class _wGemBoard{
     const board = new _wGemBoard(true);
     board.gems = board.gems.map(g=>g.duplicate());
   }
-  addgem(gem){
+  addGem(gem){
     if(!this.gem[gem.x]) this.gem[gem.x] = [];
     this.gem[gem.x][gem.y] = gem;
     gem.board = this;
