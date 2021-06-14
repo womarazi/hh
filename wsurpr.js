@@ -57,7 +57,7 @@ class _wGem{
     if (this.isOrange) this.color = Color.orange;
     if (this.isYellow) this.color = Color.yellow;
     if (this.isPurple) this.color = Color.purple;
-    if (!this.color) console.error('unrecognized gem color:, this, html);
+    if (!this.color) console.error('unrecognized gem color:', this, html);
     console.log('board:', board, this);
     board.addGem(this); }
   }
