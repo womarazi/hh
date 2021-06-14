@@ -50,10 +50,10 @@ class _wGem{
     this.isSphere = html.classList.contains('gemM') ? 1024 : 0;
     this.isIce = html.classList.contains('gemIce') ? 2048 : 0;
     this.colorBinary = this.isRed + this.isGreen + this.isBlue + this.isOrange + this.isYellow + this.isSphere + this.isIce;
-    if (this.isRed) this.color = Color.Red;
+    if (this.isRed) this.color = Color.red;
     if (this.isGreen) this.color = Color.green;
     if (this.isBlue) this.color = Color.blue;
-    if (this.isOrange) this.color = Color.green;
+    if (this.isOrange) this.color = Color.orange;
     if (this.isYellow) this.color = Color.yellow;
     console.log('board:', board, this);
     board.addGem(this); }
@@ -68,32 +68,43 @@ couldMoveInto(x, y){
   let leftFit1 = false, rightFit1 = false;
   const board = this.board.gem;
   console.log({board});
+ this.html.removeAttribute('data-swappablewith');
   if (board[x-1] && board[x-1][y].color === this.color) {
-    // ooX
-    if (board[x-2] && board[x-2][y].color === this.color) return true;
+    if (board[x-2] && board[x-2][y].color === this.color) {
+     this.html.dataset.swappablewith = 'ooX';
+     return true; }
     leftFit1 = true;
   }
   if (board[x+1] && board[x+1][y].color === this.color) {
     // Xoo
-    if (board[x+2] && board[x+2][y].color === this.color) return true;
+    if (board[x+2] && board[x+2][y].color === this.color) {
+     this.html.dataset.swappablewith = 'Xoo';
+     return true; }
     rightFit1 = true;
   }
   // oXo
-  if (leftFit1 && rightFit1) return true;
-  
-  let topFit1 = false, botFit1 = false;
+  if (leftFit1 && rightFit1) {
+     this.html.dataset.swappablewith = 'oXo';
+     return true; }
+
+ let topFit1 = false, botFit1 = false;
   if (board[x][y-1] && board[x][y-1].color === this.color) {
     // °°X
-    if (board[x][y-2] && board[x][y-2].color === this.color) return true;
+    if (board[x][y-2] && board[x][y-2].color === this.color) {
+     this.html.dataset.swappablewith = '°°x';
+     return true; }
     topFit1 = true;
   }
   if (board[x][y+1] && board[x][y+1].color === this.color) {
-    // X..
-    if (board[x][y+2] && board[x][y+2].color === this.color) return true;
+    if (board[x][y+2] && board[x][y+2].color === this.color) {
+     this.html.dataset.swappablewith = 'X..';
+     return true; }
     botFit1 = true;
   }
-  // °X_
-  if (leftFit1 && rightFit1) return true;
+
+  if (topFit1 && botFit1) {
+     this.html.dataset.swappablewith = '°x..';
+     return true; }
   return false;
 }
   duplicate(){
