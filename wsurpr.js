@@ -8,6 +8,8 @@ class _wGemBoard{
       gems = [...gems].map( (g, i) => new _wGem(this, g, i));
     }
   }
+ problema 1: il ghiaccio è un elemento separato. devo fare select su notice e fare isIce = !![...this.html.parent.children].filter( e => e.classList.contains('mIce')).length;
+problema2: adda gemP purple
 
   duplicate() {
     const board = new _wGemBoard(true);
