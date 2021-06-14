@@ -66,8 +66,8 @@ class _wGem{
    this.y = other.y;
    other.x = x;
    other.y = y;
-   this.board[this.x][this.y] = this;
-   this.board[other.x][other.y] = other; }
+   this.board.gem[this.x][this.y] = this;
+   this.board.gem[other.x][other.y] = other; }
 
  canSwap(other, mark = true){
    this.doSwap(other);
