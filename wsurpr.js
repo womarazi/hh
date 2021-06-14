@@ -24,7 +24,7 @@ class _wGemBoard{
    let xdirections = ['l', 'c', 'r'], ydirections = ['t', 'c', 'b'];
    let directions = [];
    for (let xdir of xdirections) for (let ydir of ydirections) directions.push('.', xdir + ydir);
-   [...board.querySelectorAll(directions.join(', ')].forEach( (e, i) => e.classList.remove.apply(e.classList, directions))
+   [...board.querySelectorAll(directions.join(', '))].forEach( (e, i) => e.classList.remove.apply(e.classList, directions));
    
     for(let x = 0; x < 7; x++){
       for(let y = 0; y < 7; y++){
