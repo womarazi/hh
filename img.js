@@ -58,6 +58,6 @@
 
   }
 
-  const excludeDomains = [];
+  const excludeDomains = ["nutaku.waifusurprise.com"];
 
   document.addEventListener("DOMContentLoaded", imgmain);
