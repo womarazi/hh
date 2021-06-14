@@ -66,6 +66,7 @@ couldMoveInto(x, y){
   if (this.isIce) return false;
   let leftFit1 = false, rightFit1 = false;
   const board = this.board.gem;
+  console.log({board});
   if (board[x-1] && board[x-1][y].color === this.color) {
     // ooX
     if (board[x-2] && board[x-2][y].color === this.color) return true;
