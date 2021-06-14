@@ -82,14 +82,14 @@ couldMoveInto(x, y){
   if (leftFit1 && rightFit1) return true;
   
   let topFit1 = false, botFit1 = false;
-  if (board[x][y-1].color === this.color) {
+  if (board[x][y-1] && board[x][y-1].color === this.color) {
     // °°X
-    if (board[x][y-1].color === this.color) return true;
+    if (board[x][y-2] && board[x][y-2].color === this.color) return true;
     topFit1 = true;
   }
-  if (board[x][y+1].color === this.color) {
+  if (board[x][y+1] && board[x][y+1].color === this.color) {
     // X..
-    if (board[x][y+2].color === this.color) return true;
+    if (board[x][y+2] && board[x][y+2].color === this.color) return true;
     botFit1 = true;
   }
   // °X_
