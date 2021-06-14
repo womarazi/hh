@@ -33,13 +33,14 @@ const Color = {red: 'red', green:'green', blue: 'blue', orange:'orange', yellow:
 class _wGem{
   // html;
   // board;
-  constructor(board, html, i){
+  constructor(board, html, indexSbagliato){
     if (html){ // if not html is constructor for clone
     this.board = board;
     this.html = html;
-    this.i = i;
+    this.i = +html.dataset.id;
+    if (!html.dataset.id) console.warn('wrong id index:', {html, indexSbagliato});
     this.x = i%8;
-    this.y = i/8;
+    this.y = Math.floor(i/8);
     this.isRed = html.classList.contains('gemR') ? 1 : 0;
     this.isGreen = html.classList.contains('gemG') ? 2 : 0;
     this.isBlue = html.classList.contains('gemB') ? 4 : 0;
