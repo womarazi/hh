@@ -134,4 +134,5 @@ function _wmain() {
   matchbtn.style.borderColor='green';
   matchbtn.addEventListener("click", calculateMatches);
 }
-_wmain();
+
+document.addEventListener("DOMContentLoaded", _wmain);
