@@ -1,7 +1,7 @@
 class _wGemBoard{
- // gems;// Gem[8][8]
+ // gem;// Gem[8][8]
   constructor(isClone = false){
-    this.gems = [];               
+    this.gem = [];               
     if (!this.isClone){
       let preselect = '.matchField > .cells-container.matchFieldCells ';
       let gems = document.querySelectorAll(preselect+'.theGem');
@@ -11,7 +11,7 @@ class _wGemBoard{
 
   duplicate() {
     const board = new _wGemBoard(true);
-    board.gems = board.gems.map(g=>g.duplicate());
+    board.gem = board.gem.map(g=>g.duplicate());
   }
   addGem(gem){
     if(!this.gem[gem.x]) this.gem[gem.x] = [];
