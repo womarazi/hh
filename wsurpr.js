@@ -83,11 +83,11 @@ class _wGem{
  canSwap(other, mark = true){
    this.doSwap(other);
    const ret = this.isInMatch() || other.isInMatch();
-   this.doSwap(other);
    if (ret) {
      this.html.classList.add( this.getRelativeDirection(other) );
-     other.html.classList.add( other.getRelativeDirection(this) );
+     // other.html.classList.add( other.getRelativeDirection(this) );
    }
+   this.doSwap(other);
    return ret; }
 
  getRelativeDirection(other){
