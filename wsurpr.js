@@ -23,7 +23,7 @@ class _wGemBoard{
    let board = document.querySelector(this.boardSelector);
    let xdirections = ['l', 'c', 'r'], ydirections = ['t', 'c', 'b'];
    let directions = [];
-   for (let xdir of xdirections) for (let ydir of ydirections) directions.push('.', xdir + ydir);
+   for (let xdir of xdirections) for (let ydir of ydirections) directions.push('.'+ xdir + ydir);
    [...board.querySelectorAll(directions.join(', '))].forEach( (e, i) => e.classList.remove.apply(e.classList, directions));
    
     for(let x = 0; x < 7; x++){
