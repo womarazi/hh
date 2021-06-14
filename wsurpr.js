@@ -1,7 +1,7 @@
 function parseBoard() {
 }
-Class _wGemBoard{
- gems;// Gem[8][8]
+class _wGemBoard{
+ // gems;// Gem[8][8]
   constructor(isClone = false){
     this.gems = [];               
     if (!this.isClone){
@@ -33,8 +33,8 @@ Class _wGemBoard{
 const knownGems = {R:{color: 'red'}, G:{color: 'green'}, B:{color: 'blue'}, W:{color: 'orange'}, O:{color: 'yellow'}, M:{color:'sphere'}, Ice:{color:'ice'}};
 const Color = {red: 'red', green:'green', blue: 'blue', orange:'orange', yellow:'yellow'};
 class _wGem{
-  html;
-  board;//
+  // html;
+  // board;
   constructor(board, html, i){
     if (html){ // if not html is constructor for clone
     board = board;
@@ -100,7 +100,7 @@ couldMoveInto(x, y){
   simulateSwap(other){
   if (!this.canSwap(other)) return null;
     return {todo: 'swapscore'};
-    const board = board.duplicate();
+    const board = this.board.duplicate();
   }
 }
 function makeButton() {
