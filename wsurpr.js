@@ -192,7 +192,13 @@ function _wmain() {
   matchbtn.addEventListener("click", calculateMatches);
  
  const style = document.createElement('style');
- style.innerHTML = '._wswappable{ border: 2px solid red; }';
+ style.innerHTML = '._wswappable{ border: 2px solid red;}' +
+   '.lt, .lb, .cc, .rt, .rb { border: 4px dotted purple; }' +
+   '.ct{ border-top: 2px solid #ff000077; } ' +
+   '.cb{ border-bottom: 2px solid #ff000077; }' +
+   '.lc{ border-left: 2px solid #ff000077; }' +
+   '.rc{ border-right: 2px solid #ff000077; }' +
+   '';
  document.body.append(style);
 }
 
