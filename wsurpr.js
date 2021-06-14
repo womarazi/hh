@@ -37,7 +37,7 @@ class _wGem{
     if (html){ // if not html is constructor for clone
     this.board = board;
     this.html = html;
-    this.i = +html.dataset.id;
+    this.i = html.dataset.id - 1;
     if (!html.dataset.id) console.warn('wrong id index:', {html, indexSbagliato});
     this.x = this.i%8;
     this.y = Math.floor(this.i/8);
