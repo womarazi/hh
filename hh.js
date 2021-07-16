@@ -1498,7 +1498,7 @@ function sortGirlArr() {
 var lastgirlCollected = -1;
 var lastIndex = 0;
 
-function haremCollectLoop(keySorted, i = 0) {
+function haremCollectLoop(keySorted, i = 1) {
   if($('div.girls_list>div[id_girl]').length === 0) {
     console.log('timeoutHaremLoop 100'); setTimeout(haremCollectLoop, 100); return; }
   var sec = 1000,
@@ -1517,7 +1517,8 @@ function haremCollectLoop(keySorted, i = 0) {
     var timeleft = girl.gData.pay_in; // maxwait= pay_time
     if (timeleft === undefined || timeleft === null) continue; //girl not owned.
     if (timeleft === 0 && lastgirlCollected !== gId) {
-      const delay = i >= 200 ? bigdelay : (i >= 4*5 ? middelay : smalldelay);
+      const delay = i % 200 === 0 ? bigdelay : (i % 4*5 === 0 ? middelay : smalldelay);
+      const delayname = i % 200 === 0 ? "bigdelay" : (i % 4*5 === 0 ? "middelay" : "smalldelay");
       console.log(
         "collect(",
         gId,
@@ -1525,16 +1526,14 @@ function haremCollectLoop(keySorted, i = 0) {
         girl.gData.Name,
         "), timeleft:",
         timeleft,
-        ", wait:",
-       delay
+        ", " + delayname + ":",
+       delay, delayname
       );
       haremCollectGirl(gId);
       lastgirlCollected = gId;
       lastIndex = index;
-      if (i >= 200) {
-      }
       setTimeout(function() {
-        haremCollectLoop(keySorted, i);
+        haremCollectLoop(keySorted, i++);
       }, delay);
       return;
     }
@@ -1548,7 +1547,7 @@ function haremCollectLoop(keySorted, i = 0) {
 function haremCollectGirl(id) {
   if (id === null || id === undefined || isNaN(+id)) return;
   var girlsSelector = 'div.girls_list>div[id_girl]>div[girl="' + id + '"]';
-  console.log("$(", girlsSelector, ").trigger('click');");
+  // console.log("$(", girlsSelector, ").trigger('click');");
   $(girlsSelector).trigger("click");
 }
 function harem0() {
