@@ -1533,7 +1533,7 @@ function haremCollectLoop(keySorted, i = 1) {
       lastgirlCollected = gId;
       lastIndex = index;
       setTimeout(function() {
-        haremCollectLoop(keySorted, i++);
+        haremCollectLoop(keySorted, i+1); // astastnsria sararwqasd as
       }, delay);
       return;
     }
