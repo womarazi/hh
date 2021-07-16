@@ -1525,8 +1525,8 @@ function haremCollectLoop(keySorted, i = 1) {
         " = ",
         girl.gData.Name,
         "), timeleft:",
-        timeleft,
-        ", " + delayname + ":",
+        timeleft, 'i:', i,
+        " waiting:",
        delay, delayname
       );
       haremCollectGirl(gId);
