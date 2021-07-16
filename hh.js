@@ -1494,16 +1494,20 @@ function sortGirlArr() {
   console.log("keysSorted: ", keysSorted);
   return keysSorted;
 }
+
 var lastgirlCollected = -1;
 var lastIndex = 0;
-function haremCollectLoop(keySorted) {
+
+function haremCollectLoop(keySorted, i = 0) {
   if($('div.girls_list>div[id_girl]').length === 0) {
     console.log('timeoutHaremLoop 100'); setTimeout(haremCollectLoop, 100); return; }
   var sec = 1000,
     min = 60 * 1000,
     hour = 60 * 60 * 1000;
-  var bigdelay = myrand(10,40) * min;
-  var smalldelay = myrand(0.2, 0.3) * sec;
+  var enddelay = 14400 * (1 + Math.pow(myrand(0, 1), 3)) * min; // to restart the collecting after they have regenerated. 14400 cover 57% girls, 28800 cover 97%, both are exact frequent breakpoints
+  var bigdelay = myrand(5, 10) * min; // to avoid temporary ban (answer with genric 500) due to too much request rate
+  var middelay = myrand(2, 3) * sec; // between "screens" (simulate time to scroll)
+  var smalldelay = myrand(0.2, 0.3) * sec; // between 2 consecutive girls
   if (!keySorted) keySorted = sortGirlArr();
   var index = 0;
   for (var key in keySorted) {
@@ -1513,6 +1517,7 @@ function haremCollectLoop(keySorted) {
     var timeleft = girl.gData.pay_in; // maxwait= pay_time
     if (timeleft === undefined || timeleft === null) continue; //girl not owned.
     if (timeleft === 0 && lastgirlCollected !== gId) {
+      const delay = i >= 200 ? bigdelay : (i >= 4*5 ? middelay : smalldelay);
       console.log(
         "collect(",
         gId,
@@ -1521,14 +1526,16 @@ function haremCollectLoop(keySorted) {
         "), timeleft:",
         timeleft,
         ", wait:",
-        smalldelay
+       delay
       );
       haremCollectGirl(gId);
       lastgirlCollected = gId;
       lastIndex = index;
+      if (i >= 200) {
+      }
       setTimeout(function() {
-        haremCollectLoop(keySorted);
-      }, smalldelay);
+        haremCollectLoop(keySorted, i);
+      }, delay);
       return;
     }
   }
@@ -1536,7 +1543,7 @@ function haremCollectLoop(keySorted) {
   //only reached when girl are all ccollected.
   setTimeout(function() {
     haremCollectLoop(keySorted);
-  }, bigdelay);
+  }, enddelay);
 }
 function haremCollectGirl(id) {
   if (id === null || id === undefined || isNaN(+id)) return;
