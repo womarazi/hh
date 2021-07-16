@@ -1517,8 +1517,8 @@ function haremCollectLoop(keySorted, i = 1) {
     var timeleft = girl.gData.pay_in; // maxwait= pay_time
     if (timeleft === undefined || timeleft === null) continue; //girl not owned.
     if (timeleft === 0 && lastgirlCollected !== gId) {
-      const delay = i % 200 === 0 ? bigdelay : (i % 4*5 === 0 ? middelay : smalldelay);
-      const delayname = i % 200 === 0 ? "bigdelay" : (i % 4*5 === 0 ? "middelay" : "smalldelay");
+      const delay = i % 200 === 0 ? bigdelay : (i % (4*5) === 0 ? middelay : smalldelay);
+      const delayname = i % 200 === 0 ? "bigdelay" : (i % (4*5) === 0 ? "middelay" : "smalldelay");
       console.log(
         "collect(",
         gId,
