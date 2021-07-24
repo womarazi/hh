@@ -66,6 +66,11 @@ function main0() {
   var params = getJsonFromUrl();
   console.log("hhMain url:", pathArray, params);
   switch (pathArray[0]) {
+    case "harem":
+      let shards = Object.values(girls).filter( (e, i) => !!e.gData.shards ).map( (e, i)=> { return {gid: e.gId, shards: e.gData.shards}; } )
+      localStorage.setItem('womarazi_shards', JSON.stringify(shards));
+      setVar('girls', girls);
+      break;
     case "tower-of-fame":
       towerOfFameSetup();
       break;
@@ -1058,7 +1063,9 @@ function popSingle(collected = false, retrycount = 0){
   }
 
 }
-
+var sec = 1000;
+var min = 60*sec;
+var hour = 60*min;
 function hhmain() {
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
@@ -1069,7 +1076,7 @@ function hhmain() {
   console.log("hhMain url:", pathArray, params);
   switch (pathArray[0]) {
     case "tower-of-fame":
-      towerOfFameMain();
+      towerOfFameMain2021();
       break;
       
     case "home":
@@ -1086,8 +1093,6 @@ function hhmain() {
       seasonArenaMain();
       break;
     case "harem":
-      let shards = Object.values(girls).filter( (e, i) => !!e.gData.shards ).map( (e, i)=> { return {gid: e.gId, shards: e.gData.shards}; } )
-      localStorage.setItem('womarazi_shards', JSON.stringify(shards));
       harem0(); break;
     case "activities":
       switch(params["tab"]) {
@@ -1113,8 +1118,42 @@ function hhmain() {
       
       break;
 
-    case "battle":
-      if (params["id_arena"] !== undefined) {
+    case "troll-pre-battle":
+      const girls = getVar('girls');
+      const trollStatus = getVar('trollStatus');
+      const trollnum = params["id_opponent"];
+      if (!trollStatus) trollStatus = [];
+      trollStatus[trollnum].ymen = $('.rewards_list [cur="ticket"]')[0]?.innerText;
+      trollStatus[trollnum].ymen = $('.rewards_list [cur="soft_currency"]')[0]?.innerText;
+      trollStatus[trollnum].orb_m1 = $('.rewards_list [cur="orbs"] .o_m1').length
+      let girls = $('.rewards_list .girls_reward')[0];
+      let grewards = [];
+      if (girls) {
+       try{ grewards = JSON.parse(girls.dataset.rewards).map(g=>g.id_girl); } catch(e){}
+      }
+      trollStatus[trollnum].girls = grewards;
+      setVar('trollStatus', trollStatus);
+      break;
+      
+    case "troll-battle.html":
+      const trollnum = params["id_opponent"];
+      const trollStatus = getVar('trollStatus');
+      const girls = getVar('girls');
+      let shardssum = 0;
+      let shards = trollStatus[trollnum]?.girls.map( gid => {
+        let s = girls[gid].gData.shards;
+        s = (s === undefined ? 100 : girls[gid].gData.shards);
+        shardssum += s;
+        return s;
+      }
+      if (shards.length === shardssum/100){
+         throw new Exception('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
+      }
+      if (getFightEnergy()) whenBattleStart(()=>refreshPage());
+      else {
+        // todo: check if use kobans to refill
+        setTimeout(()=> refreshPage(), 30*min); }
+      /*if (params["id_arena"] !== undefined) {
         return trollFight(true, false, false);
       }
       if (params["id_troll"] !== undefined) {
@@ -1125,7 +1164,7 @@ function hhmain() {
       }
       if (params["id_season_arena"] !== undefined) {
         return trollFight(false, false, false, true);
-      }
+      }*/
       break;
       
     case "arena":
@@ -1146,7 +1185,20 @@ function hhmain() {
 
   }
 }
-
+function getVar(name){ return localStorage.read('_hhjs_'+name); }
+function gstVar(name, val){ return localStorage.write('_hhjs_'+name, val); }
+function getBattleEnergy(){
+  return +$('.energy_counter[type="fight"] [energy]')[0].innerText;
+}
+function getQuestEnergy(){
+  return +$('.energy_counter[type="quest"] [energy]')[0].innerText;
+}
+function whenBattleStart(callback, enemyhp = null, count = 0){
+  if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar)[1];
+  if(enemyhp.style.width) return callcack();
+  if(count > 100) return;
+  setTimeout(()=>whenBattleStart(callback, enemyhp, count++), 100);
+}
 function pachinkoMain() {
   let rewards;
   pachinkoMainOnClick();
