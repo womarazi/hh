@@ -1126,16 +1126,16 @@ function hhmain() {
       trollStatus[trollnum].ymen = $('.rewards_list [cur="ticket"]')[0]?.innerText;
       trollStatus[trollnum].ymen = $('.rewards_list [cur="soft_currency"]')[0]?.innerText;
       trollStatus[trollnum].orb_m1 = $('.rewards_list [cur="orbs"] .o_m1').length
-      let girls = $('.rewards_list .girls_reward')[0];
+      let girlshtml = $('.rewards_list .girls_reward')[0];
       let grewards = [];
-      if (girls) {
-       try{ grewards = JSON.parse(girls.dataset.rewards).map(g=>g.id_girl); } catch(e){}
+      if (girlshtml) {
+       try{ grewards = JSON.parse(girlshtml.dataset.rewards).map(g=>g.id_girl); } catch(e){}
       }
       trollStatus[trollnum].girls = grewards;
       setVar('trollStatus', trollStatus);
-      break;
+      break;}
       
-    case "troll-battle.html":
+    case "troll-battle.html":{
       const trollnum = params["id_opponent"];
       const trollStatus = getVar('trollStatus');
       const girls = getVar('girls');
