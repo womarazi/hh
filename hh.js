@@ -1118,7 +1118,7 @@ function hhmain() {
       
       break;
 
-    case "troll-pre-battle":
+    case "troll-pre-battle":{
       const girls = getVar('girls');
       const trollStatus = getVar('trollStatus');
       const trollnum = params["id_opponent"];
@@ -1165,7 +1165,7 @@ function hhmain() {
       if (params["id_season_arena"] !== undefined) {
         return trollFight(false, false, false, true);
       }*/
-      break;
+      break;}
       
     case "arena":
       arenaMain();
