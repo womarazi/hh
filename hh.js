@@ -1191,7 +1191,7 @@ function hhmain() {
 }
 function getVar(name){ 
   let ret = localStorage.getItem('_hhjs_'+name);
-  try { ret = JSON.parse(ret); } catch(){}
+  try { ret = JSON.parse(ret); } catch(e){}
   return ret;
 }
 function setVar(name, val){
