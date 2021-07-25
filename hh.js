@@ -16,7 +16,7 @@ function parseBlessingCondition(str) {
 }
 function parseBlessings() {
   var $blessinghtml = $('#popup_blessings .blessing.active-blessing');
-  return $blessinghtml.map( b => parseBlessing(b));
+  return $blessinghtml.map( (i, b) => parseBlessing(b));
 }
 function parseBlessing(blessinghtml){
   var $blessinghtml = $(blessinghtml);
@@ -39,7 +39,7 @@ function seasonmain2021() {
 function parseSeasonPlayers() {
   var $playershtml = $('#season-arena .season_arena_block');
   var blessings = parseBlessings();
-  var players = $playershtml.map( (p) => parseSeasonPlayer($(p), blessings));
+  var players = $playershtml.map( (i, p) => parseSeasonPlayer($(p), blessings));
   return players;
 }
 
