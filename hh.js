@@ -1124,7 +1124,7 @@ function hhmain() {
       const trollnum = params["id_opponent"];
       if (!trollStatus) trollStatus = [];
       if (!trollStatus[trollnum]) trollStatus[trollnum] = {};
-      trollStatus[trollnum].ymen = $('.rewards_list [cur="ticket"]')[0]?.innerText;
+      trollStatus[trollnum].ticket = $('.rewards_list [cur="ticket"]')[0]?.innerText;
       trollStatus[trollnum].ymen = $('.rewards_list [cur="soft_currency"]')[0]?.innerText;
       trollStatus[trollnum].orb_m1 = $('.rewards_list [cur="orbs"] .o_m1').length
       let girlshtml = $('.rewards_list .girls_reward')[0];
@@ -1197,7 +1197,8 @@ function getVar(name){
 function setVar(name, val){
   if (val && typeof val == 'object') val = JSON.stringify(val);
   return localStorage.setItem('_hhjs_'+name, val); }
-function getBattleEnergy(){
+
+function getFightEnergy(){
   return +$('.energy_counter[type="fight"] [energy]')[0].innerText;
 }
 function getQuestEnergy(){
