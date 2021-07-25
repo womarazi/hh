@@ -1189,7 +1189,11 @@ function hhmain() {
 
   }
 }
-function getVar(name){ return localStorage.getItem('_hhjs_'+name); }
+function getVar(name){ 
+  let ret = localStorage.getItem('_hhjs_'+name);
+  try { ret = JSON.parse(ret); } catch(){}
+  return ret;
+}
 function setVar(name, val){
   if (val && typeof val == 'object') val = JSON.stringify(val);
   return localStorage.setItem('_hhjs_'+name, val); }
