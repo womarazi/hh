@@ -1123,6 +1123,7 @@ function hhmain() {
       let trollStatus = getVar('trollStatus');
       const trollnum = params["id_opponent"];
       if (!trollStatus) trollStatus = [];
+      if (!trollStatus[trollnum]) trollStatus[trollnum] = {};
       trollStatus[trollnum].ymen = $('.rewards_list [cur="ticket"]')[0]?.innerText;
       trollStatus[trollnum].ymen = $('.rewards_list [cur="soft_currency"]')[0]?.innerText;
       trollStatus[trollnum].orb_m1 = $('.rewards_list [cur="orbs"] .o_m1').length
