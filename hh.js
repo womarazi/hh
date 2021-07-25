@@ -5,7 +5,92 @@ setTimeout(main0, 500);
 function refreshPage(){
   setUrl(document.location.href);
 }
+///////////////////////////////////////////// new season 2021
+function parseBlessingCondition(str) {
+  switch(str.toLowerCase().substr(0, str.indexOf(' '))){
+    default: throw new Exception('todo: implement this condition:', str);
+    case 'rarity': return {rarity: str.substr('rarity'.length).trim()};
+    case 'hair': return {hair: str.substr('hair color'.length).trim()};
+    case 'favorite': return {position: str.substr('Favorite position'.length).trim()};
+  }
+}
+function parseBlessings() {
+  var blessinghtml = $('#popup_blessings .blessing.active-blessing');
+  return blessinghtml.map( b => parseBlessing(b));
+}
+function parseBlessing(var blessinghtml){
+  var $blessinghtml = $(blessinghtml);
+  var blessing = {};
+  blessing.time0 = $blessinghtml.find('.blessing-timer')[0].innerText;
+  blessing.time = 1000*timeparse(blessing.time0);
+  blessing.expiration = new Date(new Date().getTime() + blessing.time);
+  blessing.condition0 = $blessinghtml.find('.blessing-condition')[0].innerText;
+  blessing.condition = parseBlessingCondition(blessing.condition0);
+  blessing.bonus0 = $blessinghtml.find('.blessing-bonus')[0].innerText
+  if(blessing.bonus0.indexOf('%') > 0) {
+    blessing.bonus = 1+blessing.bonus0.substr(1).replace('%', '')/100;
+  } else throw new Error('unexpected blessing bonus, insert it:', blessing.bonus0);
+  // delete blessing.time0; delete blessing.condition0M delete blessing.bonus0;
+}
 
+function seasonmain2021() {
+  var seasonPlayers = parseSeasonPlayers();
+}
+function parseSeasonPlayers() {
+  var $playershtml = $('#season-arena .season_arena_block');
+  var blessings = parseBlessings();
+  var players = $playershtml.map( (p) => parseSeasonPlayer($(p), blessings));
+  return players;
+}
+
+var _hhjs_classes = [null, 'hk', 'ch', 'kh'];
+function parseSeasonPlayer($player, blessings) {
+  var player = {};
+  var player.girls = [];
+for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings);
+  
+}
+function parseSeasonGirl($player, gindex, blessings){
+  var $player = $(temp0);
+  var girls = getVar('girls');
+  var girl = $player.find('[data-team-member-position="0"] img')[gindex];
+  if (!girl) return null;
+  var gid = +girl.getAttribute('src').match('https\:\/\/hh2\.hh\-content\.com\/pictures\/girls\/([0-9]+)\/')[1];
+  var gdata0 = girls[gid];
+  var gdata = girl.getAttribute('new-girl-tooltip-data');
+  if (!gdata) return null;
+  gdata = JSON.parse(gdata);
+  gdata.class = _hhjs_classes[gdata.class];
+  gdata.stats = {hk:gdata.caracs.carac1, ch:gdata.caracs.carac2, kh: gdata.caracs.carac3};
+  gdata.stars = (gdata.Graded2.match(/\<g/g) || []).length;
+  delete gdata.caracs;
+  delete gdata.Graded2;
+  gdata.gid = gid;
+  gdata.bonuses = findGirlBonuses(girls[gdata.gid], blessings, gdata);
+  return gdata;
+}
+function fingGirlbonuses(ginfo, blessings, output = {}){
+  output.bonuses = blessings.map(b => {from: b, applied: doesBonusApply(ginfo, b)});
+  output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
+    if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
+    return sum + elem2.applied ? 0 : elem2.from.bonus; }
+  return output.bonuses; }
+
+function doesBonusApply(ginfo, blessing){
+  if (blessing.condition.hair) {
+    return ginfo.gData.ref.hair.indexOf(blessing.condition.hair) >= 0;
+  }
+  if (blessing.condition.eyes) {
+    return ginfo.gData.ref.eyes.indexOf(blessing.condition.eyes) >= 0;
+  }
+  if (blessing.condition.rarity) {
+    return ginfo.gData.rarity.indexOf(blessing.condition.rarity) >= 0;
+  }
+  if (blessing.condition.position){
+    return ginfo.position_img.indexOf(blessing.condition.position) >= 0;
+  }
+}
+///////////////////// new season 2021 end
 var buttonContainer;
 function addKobanAutoButton() {
   let kobanbtn = document.createElement("button");
