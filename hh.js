@@ -1133,6 +1133,7 @@ function hhmain() {
        try{ grewards = JSON.parse(girlshtml.dataset.rewards).map(g=>g.id_girl); } catch(e){}
       }
       trollStatus[trollnum].girls = grewards;
+      console.log({trollStatus, trollnum, girlshtml, grewards, girls});
       setVar('trollStatus', trollStatus);
       break;}
       
