@@ -1120,7 +1120,7 @@ function hhmain() {
 
     case "troll-pre-battle":{
       const girls = getVar('girls');
-      const trollStatus = getVar('trollStatus');
+      let trollStatus = getVar('trollStatus');
       const trollnum = params["id_opponent"];
       if (!trollStatus) trollStatus = [];
       trollStatus[trollnum].ymen = $('.rewards_list [cur="ticket"]')[0]?.innerText;
