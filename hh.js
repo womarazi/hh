@@ -19,8 +19,8 @@ function parseBlessingsSetup(delay = 100, count = 0){
   function onBlessingClick() {
     console.log('onBlessingClick check', {delay, count});
     let success = false;
-    try { success = !parseBlessings(); } catch(e) { console.error(e); }
-   if (!success) setTimeout(()=>onBlessingClick(delay, count++), delay);
+    try { success = parseBlessings(); } catch(e) { console.error(e); }
+   if (!success) setTimeout(()=>onBlessingClick(delay, count+1), delay);
   }
   $('#blessings-button').on('click.hhjs', onBlessingClick);
 }
