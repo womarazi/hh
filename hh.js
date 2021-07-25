@@ -1189,7 +1189,7 @@ function hhmain() {
   }
 }
 function getVar(name){ return localStorage.getItem('_hhjs_'+name); }
-function gstVar(name, val){ return localStorage.setItem('_hhjs_'+name, val); }
+function setVar(name, val){ return localStorage.setItem('_hhjs_'+name, val); }
 function getBattleEnergy(){
   return +$('.energy_counter[type="fight"] [energy]')[0].innerText;
 }
