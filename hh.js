@@ -14,13 +14,27 @@ function parseBlessingCondition(str) {
     case 'favorite': return {position: str.substr('Favorite position'.length).trim()};
   }
 }
-function parseBlessings() {
-  var $blessinghtml = $('#popup_blessings .blessing.active-blessing');
-  return $blessinghtml.map( (i, b) => parseBlessing(b));
+
+function parseBlessingsSetup(delay = 100, count = 0){
+  function onBlessingClick () => {
+    console.log('onBlessingClick check', {delay, count});
+   if (!parseBlessings()) setTimeout(()=>onBlessingClick(delay, count++), delay);
+  }
+  $('#blessings-button').on('click.hhjs', onBlessingClick);
 }
+
+function parseBlessings() {
+  var $blessinghtml = $('#popup_blessings .blessing.active-blessing:visible');
+  let blessings = [];
+  if (!$blessinghtml.length) return false;
+  blessings = $blessinghtml.map( (i, b) => parseBlessing(b));
+  setVar('blessings', blessings);
+  return true; }
+
 function parseBlessing(blessinghtml){
   var $blessinghtml = $(blessinghtml);
   var blessing = {};
+  console.log({$blessinghtml, blessinghtml});
   blessing.time0 = $blessinghtml.find('.blessing-timer')[0].innerText;
   blessing.time = 1000*timeparse(blessing.time0);
   blessing.expiration = new Date(new Date().getTime() + blessing.time);
@@ -38,7 +52,7 @@ function seasonmain2021() {
 }
 function parseSeasonPlayers() {
   var $playershtml = $('#season-arena .season_arena_block');
-  var blessings = parseBlessings();
+  var blessings = getVar('blessings');
   var players = $playershtml.map( (i, p) => parseSeasonPlayer($(p), blessings));
   return players;
 }
@@ -125,7 +139,7 @@ function main0() {
     alert('old timeout hhmain0 100, should never happen!');
     setTimeout(main0, 100);
     return; }
-  
+  parseBlessingsSetup();
   buttonContainer = document.createElement("div");
   document.body.append(buttonContainer);
   buttonContainer.append(start);
