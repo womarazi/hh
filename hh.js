@@ -1204,11 +1204,12 @@ function getFightEnergy(){
 function getQuestEnergy(){
   return +$('.energy_counter[type="quest"] [energy]')[0].innerText;
 }
-function whenBattleStart(callback, enemyhp = null, count = 0){
+function whenBattleStart(callback, enemyhp = null, count = 0, delay = 100){
   if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar')[1];
-  if(enemyhp.style.width) return callcack();
+  if(enemyhp.style.width) return callback();
   if(count > 100) return;
-  setTimeout(()=>whenBattleStart(callback, enemyhp, count++), 100);
+  console.count('whenbattlestart check delay', delay);
+  setTimeout(()=>whenBattleStart(callback, enemyhp, count++, delay), delay);
 }
 function pachinkoMain() {
   let rewards;
