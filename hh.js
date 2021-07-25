@@ -16,7 +16,7 @@ function parseBlessingCondition(str) {
 }
 
 function parseBlessingsSetup(delay = 100, count = 0){
-  function onBlessingClick () => {
+  function onBlessingClick() {
     console.log('onBlessingClick check', {delay, count});
    if (!parseBlessings()) setTimeout(()=>onBlessingClick(delay, count++), delay);
   }
