@@ -1135,7 +1135,8 @@ function hhmain() {
       setVar('trollStatus', trollStatus);
       break;}
       
-    case "troll-battle.html":{
+    case "troll-battle":{
+      
       const trollnum = params["id_opponent"];
       const trollStatus = getVar('trollStatus');
       const girls = getVar('girls');
@@ -1146,6 +1147,7 @@ function hhmain() {
         shardssum += s;
         return s;
       });
+      console.log('troll-battle', {shards, girls, trollnum, trollStatus, energy: getFightEnergy()});
       if (shards.length === shardssum/100){
          throw new Exception('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
       }
