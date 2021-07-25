@@ -1205,7 +1205,7 @@ function getQuestEnergy(){
   return +$('.energy_counter[type="quest"] [energy]')[0].innerText;
 }
 function whenBattleStart(callback, enemyhp = null, count = 0){
-  if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar)[1]');
+  if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar')[1];
   if(enemyhp.style.width) return callcack();
   if(count > 100) return;
   setTimeout(()=>whenBattleStart(callback, enemyhp, count++), 100);
