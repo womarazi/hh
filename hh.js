@@ -15,10 +15,10 @@ function parseBlessingCondition(str) {
   }
 }
 function parseBlessings() {
-  var blessinghtml = $('#popup_blessings .blessing.active-blessing');
-  return blessinghtml.map( b => parseBlessing(b));
+  var $blessinghtml = $('#popup_blessings .blessing.active-blessing');
+  return $blessinghtml.map( b => parseBlessing(b));
 }
-function parseBlessing(var blessinghtml){
+function parseBlessing(blessinghtml){
   var $blessinghtml = $(blessinghtml);
   var blessing = {};
   blessing.time0 = $blessinghtml.find('.blessing-timer')[0].innerText;
