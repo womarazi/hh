@@ -52,7 +52,6 @@ function parseSeasonPlayer($player, blessings) {
 }
 
 function parseSeasonGirl($player, gindex, blessings){
-  var $player = $(temp0);
   var girls = getVar('girls');
   var girl = $player.find('[data-team-member-position="0"] img')[gindex];
   if (!girl) return null;
@@ -71,10 +70,10 @@ function parseSeasonGirl($player, gindex, blessings){
   return gdata;
 }
 function fingGirlbonuses(ginfo, blessings, output = {}){
-  output.bonuses = blessings.map(b => {from: b, applied: doesBonusApply(ginfo, b)});
+  output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(ginfo, b)}; });
   output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
     if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
-    return sum + elem2.applied ? 0 : elem2.from.bonus; }
+    return sum + elem2.applied ? 0 : elem2.from.bonus; });
   return output.bonuses; }
 
 function doesBonusApply(ginfo, blessing){
