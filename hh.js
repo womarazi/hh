@@ -46,7 +46,7 @@ function parseSeasonPlayers() {
 var _hhjs_classes = [null, 'hk', 'ch', 'kh'];
 function parseSeasonPlayer($player, blessings) {
   var player = {};
-  var player.girls = [];
+  player.girls = [];
   for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
   return player;
 }
