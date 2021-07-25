@@ -18,7 +18,9 @@ function parseBlessingCondition(str) {
 function parseBlessingsSetup(delay = 100, count = 0){
   function onBlessingClick() {
     console.log('onBlessingClick check', {delay, count});
-   if (!parseBlessings()) setTimeout(()=>onBlessingClick(delay, count++), delay);
+    let success = false;
+    try { success = !parseBlessings(); } catch(e) { console.error(e); }
+   if (!success) setTimeout(()=>onBlessingClick(delay, count++), delay);
   }
   $('#blessings-button').on('click.hhjs', onBlessingClick);
 }
