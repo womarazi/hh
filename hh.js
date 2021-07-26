@@ -116,9 +116,6 @@ function parseSeasonPlayer($player, blessings) {
 
 function parseSeasonGirl(girl, gindex, blessings){
   var girls = getVar('girls');
-  window.$player = $player;
-  window.i = gindex;
-  window.blessings = blessings
   if (!girl) return null;
   var gid = +girl.getAttribute('src').match('https\:\/\/hh2\.hh\-content\.com\/pictures\/girls\/([0-9]+)\/')[1];
   var gdata0 = girls[gid];
