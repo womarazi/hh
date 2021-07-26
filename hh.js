@@ -128,11 +128,12 @@ function parseSeasonGirl($player, gindex, blessings){
   delete gdata.caracs;
   delete gdata.Graded2;
   gdata.gid = gid;
-  console.log('findGirlBonuses, {ginfo: girls[gdata.gid], blessings, gdata});
+  console.log('findGirlBonuses blessings', {ginfo: girls[gdata.gid], blessings, gdata});
   gdata.bonuses = findGirlBonuses(girls[gdata.gid], blessings, gdata);
   return gdata;
 }
 function findGirlBonuses(ginfo, blessings, output = {}){
+  if (!blessings) blessings = getVar('blessings');
   output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(ginfo, b)}; });
   output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
     if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
