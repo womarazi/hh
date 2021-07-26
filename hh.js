@@ -2149,10 +2149,12 @@ function getMissions()/* :{time: seconds, button: html, container: html}[] */ {
 function timeparse(str) {
   let sec = 0;
   let matches = str.match(/([0-9]+|[a-z]+)/gm);
-  pe(matches.length % 2 !== 0, 'datetime matches should be even (time and timeunit):' + str);
+  pe (matches.length % 2 !== 0, 'datetime matches should be even (time and timeunit):' + str);
   for (let i = 0; i+1 < matches.length; i+=2) {
     switch(matches[i+1]){
       default: pe(true, 'unexpected timeunit:'+matches[i+1]+' inside:'+str); break;
+      case 'w': sec += matches[i] * 60*60*24; break;
+      case 'd': sec += matches[i] * 60*60*24; break;
       case 'hr': case 'h': sec += matches[i] * 60*60; break;
       case 'min': case 'm': sec += matches[i] * 60; break;
       case 'sec': case 's': sec += +matches[i]; break;
