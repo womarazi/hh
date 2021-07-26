@@ -71,7 +71,7 @@ function seasonmain2021(count = 0, delay = 200) {
   var you = seasonPlayers[0];
   var opponents = seasonPlayers.slice(1);
   
-  let scoringFunction getVar('scoringFunction_seasons');
+  let scoringFunction = getVar('scoringFunction_seasons');
   if (!scoringFunction) {
     scoringFunction = (wr, pt, gxp, aff) => { return wr * (pt * 1 + gxp * 0 + aff * 0); };
     setVar('scoringFunction_seasons', scoringFunction);
