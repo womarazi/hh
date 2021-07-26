@@ -150,7 +150,7 @@ function doesBonusApply(ginfo, blessing){
     return ginfo.gData.rarity.indexOf(blessing.condition.rarity) >= 0;
   }
   if (blessing.condition.position){
-    return ginfo.position_img.indexOf(blessing.condition.position) >= 0;
+    return ginfo.gData.position_img.indexOf(blessing.condition.position) >= 0;
   }
 }
 ///////////////////// new season 2021 end
