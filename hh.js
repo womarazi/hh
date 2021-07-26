@@ -1352,7 +1352,7 @@ function hhmain() {
       setVar('trollStatus', trollStatus);
       if (!localStorage.getItem('pageAutorun_troll-pre-battle.html')) return;
       const favBoss = +localStorage.getItem('favBoss');
-      if (!getVar('trollStatus').girls.length && trollnum !== favBoss) { return; }
+      if (!getVar('trollStatus')[trollnum].girls.length && trollnum !== favBoss) { return; }
       setUrl('https://www.hentaiheroes.com/troll-battle.html?number_of_battles=1&id_opponent=' + trollnum);
       return; }
       
