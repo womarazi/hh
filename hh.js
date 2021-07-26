@@ -296,9 +296,9 @@ function makeRunButton(size = 30) {
   buttonContainer.append(btn);
   return btn;
 }
-
+/*
 function getvar(name) { return localStorage.getItem(name); }
-function setvar(name) { return localStorage.setItem(name); }
+function setvar(name) { return localStorage.setItem(name); }*/
 function shopitemsetup(container) {
   container = container || document.createElement('div');
   buttonContainer.append(container);
@@ -1342,7 +1342,7 @@ function hhmain() {
 
 var getVarCache = {};
 function getVar(name){ 
-  if (getVarCache[name]) return name;
+  if (getVarCache[name]) return getVarCache[name];
   let val = localStorage.getItem('_hhjs_'+name);
   try { val = JSON.parse(val); } catch(e){}
   getVarCache[name] = val;
