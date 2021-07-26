@@ -48,6 +48,7 @@ function parseBlessing(blessinghtml){
     blessing.bonus = 1+blessing.bonus0.substr(1).replace('%', '')/100;
   } else throw new Error('unexpected blessing bonus, insert it:', blessing.bonus0);
   // delete blessing.time0; delete blessing.condition0M delete blessing.bonus0;
+  return blessing;
 }
 
 function seasonmain2021() {
