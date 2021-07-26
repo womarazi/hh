@@ -15,13 +15,15 @@ function parseBlessingCondition(str) {
   }
 }
 
-function parseBlessingsSetup(delay = 100, count = 0){
-  function onBlessingClick() {
-    console.log('onBlessingClick check', {delay, count});
-    let success = false;
-    try { success = parseBlessings(); } catch(e) { console.error(e); }
-   if (!success) setTimeout(()=>onBlessingClick(delay, count+1), delay);
-  }
+function onBlessingClick(delay = 200, count = 0) {
+  console.log('onBlessingClick check', {delay, count});
+  let success = false;
+  if (count > 300) return;
+  try { success = parseBlessings(); } catch(e) { console.error(e); }
+  if (!success) setTimeout(()=>onBlessingClick(delay, count+1), delay);
+}
+
+function parseBlessingsSetup(){
   $('#blessings-button').on('click.hhjs', onBlessingClick);
 }
 
@@ -29,7 +31,7 @@ function parseBlessings() {
   var $blessinghtml = $('#popup_blessings .blessing.active-blessing:visible');
   let blessings = [];
   if (!$blessinghtml.length) return false;
-  blessings = $blessinghtml.map( (i, b) => parseBlessing(b));
+  blessings = $blessinghtml.toArray().map( (b) => parseBlessing(b));
   console.log('blessings return:', {blessings, $blessinghtml});
   setVar('blessings', blessings);
   return true; }
@@ -51,13 +53,26 @@ function parseBlessing(blessinghtml){
   return blessing;
 }
 
-function seasonmain2021() {
+function validBlessings(blessings, canTriggerUpdate = true){
+  let expirations = blessings.map( bl => new Date(bl.expiration)).sort((a,b)=>a.getTime()-b.getTime());
+  if (expirations[0].getTime() <= new Date().getTime()) {
+    if (!canTriggerUpdate) return false;
+    HHPopupManager.show("popup_blessings", { prevent_events: true });
+    onBlessingClick();
+    return false; }
+  return true; }
+
+function seasonmain2021(count = 0, delay = 200) {
+  var blessings = getVar('blessings');
+  console.log('seasonmain2021', {count, delay});
+  if (count > 200) return;
+  if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021(count+1, delay), delay); return; }
   var seasonPlayers = parseSeasonPlayers();
 }
 function parseSeasonPlayers() {
   var $playershtml = $('#season-arena .season_arena_block');
   var blessings = getVar('blessings');
-  var players = $playershtml.map( (i, p) => parseSeasonPlayer($(p), blessings));
+  var players = $playershtml.toArray().map((p) => parseSeasonPlayer($(p), blessings));
   return players;
 }
 
@@ -66,8 +81,26 @@ function parseSeasonPlayer($player, blessings) {
   var player = {};
   player.girls = [];
   for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
-  return player;
-}
+  var $stats = $player.find('.hero_stats');
+  // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
+  player.stats = JSON.parse($stats.find('.cjs_opponent_stats')[0].getAttribute('ca-opponent-stats'));
+  player.id = player.stats.id_member;
+  player.lv = player.stats.level;
+  player.mojo = player.stats.mojo;
+  player.rewards = {...player.stats.rewards};
+  player.girls0 = player.stats.team
+  player.hk = player.stats.caracs.carac1;
+  player.ch = player.stats.caracs.carac2;
+  player.kh=player.stats.caracs.carac3;
+  player.atk = player.stats.caracs.damage;
+  player.avglv = player.stats.average_team_level;
+  player.def = player.stats.defense;
+  player.ego = player.stats.caracs.ego;
+  player.endurance = player.stats.caracs.endurance;
+  player.type = _hhjs_classes[player.stats.class];
+  player.class = player.type;
+  player.club = player.stats.club;
+  return player; }
 
 function parseSeasonGirl($player, gindex, blessings){
   var girls = getVar('girls');
