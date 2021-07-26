@@ -30,6 +30,7 @@ function parseBlessings() {
   let blessings = [];
   if (!$blessinghtml.length) return false;
   blessings = $blessinghtml.map( (i, b) => parseBlessing(b));
+  console.log('blessings return:', {blessings, $blessinghtml});
   setVar('blessings', blessings);
   return true; }
 
