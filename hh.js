@@ -104,7 +104,7 @@ function seasonmain2021(count = 0, delay = 200) {
     o.fight = getWinRatio2021(you, o);
     console.log('scoringFunction(o.fight.winrate, o.rewards.pt, o.rewards.gxp, o.rewards.aff)', {o, scoringFunction});
     o.score = scoringFunction(o.fight.winrate, o.rewards.pt, o.rewards.gxp, o.rewards.aff);
-    exportDataToGui(o, i+1);
+    exportDataToGui(o, i);
   });
   return seasonPlayers;
 }
