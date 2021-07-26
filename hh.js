@@ -93,10 +93,10 @@ function seasonmain2021(count = 0, delay = 200) {
     var avglv =  $('#season-arena > .opponents_arena > .season_arena_opponent_container .average-lvl')[i];
     console.log('exportDataToGui', {o, i, fightbtn, avglv});
     avglv.innerHTML = 'pt: <b style="color: red">' + o.score.toFixed(2) +
-      '</b>, wr: <p style="color:orange">'+ printpercent(o.fight.winrate) +
-      '</p>, pts: <p style="color:orange">' + (o.fight.winrate * o.rewards.pt).toFixed(1) + 
-      '</p>, gxp: <p style="color:orange">' + (o.fight.winrate * o.rewards.gxp).toFixed(1) +
-      '</p>, aff: <p style="color:orange">' + (o.fight.winrate * o.rewards.aff).toFixed(1) + '</p>';
+      '</b>, wr: <b style="color:orange">'+ printpercent(o.fight.winrate) +
+      '</b>, pts: <b style="color:orange">' + (o.fight.winrate * o.rewards.pt).toFixed(1) + 
+      '</b>, gxp: <b style="color:orange">' + (o.fight.winrate * o.rewards.gxp).toFixed(1) +
+      '</b>, aff: <b style="color:orange">' + (o.fight.winrate * o.rewards.aff).toFixed(1) + '</b>';
     fightbtn.dataset.hhjsscore = o.score + '';
     fightbtn.dataset.enemyid = o.stats.id_member+'';
   }
