@@ -78,10 +78,11 @@ function seasonmain2021(count = 0, delay = 200) {
   }
   if (scoringFunction + '' === scoringFunction) scoringFunction = eval(scoringFunction);
  
-  var rewards = {};
   function getRewards(opponent) {
-    opponent.rewards0 = opponent.rewards;
+    var rewards = {};
+    opponent.rewards0 = {...opponent.rewards};
     [...opponent.rewards.data.rewards, ...opponent.rewards.data.team].forEach( r => { rewards[r.type] = +r.value.match('[0-9]+')[0]; } );
+    opponent.rewards = rewards;
     opponent.rewards.aff = opponent.rewards.affection = opponent.rewards.season_affection_girl;
     opponent.rewards.gxp = opponent.rewards.xp = opponent.rewards.season_xp_girl;
     opponent.rewards.pt = opponent.rewards.points = opponent.rewards.victory_points;
@@ -106,7 +107,7 @@ function getWinRatio2021(you, enemy, tries = 100){
   let results = [];
   for (let i = 0; i < tries; i++) { results[i] = simulateFight2021(you, enemy); }
   var ret = {results};
-  ret.winratio = sumArrayByProperty(results, 'win') / results.length;
+  ret.winrate = sumArrayByProperty(results, 'win') / results.length;
   ret.leaguepoints = sumArrayByProperty(results, 'points') / results.length;
   return ret;
 }
