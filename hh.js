@@ -91,7 +91,7 @@ function seasonmain2021(count = 0, delay = 200) {
     var $player = $($('#season-arena .season_arena_block')[i]);
     console.log('exportDataToGui', {o, i, $player});
     var avglv = $player.find('.average-lvl')[0];
-    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:'+ printpercent(o.fight.winratio) + ', gxp:' + printpercent(o.fight.winratio * o.rewards.gxp) + ', aff:' + printpercent(o.fight.winratio * o.rewards.aff);
+    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:'+ printpercent(o.fight.winrate) + ', gxp:' + printpercent(o.fight.winrate * o.rewards.gxp) + ', aff:' + printpercent(o.fight.winrate * o.rewards.aff);
   }
   opponents.forEach( (o, i) => {
     getRewards(o);
@@ -102,6 +102,7 @@ function seasonmain2021(count = 0, delay = 200) {
   });
   return seasonPlayers;
 }
+
 function printpercent(number, digits) { return (number * 100).toFixed(digits) + '%'; }
 function getWinRatio2021(you, enemy, tries = 100){
   let results = [];
