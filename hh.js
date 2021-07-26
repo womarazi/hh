@@ -81,6 +81,7 @@ function parseSeasonPlayer($player, blessings) {
   var player = {};
   player.girls = [];
   for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
+  console.log('parseseasonplayer', {player});
   var $stats = $player.find('.hero_stats');
   // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
   player.stats = JSON.parse($stats.find('.cjs_opponent_stats')[0].getAttribute('ca-opponent-stats'));
@@ -120,7 +121,7 @@ function parseSeasonGirl($player, gindex, blessings){
   gdata.bonuses = findGirlBonuses(girls[gdata.gid], blessings, gdata);
   return gdata;
 }
-function fingGirlbonuses(ginfo, blessings, output = {}){
+function findGirlBonuses(ginfo, blessings, output = {}){
   output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(ginfo, b)}; });
   output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
     if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
