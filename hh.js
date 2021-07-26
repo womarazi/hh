@@ -68,7 +68,70 @@ function seasonmain2021(count = 0, delay = 200) {
   if (count > 200) return;
   if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021(count+1, delay), delay); return; }
   var seasonPlayers = parseSeasonPlayers();
+  var you = seasonPlayers[0];
+  var opponents = seasonPlayers.slice(1);
+  
+  let scoringFunction getVar('scoringFunction_seasons');
+  if (!scoringFunction) {
+    scoringFunction = (wr, pt, gxp, aff) => { return wr * (pt * 1 + gxp * 0 + aff * 0); };
+    setVar('scoringFunction_seasons', scoringFunction);
+  }
+  if (scoringFunction + '' === scoringFunction) scoringFunction = eval(scoringFunction);
+ 
+  var rewards = {};
+  function getRewards(opponent) {
+    opponent.rewards0 = opponent.rewards;
+    [...opponent.rewards.data.rewards, ...opponent.rewards.data.team].forEach( r => { rewards[r.type] = +r.value.match('[0-9]+')[0]; } );
+    opponent.rewards.aff = opponent.rewards.affection = opponent.rewards.season_affection_girl;
+    opponent.rewards.gxp = opponent.rewards.xp = opponent.rewards.season_xp_girl;
+    opponent.rewards.pt  opponent.rewards.points = opponent.rewards.victory_points;
+ }
+  function exportDataToGui(o, i){
+    var $player = $($('#season-arena .season_arena_block')[i]);
+    console.log('exportDataToGui', {o, i, $player});
+    var avglv = $player.find('.average-lvl')[0];
+    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:', printpercent(o.fight.winratio) + ', gxp:' + printpercent(o.fight.winratio * o.rewards.gxp) + ', aff:' + printpercent(o.fight.winratio * o.rewards.aff);
+  }
+  opponents.forEach( (o, i) => {
+    getRewards(o);
+    o.fight = getWinRatio2021(you, o);
+    o.score = scoringFunction(o.fight.winrate, o.rewards.pt, o.rewards.gxp, o.rewards.aff);
+    exportDataToGui(o, i+1);
+  });
+  return seasonPlayers;
 }
+function printpercent(number, digits) { return (number * 100).toFixed(digits) + '%'; }
+function getWinRatio2021(you, enemy, tries = 100){
+  let results = [];
+  for (let i = 0; i < tries; i++) { results[i] = simulateFight2021(you, enemy); }
+  var ret = {results};
+  ret.winratio = sumArrayByProperty('win') / results.length;
+  ret.leaguepoints = sumArrayByProperty('points') / results.length;
+  return ret;
+}
+
+function sumArrayByProperty(arr, key = '') {
+  if (!arr || !key) return 0;
+  return arr.reduce( (sum/*starts with e1*/, e2, i/*starts from 1*/, fullarr) => i === 1 ? sum[key] + e2[key] : sum + e2[key]);
+}
+
+function simulateFight2021(you, enemy){
+  var yourhp = you.ego;
+  var enemyhp = enemy.ego;
+  var yourcrit$ = 0.3 * you.harmony / (you.harmony + enemy.harmony);
+  var enemycrit$ = 0.3 * enemy.harmony / (you.harmony + enemy.harmony);
+  while(true) { //for (let turn = 0; true; turn++){
+    enemyhp -= (you.atk - enemy.def) * (checkRandom(yourcrit$) ? 2 : 1);  
+    if (enemyhp <= 0) {
+      return { points: 15 + Math.floor(10 * yourhp / you.ego), win: 1 };
+    }
+    yourhp -= (enemy.atk - you.def) * (checkRandom(yourcrit$) ? 2 : 1);
+    if (yourhp <= 0) {
+      return { points: 3 + Math.floor(10 * (1 - enemyhp / enemy.ego)), win: 0 };
+    }
+  }
+}
+
 function parseSeasonPlayers() {
   var $playershtml = $('#season-arena .season_arena_block');
   var blessings = getVar('blessings');
@@ -79,8 +142,8 @@ function parseSeasonPlayers() {
 var _hhjs_classes = [null, 'hk', 'ch', 'kh'];
 function parseSeasonPlayer($player, blessings) {
   var player = {};
-  player.girls = [];
-  for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
+  player.girls = ['useless'];
+  // for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
   console.log('parseseasonplayer', {player});
   var $stats = $player.find('.hero_stats');
   // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
@@ -92,7 +155,7 @@ function parseSeasonPlayer($player, blessings) {
     player.stats0 = player.stats0.getAttribute('ca-player-caracs');
   }
   player.stats = JSON.parse(player.stats0);
-  if(!player.stats.caracs) player.stats.caracs = player.stats;
+  if (!player.stats.caracs) player.stats.caracs = player.stats;
   player.id = player.stats.id_member;
   player.lv = player.stats.level;
   player.mojo = player.stats.mojo;
@@ -109,7 +172,8 @@ function parseSeasonPlayer($player, blessings) {
   player.type = _hhjs_classes[player.stats.class];
   player.class = player.type;
   player.club = player.stats.club;
-  if (player.club) player.club
+  player.harmony = player.stats.caracs.chance || +$stats.find('[hh_title="Harmony"]')[0].innerText.replace(',', '');
+  // if (player.club) player.club
   return player; }
 
 function parseSeasonGirl($player, gindex, blessings){
@@ -132,6 +196,7 @@ function parseSeasonGirl($player, gindex, blessings){
   gdata.bonuses = findGirlBonuses(girls[gdata.gid], blessings, gdata);
   return gdata;
 }
+
 function findGirlBonuses(ginfo, blessings, output = {}){
   if (!blessings) blessings = getVar('blessings');
   output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(ginfo, b)}; });
