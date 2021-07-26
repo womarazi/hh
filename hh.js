@@ -80,9 +80,7 @@ var _hhjs_classes = [null, 'hk', 'ch', 'kh'];
 function parseSeasonPlayer($player, blessings) {
   var player = {};
   player.girls = [];
-  
-  var $girls = $player.find('[data-team-member-position] img');
-  for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($girls[0], i, blessings); }
+  for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
   console.log('parseseasonplayer', {player});
   var $stats = $player.find('.hero_stats');
   // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
@@ -114,9 +112,11 @@ function parseSeasonPlayer($player, blessings) {
   if (player.club) player.club
   return player; }
 
-function parseSeasonGirl(girl, gindex, blessings){
-  var girls = getVar('girls');
+function parseSeasonGirl($player, gindex, blessings){
+  var $girl = $player.find('[data-team-member-position="'+gindex+'"] img');
+  var girl = $girl[0]
   if (!girl) return null;
+  var girls = getVar('girls');
   var gid = +girl.getAttribute('src').match('https\:\/\/hh2\.hh\-content\.com\/pictures\/girls\/([0-9]+)\/')[1];
   var gdata0 = girls[gid];
   var gdata = girl.getAttribute('new-girl-tooltip-data');
@@ -1337,12 +1337,17 @@ function hhmain() {
 
   }
 }
+
+var getVarCache = {};
 function getVar(name){ 
-  let ret = localStorage.getItem('_hhjs_'+name);
-  try { ret = JSON.parse(ret); } catch(e){}
-  return ret;
-}
+  if (getVarCache[name]) return name;
+  let val = localStorage.getItem('_hhjs_'+name);
+  try { val = JSON.parse(val); } catch(e){}
+  getVarCache[name] = val;
+  return val; }
+
 function setVar(name, val){
+  getVarCache[name] = val;
   if (val && typeof val == 'object') val = JSON.stringify(val);
   return localStorage.setItem('_hhjs_'+name, val); }
 
@@ -1352,6 +1357,7 @@ function getFightEnergy(){
 function getQuestEnergy(){
   return +$('.energy_counter[type="quest"] [energy]')[0].innerText;
 }
+
 function whenBattleStart(callback, enemyhp = null, count = 0, delay = 100){
   if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar')[1];
   if(enemyhp.style.width) return callback();
@@ -1359,6 +1365,7 @@ function whenBattleStart(callback, enemyhp = null, count = 0, delay = 100){
   console.count('whenbattlestart check delay', delay);
   setTimeout(()=>whenBattleStart(callback, enemyhp, count++, delay), delay);
 }
+
 function pachinkoMain() {
   let rewards;
   pachinkoMainOnClick();
