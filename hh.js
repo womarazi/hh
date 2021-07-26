@@ -92,6 +92,7 @@ function parseSeasonPlayer($player, blessings) {
     player.stats0 = player.stats0.getAttribute('ca-player-caracs');
   }
   player.stats = JSON.parse(player.stats0);
+  if(!player.stats.caracs) player.stats.caracs = player.stats;
   player.id = player.stats.id_member;
   player.lv = player.stats.level;
   player.mojo = player.stats.mojo;
