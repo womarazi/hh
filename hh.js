@@ -128,6 +128,7 @@ function parseSeasonGirl($player, gindex, blessings){
   delete gdata.caracs;
   delete gdata.Graded2;
   gdata.gid = gid;
+  console.log('findGirlBonuses, {ginfo: girls[gdata.gid], blessings, gdata});
   gdata.bonuses = findGirlBonuses(girls[gdata.gid], blessings, gdata);
   return gdata;
 }
