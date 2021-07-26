@@ -141,16 +141,16 @@ function findGirlBonuses(ginfo, blessings, output = {}){
 function doesBonusApply(ginfo, blessing){
   console.log('doesbonusapply?()', {ginfo, blessing});
   if (blessing.condition.hair) {
-    return ginfo.gData.ref.hair.indexOf(blessing.condition.hair) >= 0;
+    return ginfo.gData.ref.hair?.indexOf(blessing.condition.hair) >= 0;
   }
   if (blessing.condition.eyes) {
-    return ginfo.gData.ref.eyes.indexOf(blessing.condition.eyes) >= 0;
+    return ginfo.gData.ref.eyes?.indexOf(blessing.condition.eyes) >= 0;
   }
   if (blessing.condition.rarity) {
-    return ginfo.gData.rarity.indexOf(blessing.condition.rarity) >= 0;
+    return ginfo.gData.rarity?.indexOf(blessing.condition.rarity) >= 0;
   }
   if (blessing.condition.position){
-    return ginfo.gData.position_img.indexOf(blessing.condition.position) >= 0;
+    return ginfo.gData.position_img?.indexOf(blessing.condition.position) >= 0;
   }
 }
 ///////////////////// new season 2021 end
