@@ -1484,8 +1484,8 @@ function pachinkoshards(){
 function maketoweruserlist(userlist = null) {
   if (!userlist) { userlist = {}; }
   window.userlist = userlist;
-  const $leagues = $('.leagues_table');
-  const $idarr = $leagues.find('[sorting_id]');
+  const $leagues = $('#leagues_middle .leagues_table');
+  const $idarr = $leagues.find('[sorting_id]:visible');
   let i;
   for (i = 0; i < $idarr.length; i++) { // user list validator
     let userid = $idarr[i].getAttribute('sorting_id');
@@ -1613,10 +1613,12 @@ function replaceCharAt(string, index, replacestr) {
   return string.substr(0, +index) + replacestr + string.substr(index + 1); }
 
 function towerOfFameSetup() {
+  const buttonhide = document.createElement('button');
   const buttonch = document.createElement('button');
   const buttonkh = document.createElement('button');
   const buttonhk = document.createElement('button');
   const buttonmakeuserlist = document.createElement('button');
+  buttonhide.innerText = '👁';
   buttonch.innerText = 'CH';
   buttonkh.innerText = 'KH';
   buttonhk.innerText = 'HK';
@@ -1626,33 +1628,50 @@ function towerOfFameSetup() {
   buttoncontainer.style.right = '0px';
   buttoncontainer.style.zIndex = 1001;
   buttoncontainer.style.backgroundColor = 'gray';
-  buttonmakeuserlist.style.margin = buttonch.style.margin = buttonkh.style.margin = buttonhk.style.margin = '10px';
-  buttonmakeuserlist.style.border = buttonch.style.border = buttonkh.style.border = buttonhk.style.border = '5px solid black';
-  buttonmakeuserlist.style.height = buttonch.style.height = buttonkh.style.height = buttonhk.style.height =
-  buttonmakeuserlist.style.width = buttonch.style.width = buttonkh.style.width = buttonhk.style.width = '30px';
   
-  buttonmakeuserlist.style.padding = buttonch.style.padding = buttonkh.style.padding = buttonhk.style.padding = '0';
-  buttonmakeuserlist.style.borderRadius = buttonch.style.borderRadius = buttonkh.style.borderRadius = buttonhk.style.borderRadius = '15px';
+  buttonhide.style.margin = buttonmakeuserlist.style.margin = buttonch.style.margin = buttonkh.style.margin = buttonhk.style.margin = '10px';
+  buttonhide.style.border = buttonmakeuserlist.style.border = buttonch.style.border = buttonkh.style.border = buttonhk.style.border = '5px solid black';
+  buttonhide.style.height = buttonmakeuserlist.style.height = buttonch.style.height = buttonkh.style.height = buttonhk.style.height =
+  buttonhide.style.width = buttonmakeuserlist.style.width = buttonch.style.width = buttonkh.style.width = buttonhk.style.width = '30px';
+  
+  buttonhide.style.padding = buttonmakeuserlist.style.padding = buttonch.style.padding = buttonkh.style.padding = buttonhk.style.padding = '0';
+  buttonhide.style.borderRadius = buttonmakeuserlist.style.borderRadius = buttonch.style.borderRadius = buttonkh.style.borderRadius = buttonhk.style.borderRadius = '15px';
+  
   
   buttonch.style.borderColor = 'red';
   buttonkh.style.borderColor = 'white';
-  buttonhk.style.borderColor = 'black';
-  buttonmakeuserlist.style.borderColor = 'black';
+  buttonhide.style.margin.borderColor = buttonmakeuserlist.style.borderColor = buttonhk.style.borderColor = 'black';
+  let dohide = localStorage.getItem('_hhtowerhide') === 'true';
   let doch = localStorage.getItem('_hhtowerch') === 'true';
   let dokh = localStorage.getItem('_hhtowerkh') === 'true';
   let dohk = localStorage.getItem('_hhtowerhk') === 'true';
+  buttonhide.style.backgroundColor = dohide ? 'green' : 'white';
   buttonch.style.backgroundColor = doch ? 'green' : 'red';
   buttonkh.style.backgroundColor = dokh ? 'green' : 'red';
   buttonhk.style.backgroundColor = dohk ? 'green' : 'red';
   buttonmakeuserlist.id = 'buttonmakeuserlist';
+  buttonhk.id = 'hhjs_buttonhide';
   buttonhk.id = 'buttonhk';
   buttonkh.id = 'buttonkh';
   buttonch.id = 'buttonch';
+  buttoncontainer.append(buttonhide);
   buttoncontainer.append(buttonmakeuserlist);
   buttoncontainer.append(buttonch);
   buttoncontainer.append(buttonkh);
   buttoncontainer.append(buttonhk);
   document.body.append(buttoncontainer);
+  
+  $(buttonhide).on('click', () =>  {
+    let $tr = $('#leagues_middle tr[sorting_id]');
+    if (buttonmakeuserlist.style.backgroundColor === 'white') {
+      buttonmakeuserlist.style.backgroundColor = 'white';
+      $('tr[sorting_id]').show();
+      return; }
+    for (let i = 0; i < $tr.length; i++) {
+      if ($tr[0].cells[3].innerText === '3/3');
+      $tr[0].style.display = 'none'; }
+    buttonmakeuserlist.style.backgroundColor = 'green' ; });
+
   $(buttonmakeuserlist).on('click', () =>  {
     if (buttonmakeuserlist.style.backgroundColor === 'white') {
       buttonmakeuserlist.style.backgroundColor = 'black';
