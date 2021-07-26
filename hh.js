@@ -139,6 +139,7 @@ function findGirlBonuses(ginfo, blessings, output = {}){
   return output.bonuses; }
 
 function doesBonusApply(ginfo, blessing){
+  console.log('doesbonusapply?()', {ginfo, blessing});
   if (blessing.condition.hair) {
     return ginfo.gData.ref.hair.indexOf(blessing.condition.hair) >= 0;
   }
