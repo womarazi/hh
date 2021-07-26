@@ -91,7 +91,10 @@ function seasonmain2021(count = 0, delay = 200) {
     var $player = $($('#season-arena .season_arena_block')[i]);
     console.log('exportDataToGui', {o, i, $player});
     var avglv = $player.find('.average-lvl')[0];
-    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:'+ printpercent(o.fight.winrate) + ', gxp:' + printpercent(o.fight.winrate * o.rewards.gxp) + ', aff:' + printpercent(o.fight.winrate * o.rewards.aff);
+    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:'+ printpercent(o.fight.winrate) +
+      ', pts:' + (o.fight.winrate * o.rewards.pts).toFixed(2) + 
+      ', gxp:' + (o.fight.winrate * o.rewards.gxp).toFixed(2) +
+      ', aff:' + (o.fight.winrate * o.rewards.aff).toFixed(2);
     const fightbtn = $player.find('.btn_season_perform')[0];
     fightbtn.dataset.hhjsscore = o.score + '';
     fightbtn.dataset.enemyid = o.stats.id_member+'';
@@ -117,7 +120,7 @@ function season2021Start(){
   if (+maxScoreBtn.enemyid > 0) setUrl('https://www.hentaiheroes.com/season-battle.html?id_opponent=' + maxScoreBtn.enemyid + '&number_of_battles=1');
 }
 
-function printpercent(number, digits) { return (number * 100).toFixed(digits) + '%'; }
+function printpercent(number, digits = 2) { return (number * 100).toFixed(digits) + '%'; }
 function getWinRatio2021(you, enemy, tries = 100){
   let results = [];
   for (let i = 0; i < tries; i++) { results[i] = simulateFight2021(you, enemy); }
