@@ -81,7 +81,6 @@ function parseSeasonPlayer($player, blessings) {
   var player = {};
   player.girls = [];
   for (let i = 0; i < 7; i++) {
-    console.log('parseSeasonGirl', {$player, i, blessings, ret: parseSeasonGirl($player, i, blessings)});
     player.girls[i] = parseSeasonGirl($player, i, blessings);
   }
   console.log('parseseasonplayer', {player});
@@ -118,6 +117,11 @@ function parseSeasonPlayer($player, blessings) {
 function parseSeasonGirl($player, gindex, blessings){
   var girls = getVar('girls');
   var girl = $player.find('[data-team-member-position="'+gindex+'"] img')[gindex];
+  
+  window.$player = $player;
+  window.i = gindex;
+  window.blessings = blessings
+  console.log('parseSeasonGirl', {$player, gindex, blessings, girl}, 'parseSeasonGirl($player, 1, blessings)');
   if (!girl) return null;
   var gid = +girl.getAttribute('src').match('https\:\/\/hh2\.hh\-content\.com\/pictures\/girls\/([0-9]+)\/')[1];
   var gdata0 = girls[gid];
