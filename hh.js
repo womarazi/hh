@@ -90,11 +90,12 @@ function seasonmain2021(count = 0, delay = 200) {
     var $player = $($('#season-arena .season_arena_block')[i]);
     console.log('exportDataToGui', {o, i, $player});
     var avglv = $player.find('.average-lvl')[0];
-    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:', printpercent(o.fight.winratio) + ', gxp:' + printpercent(o.fight.winratio * o.rewards.gxp) + ', aff:' + printpercent(o.fight.winratio * o.rewards.aff);
+    avglv.innerHTML = 'pt:<b style="color: red">' + o.score + '</b>, wr:'+ printpercent(o.fight.winratio) + ', gxp:' + printpercent(o.fight.winratio * o.rewards.gxp) + ', aff:' + printpercent(o.fight.winratio * o.rewards.aff);
   }
   opponents.forEach( (o, i) => {
     getRewards(o);
     o.fight = getWinRatio2021(you, o);
+    console.log('scoringFunction(o.fight.winrate, o.rewards.pt, o.rewards.gxp, o.rewards.aff)', {o, scoringFunction});
     o.score = scoringFunction(o.fight.winrate, o.rewards.pt, o.rewards.gxp, o.rewards.aff);
     exportDataToGui(o, i+1);
   });
