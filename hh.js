@@ -70,6 +70,7 @@ function seasonmain2021(count = 0, delay = 200) {
   var seasonPlayers = parseSeasonPlayers();
   var you = seasonPlayers[0];
   var opponents = seasonPlayers.slice(1);
+  console.log('scoringFunction', {seasonPlayers, you, opponents});
   
   let scoringFunction = getVar('scoringFunction_seasons');
   if (!scoringFunction) {
