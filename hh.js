@@ -80,7 +80,10 @@ var _hhjs_classes = [null, 'hk', 'ch', 'kh'];
 function parseSeasonPlayer($player, blessings) {
   var player = {};
   player.girls = [];
-  for (let i = 0; i < 7; i++) { player.girls[i] = parseSeasonGirl($player, i, blessings); }
+  for (let i = 0; i < 7; i++) {
+    console.log('parseSeasonGirl', {$player, i, blessings, ret: parseSeasonGirl($player, i, blessings)});
+    player.girls[i] = parseSeasonGirl($player, i, blessings);
+  }
   console.log('parseseasonplayer', {player});
   var $stats = $player.find('.hero_stats');
   // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
