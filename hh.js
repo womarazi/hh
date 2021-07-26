@@ -84,6 +84,7 @@ function parseSeasonPlayer($player, blessings) {
   console.log('parseseasonplayer', {player});
   var $stats = $player.find('.hero_stats');
   // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
+  console.log('parseSeasonPlayer', {$player, blessings});
   player.stats = JSON.parse($stats.find('.cjs_opponent_stats')[0].getAttribute('ca-opponent-stats'));
   player.id = player.stats.id_member;
   player.lv = player.stats.level;
