@@ -103,17 +103,18 @@ function parseSeasonPlayer($player, blessings) {
   player.kh=player.stats.caracs.carac3;
   player.atk = player.stats.caracs.damage;
   player.avglv = player.stats.average_team_level;
-  player.def = player.stats.defense;
+  player.def = player.stats.caracs.defense;
   player.ego = player.stats.caracs.ego;
   player.endurance = player.stats.caracs.endurance;
   player.type = _hhjs_classes[player.stats.class];
   player.class = player.type;
   player.club = player.stats.club;
+  if (player.club) player.club
   return player; }
 
 function parseSeasonGirl($player, gindex, blessings){
   var girls = getVar('girls');
-  var girl = $player.find('[data-team-member-position="0"] img')[gindex];
+  var girl = $player.find('[data-team-member-position="'+gindex+'"] img')[gindex];
   if (!girl) return null;
   var gid = +girl.getAttribute('src').match('https\:\/\/hh2\.hh\-content\.com\/pictures\/girls\/([0-9]+)\/')[1];
   var gdata0 = girls[gid];
