@@ -84,7 +84,7 @@ function seasonmain2021(count = 0, delay = 200) {
     [...opponent.rewards.data.rewards, ...opponent.rewards.data.team].forEach( r => { rewards[r.type] = +r.value.match('[0-9]+')[0]; } );
     opponent.rewards.aff = opponent.rewards.affection = opponent.rewards.season_affection_girl;
     opponent.rewards.gxp = opponent.rewards.xp = opponent.rewards.season_xp_girl;
-    opponent.rewards.pt  opponent.rewards.points = opponent.rewards.victory_points;
+    opponent.rewards.pt = opponent.rewards.points = opponent.rewards.victory_points;
  }
   function exportDataToGui(o, i){
     var $player = $($('#season-arena .season_arena_block')[i]);
@@ -1345,7 +1345,7 @@ function hhmain() {
       let girlshtml = $('.rewards_list .girls_reward')[0];
       let grewards = [];
       if (girlshtml) {
-       try { grewards = JSON.parse(girlshtml.dataset.rewards).map(g=>g.id_girl); } catch(e){}
+       try { grewards = JSON.parse(girlshtml.dataset.rewards).map(g=>g.id_girl); } catch(e){ console.error(e); }
       }
       trollStatus[trollnum].girls = grewards;
       console.log({trollStatus, trollnum, girlshtml, grewards, girls});
