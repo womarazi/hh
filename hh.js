@@ -105,8 +105,8 @@ function getWinRatio2021(you, enemy, tries = 100){
   let results = [];
   for (let i = 0; i < tries; i++) { results[i] = simulateFight2021(you, enemy); }
   var ret = {results};
-  ret.winratio = sumArrayByProperty('win') / results.length;
-  ret.leaguepoints = sumArrayByProperty('points') / results.length;
+  ret.winratio = sumArrayByProperty(results, 'win') / results.length;
+  ret.leaguepoints = sumArrayByProperty(results, 'points') / results.length;
   return ret;
 }
 
