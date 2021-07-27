@@ -62,11 +62,11 @@ function validBlessings(blessings, canTriggerUpdate = true){
     return false; }
   return true; }
 
-function seasonmain2021(count = 0, delay = 200) {
+function seasonmain2021Pre(count = 0, delay = 200) {
   var blessings = getVar('blessings');
   console.log('seasonmain2021', {count, delay});
   if (count > 200) return;
-  if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021(count+1, delay), delay); return; }
+  if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021Pre(count+1, delay), delay); return; }
   var seasonPlayers = parseSeasonPlayers();
   var you = seasonPlayers[0];
   var opponents = seasonPlayers.slice(1);
@@ -111,7 +111,8 @@ function seasonmain2021(count = 0, delay = 200) {
   });
   return seasonPlayers;
 }
-function season2021Start(){
+
+function seasonmain2021Run(){
   var $runbtns = $('#season-arena .season_arena_block .btn_season_perform');
   var maxScoreBtn = null;
   var maxScore = 0;
@@ -1328,7 +1329,9 @@ function hhmain() {
       shopMain();
       break;
     case "season-arena":
-      seasonArenaMain();
+      seasonmain2021Pre();
+      if (localStorage.getItem('pageAutorun_season-arena.html') !== 'true') return;
+      seasonmain2021Run();
       break;
     case "harem":
       harem0(); break;
