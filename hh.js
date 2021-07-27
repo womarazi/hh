@@ -311,6 +311,30 @@ function main0() {
       localStorage.setItem('womarazi_shards', JSON.stringify(shards));
       setVar('girls', girls);
       break;
+      
+    case "troll-pre-battle": {
+      const girls = getVar('girls');
+      let trollStatus = getVar('trollStatus');
+      const trollnum = +params["id_opponent"];
+      if (!trollStatus) trollStatus = [];
+      if (!trollStatus[trollnum]) trollStatus[trollnum] = {};
+      trollStatus[trollnum].ticket = $('.rewards_list [cur="ticket"]')[0]?.innerText;
+      trollStatus[trollnum].ymen = $('.rewards_list [cur="soft_currency"]')[0]?.innerText;
+      trollStatus[trollnum].orb_m1 = $('.rewards_list [cur="orbs"] .o_m1').length
+      let girlshtml = $('.rewards_list .girls_reward')[0];
+      let grewards = [];
+      if (girlshtml) {
+       try { grewards = JSON.parse(girlshtml.dataset.rewards).map(g=>g.id_girl); } catch(e){ console.error(e); }
+      }
+      trollStatus[trollnum].girls = grewards;
+      console.log({trollStatus, trollnum, girlshtml, grewards, girls});
+      setVar('trollStatus', trollStatus);
+      if (!localStorage.getItem('pageAutorun_troll-pre-battle.html')) break;
+      const favBoss = +localStorage.getItem('favBoss');
+      if (!getVar('trollStatus')[trollnum].girls.length && trollnum !== favBoss) { break; }
+      setUrl('https://www.hentaiheroes.com/troll-battle.html?number_of_battles=1&id_opponent=' + trollnum);
+      break; }
+      
     case "season-arena": seasonmain2021Pre(); break;
     case "tower-of-fame":
       towerOfFameSetup();
@@ -1354,37 +1378,13 @@ function hhmain() {
          // case "missions": break;
          // case "contests": break;
       }
-      
-     
-    
-
-      
       break;
-
-    case "troll-pre-battle":{
-      const girls = getVar('girls');
-      let trollStatus = getVar('trollStatus');
-      const trollnum = +params["id_opponent"];
-      if (!trollStatus) trollStatus = [];
-      if (!trollStatus[trollnum]) trollStatus[trollnum] = {};
-      trollStatus[trollnum].ticket = $('.rewards_list [cur="ticket"]')[0]?.innerText;
-      trollStatus[trollnum].ymen = $('.rewards_list [cur="soft_currency"]')[0]?.innerText;
-      trollStatus[trollnum].orb_m1 = $('.rewards_list [cur="orbs"] .o_m1').length
-      let girlshtml = $('.rewards_list .girls_reward')[0];
-      let grewards = [];
-      if (girlshtml) {
-       try { grewards = JSON.parse(girlshtml.dataset.rewards).map(g=>g.id_girl); } catch(e){ console.error(e); }
-      }
-      trollStatus[trollnum].girls = grewards;
-      console.log({trollStatus, trollnum, girlshtml, grewards, girls});
-      setVar('trollStatus', trollStatus);
-      if (!localStorage.getItem('pageAutorun_troll-pre-battle.html')) return;
-      const favBoss = +localStorage.getItem('favBoss');
-      if (!getVar('trollStatus')[trollnum].girls.length && trollnum !== favBoss) { return; }
-      setUrl('https://www.hentaiheroes.com/troll-battle.html?number_of_battles=1&id_opponent=' + trollnum);
-      return; }
       
+    case "season-battle":
+       whenBattleStart(()=>refreshPage());
+      break;
     case "troll-battle":{
+
       const trollnum = params["id_opponent"];
       const trollStatus = getVar('trollStatus');
       const girls = getVar('girls');
