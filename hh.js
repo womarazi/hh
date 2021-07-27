@@ -118,8 +118,8 @@ function seasonmain2021Run(){
   var maxScore = 0;
   for (let i = 0; i < $runbtns.length; i++) {
     let runbtn = $runbtns[i];
-    console.log('check season scores:', {maxScoreBtn, runbtn, condition1: !maxScoreBtn, condition2: maxScoreBtn?.dataset.score < +runbtn.dataset.score, cond2str:maxScoreBtn?.dataset.score +'<' +runbtn.dataset.score});
-    if (!maxScoreBtn || +maxScoreBtn.dataset.score < +runbtn.dataset.score) { maxScoreBtn = runbtn; }
+    console.log('check season scores:', {maxScoreBtn, runbtn, condition1: !maxScoreBtn, condition2: maxScoreBtn?.dataset.hhjsscore < +runbtn.dataset.hhjsscore, cond2str:maxScoreBtn?.dataset.hhjsscore +'<' +runbtn.dataset.hhjsscore});
+    if (!maxScoreBtn || +maxScoreBtn.dataset.hhjsscore < +runbtn.dataset.hhjsscore) { maxScoreBtn = runbtn; }
   }
   //setUrl('https://www.hentaiheroes.com' + maxScoreBtn.getAttribute('href'));
   console.log('seasonmain2021run', {maxScoreBtn, maxScore, $runbtns});
