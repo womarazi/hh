@@ -317,7 +317,7 @@ function main0() {
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   var params = getJsonFromUrl();
   // window.is_cheat_click = () => false;
-  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => { clearAllTimeouts(); setTimeout(hhmain, 100)); }
+  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => { clearAllTimeouts(); setTimeout(hhmain, 100); });
   window.hhjs_patharray = pathArray;
   window.hhjs_params = params;
   // ri-esegui main se cambia url senza vero refresh
