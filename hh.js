@@ -113,7 +113,7 @@ function seasonmain2021Pre(count = 0, delay = 200) {
 }
 
 function seasonmain2021Run(){
-  var $runbtns = $('#season-arena .season_arena_block .btn_season_perform');
+  var $runbtns = $('#season-arena .btn_season_perform');
   var maxScoreBtn = null;
   var maxScore = 0;
   for (let i = 0; i < $runbtns.length; i++) {
