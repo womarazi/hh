@@ -53,7 +53,8 @@ function parseBlessing(blessinghtml){
   return blessing;
 }
 
-function validBlessings(blessings, canTriggerUpdate = true){
+function validBlessings(blessings = null, canTriggerUpdate = true){
+  if (!blessings) blessings = getVar('blessings');
   let expirations = blessings.map( bl => new Date(bl.expiration)).sort((a,b)=>a.getTime()-b.getTime());
   if (expirations[0].getTime() <= new Date().getTime()) {
     if (!canTriggerUpdate) return false;
@@ -225,8 +226,9 @@ function parseSeasonGirl($player, gindex, blessings){
   return gdata;
 }
 
-function findGirlBonuses(ginfo, blessings, output = {}){
+function findGirlBonuses(ginfo, blessings, output = null){
   if (!blessings) blessings = getVar('blessings');
+  if (!output) output = ginfo;
   output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(ginfo, b)}; });
   output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
     if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
@@ -1670,6 +1672,96 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
 function replaceCharAt(string, index, replacestr) {
   if (index < 1 || index === null || index === undefined || isNaN(+index)) return string;
   return string.substr(0, +index) + replacestr + string.substr(index + 1); }
+
+function calcGirlStatMaxGradeLv1(g, blessings) {
+  var out = {};
+  g.maxGradeLv1 = out;
+  var ginfo = g.gData;
+  var maxGrade = ginfo.nb_grades;
+  var grade = ginfo.graded;
+  
+  var at0stars = (1 + 0.3 * grade);
+  var atMaxStars = (1 + 0.3 * maxGrade);
+  
+  out.hk0 = ginfo.caracs.carac1 / ginfo.level / at0stars;
+  out.ch0 = ginfo.caracs.carac2 / ginfo.level / at0stars;
+  out.kh0 = ginfo.caracs.carac3 / ginfo.level / at0stars;
+  out.hk = out.hk * atMaxStars;
+  out.ch = out.ch * atMaxStars;
+  out.kh = out.kh * atMaxStars;
+  findGirlBonuses(ginfo, blessings);
+  out.hkb = out.hk * ginfo.bonus;
+  out.chb = out.ch * ginfo.bonus;
+  out.khb = out.kh * ginfo.bonus;
+  out.sumb = out.hkb + out.chb + out.khb;
+  console.log('calcGirlStatMaxGradeLv1 ', {ginfo, blessings, g});
+}
+function changeTeamSetup(){
+  const buttonOthers = document.createElement('button');
+  const buttonBest = document.createElement('button');
+  const buttonBlessed = document.createElement('button');
+  const buttonCustom = document.createElement('button');
+  const customInput = document.createElement('input');
+  const customteamfilter = eval(getVar('customteamfilter'));
+  function setButtonStyle(btn, varName, onAction, offAction, colorOn = 'green', colorOff = 'red', text = '') {
+    buttonContainer.append(btn);
+    varName = 'teampicker_' + varName;
+    const isInput = btn.tagName !== 'INPUT';
+    let isOn = getVar(varName);
+    if (text) btn.innerText = text;
+    if (isInput) {
+      btn.style.border = '2px solid black';
+      btn.style.borderRadius = '999px';
+      btn.style.width = '30px';
+      btn.style.height = '30px';
+    }
+    function updateStyle(btn) {
+      if (isInput) return;
+      btn.style.backgroundColor = isOn ? colorOn : colorOff;
+    }
+    updateStyle();
+    if(!isInput) $(btn).off('click').on('click', () => {
+      if (colorOn === colorOff) isOn = false; else isOn = !isOn; // pulsante azione pura invece di pulsante booleano, only "do" on demand
+      setVar(varName, isOn);
+      updateStyle();
+      if (isOn) onAction && onAction(); else offAction && offAction();
+    });
+    if (isInput) $(btn).on('input', () => {
+        onAction && onAction();
+        setVar(varName, btn.value);
+      }
+    });
+  }
+  buttonContainer.append(document.createElement('br'));
+  function othersOn() {}
+  function othersOff() {}
+  function bestOn() { // sort
+    var blessings = getVar('blessings');
+    var girls = Object.values(getVar('girls'));
+    
+    if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021Pre(count+1, delay), delay); return; }
+    girls.forEach((g)=>calcGirlStatMaxGradeLv1(g, blessings));
+    girls = girls.sort( (g1, g2) => g1.sumb - g2.sumb);
+    console.log('sorted girls:', girls);
+    console.error('todo: sort gui');
+  }
+  function bestOff() {}
+  function customOn() {
+    throw new Error('todo custom filter');
+  }
+  function customOff() {}
+  function customInputOn() {/*nothing is fine*/}
+  function customInputOff() {/*nothing is fine*/}
+  customInput.value = customteamfilter ? customteamfilter.toString() : '';
+  setButtonStyle(buttonOthers, 'other', othersOn, othersOff);
+  setButtonStyle(buttonBest, 'best', bestOn, bestOff);
+  setButtonStyle(buttonCustom, 'custom', customOn, customOff, 'green', 'green');
+  setButtonStyle(customInput, 'custominput', customInputOn, customInputOff);
+  
+  
+  let doBest = getVar('teampick_bestsort')
+  
+}
 
 function towerOfFameSetup() {
   const buttonhide = document.createElement('button');
