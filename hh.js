@@ -122,7 +122,7 @@ function seasonmain2021Run(){
   }
   //setUrl('https://www.hentaiheroes.com' + maxScoreBtn.getAttribute('href'));
   console.log('seasonmain2021run', {maxScoreBtn, maxScore, $runbtns});
-  if (+maxScoreBtn.dataset.enemyid > 0) setUrl('https://www.hentaiheroes.com/season-battle.html?id_opponent=' + maxScoreBtn.enemyid + '&number_of_battles=1');
+  if (+maxScoreBtn.dataset.enemyid > 0) setUrl('https://www.hentaiheroes.com/season-battle.html?id_opponent=' + maxScoreBtn.dataset.enemyid + '&number_of_battles=1');
 }
 
 function printpercent(number, digits = 2) { return (number * 100).toFixed(digits) + '%'; }
@@ -311,6 +311,7 @@ function main0() {
       localStorage.setItem('womarazi_shards', JSON.stringify(shards));
       setVar('girls', girls);
       break;
+    case "season-arena": seasonmain2021Pre(); break;
     case "tower-of-fame":
       towerOfFameSetup();
       break;
@@ -1330,8 +1331,8 @@ function hhmain() {
       shopMain();
       break;
     case "season-arena":
-      seasonmain2021Pre();
-      if (localStorage.getItem('pageAutorun_season-arena.html') !== 'true') return;
+      // seasonmain2021Pre();
+      // if (localStorage.getItem('pageAutorun_season-arena.html') !== 'true') return;
       seasonmain2021Run();
       break;
     case "harem":
