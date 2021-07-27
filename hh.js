@@ -113,6 +113,8 @@ function seasonmain2021Pre(count = 0, delay = 200) {
 }
 
 function seasonmain2021Run(){
+  var $kisses = $('#season_battle_user_block_kiss_energy [energy]:visible');
+  if (!+$kisses[0].innerText) { setTimeout(seasonmain2021Run, 61*min); return; }
   var $runbtns = $('#season-arena .btn_season_perform');
   var maxScoreBtn = null;
   var maxScore = 0;
