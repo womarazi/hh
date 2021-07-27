@@ -256,11 +256,11 @@ function addKobanAutoButton() {
   kobanbtn.style.borderRadius = "15px";
   kobanbtn.style.width = kobanbtn.style.height = "30px";
   kobanbtn.style.border = "3px solid yellow";
-  kobanbtn.style.backgroundColor = localStorage.getItem("useKoban") === "true" ? "green" : "red";
+  kobanbtn.style.backgroundColor = canSpendKoban() ? "green" : "red";
   $(kobanbtn).on('click', () => {
-    const b = localStorage.getItem("useKoban") === "true";
+    const b = canSpendKoban();
     console.log("useKoban ? ", b, " --> ", !b, !b ? "green" : "red", kobanbtn);
-    localStorage.setItem("useKoban", !b);
+    canSpendKoban(!b);
     kobanbtn.style.backgroundColor == !b ? "green" : "red";
   });
 }
@@ -269,6 +269,19 @@ var start = document.createElement("button");
 var autorun = document.createElement("button");
 var autorunp = document.createElement("button");
 
+function canSpendKoban(set = undefined) {
+  if (set === undefined) return getVar('koban_'+hhjs_patharray[0]) === 'true';
+  setVar('koban_' + hhjs_patharray[0], !!set);
+  return set;
+}
+
+function clearAllTimeouts() {
+  let maxtimer = setTimeout(()=>{}, 0);
+  for (let i = 0; i <= maxtimer; i++) {
+    clearTimeout(i);
+    clearInterval(i);
+  }
+}
 function main0() {
   /*inj_jsLoad(
     "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/",
@@ -302,11 +315,13 @@ function main0() {
   autorun.innerHTML = 'G';
   
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
+  var params = getJsonFromUrl();
   // window.is_cheat_click = () => false;
-  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => setTimeout(hhmain, 100));
+  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => { clearAllTimeouts(); setTimeout(hhmain, 100)); }
+  window.hhjs_patharray = pathArray;
+  window.hhjs_params = params;
   // ri-esegui main se cambia url senza vero refresh
   
-  var params = getJsonFromUrl();
   console.log("hhMain url:", pathArray, params);
   switch (pathArray[0]) {
     case "harem":
@@ -335,7 +350,19 @@ function main0() {
       if (!localStorage.getItem('pageAutorun_troll-pre-battle.html')) break;
       const favBoss = +localStorage.getItem('favBoss');
       if (!getVar('trollStatus')[trollnum].girls.length && trollnum !== favBoss) { break; }
-      setUrl('https://www.hentaiheroes.com/troll-battle.html?number_of_battles=1&id_opponent=' + trollnum);
+      function fight() {
+        setUrl('https://www.hentaiheroes.com/troll-battle.html?number_of_battles=1&id_opponent=' + trollnum);
+      }
+      
+      // if energy ----> Fight!
+      if (getFightEnergy()) { fight(); break; }
+      // if not energy but kobans  ----> Refill
+      if (canSpendKoban()) {
+         alert('koban refill todo');
+        break;
+      }
+      // if not energy and not kobans  ----> wait
+      setTimeout(()=> refreshPage(), 30*min);
       break; }
       
     case "season-arena": seasonmain2021Pre(); break;
@@ -1402,10 +1429,11 @@ function hhmain() {
       if (shards.length === shardssum/100){
          throw new Exception('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
       }
-      if (getFightEnergy()) whenBattleStart(()=>refreshPage());
+      if (true || getFightEnergy()) whenBattleStart(()=>refreshPage());
       else {
         // todo: check if use kobans to refill
         setTimeout(()=> refreshPage(), 30*min); }
+      
       /*if (params["id_arena"] !== undefined) {
         return trollFight(true, false, false);
       }
@@ -1749,6 +1777,7 @@ function towerOfFameMain(autorefill = true){
   const userlistbutton = $('#buttonmakeuserlist')[0];
   // end setup html buttons, start logic
   if (!doch && !dokh && !dohk) return;
+  const usekoban = canSpendKoban();
   const mustStopToRefill = () => {
     if (energy > 0 ) return false;
     if (!usekoban) return true;
@@ -1765,7 +1794,6 @@ function towerOfFameMain(autorefill = true){
 
   const $challenge = $('.challenge_points');
   const energy = +$challenge.find('[energy]')[0].innerText;
-  const usekoban = localStorage.getItem("useKoban") === "true";
   // console.log('energy:', energy); return;
   let userlist = JSON.parse(localStorage.getItem('_hhtowerlist'));
   if (userlist.length === 0) userlist = null;
