@@ -1727,9 +1727,8 @@ function changeTeamSetup(){
       if (isOn) onAction && onAction(); else offAction && offAction();
     });
     if (isInput) $(btn).on('input', () => {
-        onAction && onAction();
-        setVar(varName, btn.value);
-      }
+      setVar(varName, btn.value);
+      onAction && onAction();
     });
   }
   buttonContainer.append(document.createElement('br'));
