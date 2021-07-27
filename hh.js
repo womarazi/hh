@@ -298,6 +298,14 @@ function main0() {
     alert('old timeout hhmain0 100, should never happen!');
     setTimeout(main0, 100);
     return; }
+  
+  const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
+  var params = getJsonFromUrl();
+  // window.is_cheat_click = () => false;
+  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => { clearAllTimeouts(); setTimeout(hhmain, 100); });
+  window.hhjs_patharray = pathArray;
+  window.hhjs_params = params;
+  
   parseBlessingsSetup();
   buttonContainer = document.createElement("div");
   document.body.append(buttonContainer);
@@ -316,12 +324,6 @@ function main0() {
   start.innerHTML = "->";
   autorun.innerHTML = 'G';
   
-  const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
-  var params = getJsonFromUrl();
-  // window.is_cheat_click = () => false;
-  $('.tabs > h4').off('click.mainhh').on('click.mainhh', () => { clearAllTimeouts(); setTimeout(hhmain, 100); });
-  window.hhjs_patharray = pathArray;
-  window.hhjs_params = params;
   // ri-esegui main se cambia url senza vero refresh
   
   console.log("hhMain url:", pathArray, params);
