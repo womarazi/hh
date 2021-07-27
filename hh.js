@@ -118,11 +118,11 @@ function seasonmain2021Run(){
   var maxScore = 0;
   for (let i = 0; i < $runbtns.length; i++) {
     let runbtn = $runbtns[i];
-    if (!maxScoreBtn || +maxScoreBtn.dataset.score > +runbtn.dataset.score) { maxScoreBtn = runbtn; }
+    if (!maxScoreBtn || +maxScoreBtn.dataset.score < +runbtn.dataset.score) { maxScoreBtn = runbtn; }
   }
   //setUrl('https://www.hentaiheroes.com' + maxScoreBtn.getAttribute('href'));
   console.log('seasonmain2021run', {maxScoreBtn, maxScore, $runbtns});
-  if (+maxScoreBtn.enemyid > 0) setUrl('https://www.hentaiheroes.com/season-battle.html?id_opponent=' + maxScoreBtn.enemyid + '&number_of_battles=1');
+  if (+maxScoreBtn.dataset.enemyid > 0) setUrl('https://www.hentaiheroes.com/season-battle.html?id_opponent=' + maxScoreBtn.enemyid + '&number_of_battles=1');
 }
 
 function printpercent(number, digits = 2) { return (number * 100).toFixed(digits) + '%'; }
