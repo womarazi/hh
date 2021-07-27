@@ -334,6 +334,9 @@ function main0() {
       setVar('girls', girls);
       break;
       
+    case "change-team": 
+      changeTeamSetup();
+      break;
     case "troll-pre-battle": {
       const girls = getVar('girls');
       let trollStatus = getVar('trollStatus');
@@ -1718,6 +1721,7 @@ function changeTeamSetup(){
       btn.style.height = '30px';
     }
     function updateStyle(btn) {
+      console.log('updateStyle', {btn});
       if (isInput) return;
       btn.style.backgroundColor = isOn ? colorOn : colorOff;
     }
