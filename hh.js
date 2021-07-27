@@ -121,6 +121,7 @@ function seasonmain2021Run(){
     if (!maxScoreBtn || +maxScoreBtn.dataset.score > +runbtn.dataset.score) { maxScoreBtn = runbtn; }
   }
   //setUrl('https://www.hentaiheroes.com' + maxScoreBtn.getAttribute('href'));
+  console.log('seasonmain2021run', {maxScoreBtn, maxScore, $runbtns});
   if (+maxScoreBtn.enemyid > 0) setUrl('https://www.hentaiheroes.com/season-battle.html?id_opponent=' + maxScoreBtn.enemyid + '&number_of_battles=1');
 }
 
