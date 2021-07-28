@@ -1391,6 +1391,12 @@ function hhmain() {
     case "shop":
       shopMain();
       break;
+    case "tower-of-fame":
+      // leagues_list: all 101 players, playerLeaguesData: current selected player
+      // todo: run hhpp as new hhpp, so i can access local context.
+      // todo2: add button to run hhpp
+      // here just do fight according to parsed user object
+      break;
     case "season-arena":
       // seasonmain2021Pre();
       // if (localStorage.getItem('pageAutorun_season-arena.html') !== 'true') return;
