@@ -17,7 +17,7 @@
 // @author			Raphael, 1121, Sluimerstand, shal, Tom208, test_anon
 // ==/UserScript==
 
-console.log('hh++ by woma', {$});
+function hhpp() {
 /*	===========
 	 CHANGELOG
 	=========== */
@@ -7722,4 +7722,8 @@ if (localStorage.getItem('HHS.oldPoAView') === '1') {
     if (CurrentPage.indexOf('home') != -1) {
         $('.event-thumbnail [rel=path_event]')[0].href="/path-of-attraction.html";
     }
-}
+}}
+
+
+console.log('hh++ by woma', {hhpp});
+window.hhpp = hhpp;
