@@ -1715,10 +1715,10 @@ function changeTeamSetup(){
   const customInput = document.createElement('input');
   const customteamfilter = eval(getVar('customteamfilter'));
   function setButtonStyle(btn, varName, onAction, offAction, colorOn = 'green', colorOff = 'red', text = '') {
-    console.log('setbuttonstyle', {isInput, varName});
     buttonContainer.append(btn);
     varName = 'teampicker_' + varName;
     const isInput = btn.tagName !== 'INPUT';
+    console.log('setbuttonstyle', {isInput, varName});
     let isOn = getVar(varName);
     if (text) btn.innerText = text;
     if (isInput) {
