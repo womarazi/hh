@@ -1715,6 +1715,7 @@ function changeTeamSetup(){
   const customInput = document.createElement('input');
   const customteamfilter = eval(getVar('customteamfilter'));
   function setButtonStyle(btn, varName, onAction, offAction, colorOn = 'green', colorOff = 'red', text = '') {
+    console.log('setbuttonstyle', {isInput, varName});
     buttonContainer.append(btn);
     varName = 'teampicker_' + varName;
     const isInput = btn.tagName !== 'INPUT';
@@ -1739,6 +1740,7 @@ function changeTeamSetup(){
       if (isOn) onAction && onAction(); else offAction && offAction();
     });
     if (isInput) $(btn).on('input', () => {
+      console.log('setbuttonstyle triggered oninput', {isInput, varName});
       setVar(varName, btn.value);
       onAction && onAction();
     });
@@ -1767,10 +1769,10 @@ function changeTeamSetup(){
   setButtonStyle(buttonOthers, 'other', othersOn, othersOff);
   setButtonStyle(buttonBest, 'best', bestOn, bestOff);
   setButtonStyle(buttonCustom, 'custom', customOn, customOff, 'green', 'green');
-  setButtonStyle(customInput, 'custominput', customInputOn, customInputOff);
-  
-  
+  setButtonStyle(customInput, 'teampick_bestsort', customInputOn, customInputOff);
   let doBest = getVar('teampick_bestsort')
+  customInput.value = doBest;
+  
   
 }
 
