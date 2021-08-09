@@ -20,7 +20,10 @@ function onBlessingClick(delay = 200, count = 0) {
   console.log('onBlessingClick check', {delay, count});
   let success = false;
   if (count > 300) return;
-  try { success = parseBlessings(); } catch(e) { console.error(e); }
+  try { success = parseBlessings(); } catch(e) {
+    console.error(e);
+    return;
+  }
   if (!success) setTimeout(()=>onBlessingClick(delay, count+1), delay);
 }
 
