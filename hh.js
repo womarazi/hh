@@ -8,7 +8,8 @@ function refreshPage(){
 ///////////////////////////////////////////// new season 2021
 function parseBlessingCondition(str) {
   switch(str.toLowerCase().substr(0, str.indexOf(' '))){
-    default: throw new Exception('todo: implement this condition:', str);
+    default: throw new Error('todo: implement this condition:', str);
+    case 'eye': return {eye: str.substr('rarity'.length).trim()};
     case 'rarity': return {rarity: str.substr('rarity'.length).trim()};
     case 'hair': return {hair: str.substr('hair color'.length).trim()};
     case 'favorite': return {position: str.substr('Favorite position'.length).trim()};
@@ -240,8 +241,8 @@ function doesBonusApply(ginfo, blessing){
   if (blessing.condition.hair) {
     return ginfo.gData.ref.hair?.indexOf(blessing.condition.hair) >= 0;
   }
-  if (blessing.condition.eyes) {
-    return ginfo.gData.ref.eyes?.indexOf(blessing.condition.eyes) >= 0;
+  if (blessing.condition.eye) {
+    return ginfo.gData.ref.eye?.indexOf(blessing.condition.eye) >= 0;
   }
   if (blessing.condition.rarity) {
     return ginfo.gData.rarity?.indexOf(blessing.condition.rarity) >= 0;
