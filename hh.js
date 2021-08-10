@@ -1724,7 +1724,7 @@ function changeTeamSetup(){
     buttonContainer.append(btn);
     varName = 'teampicker_' + varName;
     const isInput = btn.tagName !== 'INPUT';
-    console.log('setbuttonstyle', {isInput, varName});
+    console.log('setbuttonstyle', {btn, isInput, varName});
     let isOn = getVar(varName);
     if (text) btn.innerText = text;
     if (isInput) {
@@ -1734,7 +1734,7 @@ function changeTeamSetup(){
       btn.style.height = '30px';
     }
     function updateStyle(btn) {
-      console.log('updateStyle', {btn});
+      console.log('updateStyle', {btn, isInput, varName});
       if (isInput) return;
       btn.style.backgroundColor = isOn ? colorOn : colorOff;
     }
