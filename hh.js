@@ -8,11 +8,12 @@ function refreshPage(){
 ///////////////////////////////////////////// new season 2021
 function parseBlessingCondition(str) {
   switch(str.toLowerCase().substr(0, str.indexOf(' '))){
-    default: throw new Error('todo: implement this condition:', str);
+    default: console.error('todo: implement this condition:', {str}); throw new Error('todo: implement this condition:'+str);
     case 'eye': return {eye: str.substr('rarity'.length).trim()};
     case 'rarity': return {rarity: str.substr('rarity'.length).trim()};
     case 'hair': return {hair: str.substr('hair color'.length).trim()};
     case 'favorite': return {position: str.substr('Favorite position'.length).trim()};
+    case 'zodiac': return {position: str.substr('Favorite position'.length).trim()};
   }
 }
 
@@ -35,6 +36,7 @@ function parseBlessings() {
   var $blessinghtml = $('#popup_blessings .blessing.active-blessing:visible');
   let blessings = [];
   if (!$blessinghtml.length) return false;
+  if (!$blessinghtml.find('.blessing-timer').length) return false;
   blessings = $blessinghtml.toArray().map( (b) => parseBlessing(b));
   console.log('blessings return:', {blessings, $blessinghtml});
   setVar('blessings', blessings);
@@ -43,7 +45,7 @@ function parseBlessings() {
 function parseBlessing(blessinghtml){
   var $blessinghtml = $(blessinghtml);
   var blessing = {};
-  console.log({$blessinghtml, blessinghtml});
+  console.log({$blessinghtml, blessinghtml, blessing});
   blessing.time0 = $blessinghtml.find('.blessing-timer')[0].innerText;
   blessing.time = 1000*timeparse(blessing.time0);
   blessing.expiration = new Date(new Date().getTime() + blessing.time);
