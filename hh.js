@@ -1733,7 +1733,7 @@ function changeTeamSetup(){
       btn.style.width = '30px';
       btn.style.height = '30px';
     }
-    function updateStyle(btn) {
+    function updateStyle() {
       console.log('updateStyle', {btn, isInput, varName});
       if (isInput) return;
       btn.style.backgroundColor = isOn ? colorOn : colorOff;
