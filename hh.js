@@ -1723,7 +1723,7 @@ function changeTeamSetup(){
   function setButtonStyle(btn, varName, onAction, offAction, colorOn = 'green', colorOff = 'red', text = '') {
     buttonContainer.append(btn);
     varName = 'teampicker_' + varName;
-    const isInput = btn.tagName !== 'INPUT';
+    const isInput = btn.tagName === 'INPUT';
     console.log('setbuttonstyle', {btn, isInput, varName});
     let isOn = getVar(varName);
     if (text) btn.innerText = text;
@@ -1761,6 +1761,7 @@ function changeTeamSetup(){
     if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021Pre(count+1, delay), delay); return; }
     girls.forEach((g)=>calcGirlStatMaxGradeLv1(g, blessings));
     girls = girls.sort( (g1, g2) => g1.sumb - g2.sumb);
+    window.girls = girls;
     console.log('sorted girls:', girls);
     console.error('todo: sort gui');
   }
@@ -1772,7 +1773,7 @@ function changeTeamSetup(){
   function customInputOn() {/*nothing is fine*/}
   function customInputOff() {/*nothing is fine*/}
   customInput.value = customteamfilter ? customteamfilter.toString() : '';
-  setButtonStyle(buttonOthers, 'other', othersOn, othersOff);
+  setButtonStyle(buttonOthers, 'other', othersOn, othersOff, 'green', 'red');
   setButtonStyle(buttonBest, 'best', bestOn, bestOff);
   setButtonStyle(buttonCustom, 'custom', customOn, customOff, 'green', 'green');
   setButtonStyle(customInput, 'teampick_bestsort', customInputOn, customInputOff);
