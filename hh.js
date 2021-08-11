@@ -1767,7 +1767,7 @@ function changeTeamSetup(){
     girls.forEach((g)=>calcGirlStatMaxGradeLv1(g, blessings));
     girls = girls.filter(g => !!g.maxGradeLv1).sort( (g1, g2) => g1.maxGradeLv1.sumb - g2.maxGradeLv1.sumb);
     window.girlsarr = girls;
-    window.girls = girls.map(g => { return {name: g.gData.name, bonus: g.maxGradeLv1?.bonus, maxStat: g.maxGradeLv1, currStat: g.gData.caracs}; });
+    window.girls = girls.map(g => { return {name: g.gData.Name, bonus: g.bonus, bonuses: g.bonuses, maxStat: g.maxGradeLv1, currStat: g.gData.caracs}; });
     console.log('sorted girls:', girls);
     console.error('todo: sort gui');
   }
