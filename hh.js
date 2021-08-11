@@ -1705,9 +1705,9 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   out.hk0 = gData.caracs.carac1 / gData.level / at0stars;
   out.ch0 = gData.caracs.carac2 / gData.level / at0stars;
   out.kh0 = gData.caracs.carac3 / gData.level / at0stars;
-  out.hk = out.hk * atMaxStars;
-  out.ch = out.ch * atMaxStars;
-  out.kh = out.kh * atMaxStars;
+  out.hk = out.hk0 * atMaxStars;
+  out.ch = out.ch0 * atMaxStars;
+  out.kh = out.kh0 * atMaxStars;
   out.sum = out.hk + out.ch + out.kh;
   if (isNaN(out.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
   findGirlBonuses(g, blessings);
