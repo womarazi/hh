@@ -238,7 +238,7 @@ function findGirlBonuses(g, blessings, output = null){
   output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(g, b)}; });
   output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
     if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
-    return sum + elem2.applied ? 0 : elem2.from.bonus; });
+    return sum + (elem2.applied ? elem2.from.bonus : 0); });
   return output.bonuses; }
 
 function doesBonusApply(g, blessing){
@@ -1709,11 +1709,11 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   out.ch = out.ch0 * atMaxStars;
   out.kh = out.kh0 * atMaxStars;
   out.sum = out.hk + out.ch + out.kh;
-  if (isNaN(out.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
+  if (isNaN(out.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade, atMaxStars}); return; }
   findGirlBonuses(g, blessings);
-  out.hkb = out.hk * gData.bonus;
-  out.chb = out.ch * gData.bonus;
-  out.khb = out.kh * gData.bonus;
+  out.hkb = out.hk * g.bonus;
+  out.chb = out.ch * g.bonus;
+  out.khb = out.kh * g.bonus;
   out.sumb = out.hkb + out.chb + out.khb;
   if (isNaN(out.sumb)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
   // console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
