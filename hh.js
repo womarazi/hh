@@ -1710,9 +1710,10 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   var maxGrade = +gData.nb_grades;
   var grade = +gData.graded;
   
-  var stat0 = {}, statmax = {};
+  var stat0 = {}, statmax = {}, statmaxbless = {};
   out.debug = {grade, maxGrade, stat0};
   out.debug['at'+maxGrade+'stars'] = statmax;
+  out.debug.statmaxbless = statmaxbless;
   out.debug.g = g;
   
   stat0.multiplier = (1 + 0.3 * grade);
@@ -1720,17 +1721,24 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   stat0.hk = gData.caracs.carac1 / gData.level / stat0.multiplier;
   stat0.ch = gData.caracs.carac2 / gData.level / stat0.multiplier;
   stat0.kh = gData.caracs.carac3 / gData.level / stat0.multiplier;
+  stat0.sum = stat0.hk + stat0.ch + stat0.kh;
   statmax.hk = stat0.hk * statmax.multiplier;
   statmax.ch = stat0.ch * statmax.multiplier;
   statmax.kh = stat0.kh * statmax.multiplier;
-  out.sum = out.hk + out.ch + out.kh;
-  if (isNaN(out.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
+  statmax.sum = statmax.hk + statmax.ch + statmax.kh;
+  
+  if (isNaN(statmax.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
   findGirlBonuses(g, blessings);
-  out.hkb = out.hk * (1 + g.bonus);
-  out.chb = out.ch * (1 + g.bonus);
-  out.khb = out.kh * (1 + g.bonus);
-  out.sumb = out.hkb + out.chb + out.khb;
-  if (isNaN(out.sumb)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
+  statmaxbless.hk = statmax.hk * (1 + g.bonus);
+  statmaxbless.ch = statmax.ch * (1 + g.bonus);
+  statmaxbless.kh = statmax.kh * (1 + g.bonus);
+  statmaxbless.sum = statmaxbless.hk + statmaxbless.ch + statmaxbless.kh;
+  
+  out.hk = statmaxbless.hk;
+  out.ch = statmaxbless.ch;
+  out.kh = statmaxbless.kh;
+  out.sum = statmaxbless.sum;
+  if (isNaN(out.sum)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
   // console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
 }
 function changeTeamSetup(){
