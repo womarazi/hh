@@ -1729,9 +1729,9 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   
   if (isNaN(statmax.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
   findGirlBonuses(g, blessings);
-  statmaxbless.hk = statmax.hk * (1 + g.bonus);
-  statmaxbless.ch = statmax.ch * (1 + g.bonus);
-  statmaxbless.kh = statmax.kh * (1 + g.bonus);
+  statmaxbless.hk = statmax.hk * (g.bonus || 1);
+  statmaxbless.ch = statmax.ch * (g.bonus || 1);
+  statmaxbless.kh = statmax.kh * (g.bonus || 1);
   statmaxbless.sum = statmaxbless.hk + statmaxbless.ch + statmaxbless.kh;
   
   out.hk = statmaxbless.hk;
