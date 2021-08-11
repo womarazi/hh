@@ -227,33 +227,34 @@ function parseSeasonGirl($player, gindex, blessings){
   delete gdata.caracs;
   delete gdata.Graded2;
   gdata.gid = gid;
-  console.log('findGirlBonuses blessings', {ginfo: girls[gdata.gid], blessings, gdata});
+  console.log('findGirlBonuses blessings', {g: girls[gdata.gid], blessings, gdata});
   gdata.bonuses = findGirlBonuses(girls[gdata.gid], blessings, gdata);
   return gdata;
 }
 
-function findGirlBonuses(ginfo, blessings, output = null){
+function findGirlBonuses(g, blessings, output = null){
   if (!blessings) blessings = getVar('blessings');
-  if (!output) output = ginfo;
-  output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(ginfo, b)}; });
+  if (!output) output = g;
+  output.bonuses = blessings.map((b) => { return {from: b, applied: doesBonusApply(g, b)}; });
   output.bonus = output.bonuses.reduce( (sum/* or elem1 on first iteration*/, elem2)  => {
     if (typeof sum == 'object') sum = sum.applied ? sum.from.bonus : 0; // nella prima iterazione sum è il primo elemento dell'array, poi è il ritorno della call precedente (numerico)
     return sum + elem2.applied ? 0 : elem2.from.bonus; });
   return output.bonuses; }
 
-function doesBonusApply(ginfo, blessing){
-  console.log('doesbonusapply?()', {ginfo, blessing});
+function doesBonusApply(g, blessing){
+  var gData = g.gData;
+  console.log('doesbonusapply?()', {g, gData blessing});
   if (blessing.condition.hair) {
-    return ginfo.gData.ref.hair?.indexOf(blessing.condition.hair) >= 0;
+    return gData.ref.hair?.indexOf(blessing.condition.hair) >= 0;
   }
   if (blessing.condition.eye) {
-    return ginfo.gData.ref.eye?.indexOf(blessing.condition.eye) >= 0;
+    return gData.ref.eye?.indexOf(blessing.condition.eye) >= 0;
   }
   if (blessing.condition.rarity) {
-    return ginfo.gData.rarity?.indexOf(blessing.condition.rarity) >= 0;
+    return gData.rarity?.indexOf(blessing.condition.rarity) >= 0;
   }
   if (blessing.condition.position){
-    return ginfo.gData.position_img?.indexOf(blessing.condition.position) >= 0;
+    return gData.position_img?.indexOf(blessing.condition.position) >= 0;
   }
 }
 ///////////////////// new season 2021 end
@@ -1693,25 +1694,25 @@ function replaceCharAt(string, index, replacestr) {
 function calcGirlStatMaxGradeLv1(g, blessings) {
   var out = {};
   g.maxGradeLv1 = out;
-  var ginfo = g.gData;
-  var maxGrade = ginfo.nb_grades;
-  var grade = ginfo.graded;
+  var gData = g.gData;
+  var maxGrade = gData.nb_grades;
+  var grade = gData.graded;
   
   var at0stars = (1 + 0.3 * grade);
   var atMaxStars = (1 + 0.3 * maxGrade);
   
-  out.hk0 = ginfo.caracs.carac1 / ginfo.level / at0stars;
-  out.ch0 = ginfo.caracs.carac2 / ginfo.level / at0stars;
-  out.kh0 = ginfo.caracs.carac3 / ginfo.level / at0stars;
+  out.hk0 = gData.caracs.carac1 / gData.level / at0stars;
+  out.ch0 = gData.caracs.carac2 / gData.level / at0stars;
+  out.kh0 = gData.caracs.carac3 / gData.level / at0stars;
   out.hk = out.hk * atMaxStars;
   out.ch = out.ch * atMaxStars;
   out.kh = out.kh * atMaxStars;
-  findGirlBonuses(ginfo, blessings);
-  out.hkb = out.hk * ginfo.bonus;
-  out.chb = out.ch * ginfo.bonus;
-  out.khb = out.kh * ginfo.bonus;
+  findGirlBonuses(g, blessings);
+  out.hkb = out.hk * gData.bonus;
+  out.chb = out.ch * gData.bonus;
+  out.khb = out.kh * gData.bonus;
   out.sumb = out.hkb + out.chb + out.khb;
-  console.log('calcGirlStatMaxGradeLv1 ', {ginfo, blessings, g});
+  console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
 }
 function changeTeamSetup(){
   const buttonOthers = document.createElement('button');
