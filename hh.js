@@ -7,7 +7,8 @@ function refreshPage(){
 }
 ///////////////////////////////////////////// new season 2021
 function parseBlessingCondition(str) {
-  switch(str.toLowerCase().substr(0, str.indexOf(' '))){
+  str = str.toLowerCase();
+  switch(str.substr(0, str.indexOf(' '))){
     default: console.error('todo: implement this condition:', {str}); throw new Error('todo: implement this condition:'+str);
     case 'eye': return {eye: str.substr('eye color'.length).trim(), str};
     case 'rarity': return {rarity: str.substr('rarity'.length).trim(), str};
@@ -249,16 +250,16 @@ function doesBonusApply0(g, blessing){
   var gData = g.gData;
   console.log('doesbonusapply?()', {g, gData, blessing});
   if (blessing.condition.hair) {
-    return gData.ref.hair?.indexOf(blessing.condition.hair) >= 0;
+    return gData.ref.hair?.toLowerCase().indexOf(blessing.condition.hair) >= 0;
   }
   if (blessing.condition.eye) {
-    return gData.ref.eye?.indexOf(blessing.condition.eye) >= 0;
+    return gData.ref.eyes?.toLowerCase().indexOf(blessing.condition.eye) >= 0;
   }
   if (blessing.condition.rarity) {
-    return gData.rarity?.indexOf(blessing.condition.rarity) >= 0;
+    return gData.rarity?.toLowerCase().indexOf(blessing.condition.rarity) >= 0;
   }
   if (blessing.condition.position){
-    return gData.position_img?.indexOf(blessing.condition.position) >= 0;
+    return gData.position_img?.toLowerCase().indexOf(blessing.condition.position) >= 0;
   }
 }
 ///////////////////// new season 2021 end
@@ -2502,4 +2503,3 @@ function error(condition, message, printobjects) {
 function float(string) {
   return float.parse(string);
 }
-// oiuhuohu hig iy giyg uguyg yig iygh iuhiuh iu
