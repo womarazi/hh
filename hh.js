@@ -6,6 +6,8 @@ function refreshPage(){
   setUrl(document.location.href);
 }
 ///////////////////////////////////////////// new season 2021
+// eyes check: console.table(Object.values(getVar('girls')).map(g => {return {name:g.gData.Name, eyes:g.gData.ref.eyes}}).filter(g => g.eyes.toLowerCase().indexOf('silver')>=0))
+// zodiac check: console.table(Object.values(getVar('girls')).map(g => {return {name:g.gData.Name, zodiac:g.gData.ref.zodiac}}).filter(g => g.zodiac.toLowerCase().indexOf('sagitt')>=0))
 function parseBlessingCondition(str) {
   str = str.toLowerCase();
   switch(str.substr(0, str.indexOf(' '))){
