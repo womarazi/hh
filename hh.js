@@ -1726,12 +1726,12 @@ function changeTeamSetup(){
     const isInput = btn.tagName === 'INPUT';
     console.log('setbuttonstyle', {btn, isInput, varName});
     let isOn = getVar(varName);
-    if (text) btn.innerText = text;
     if (!isInput) {
       btn.style.border = '2px solid black';
       btn.style.borderRadius = '999px';
       btn.style.width = '30px';
       btn.style.height = '30px';
+      btn.innerText = text || varName[0];
     }
     function updateStyle() {
       console.log('updateStyle', {btn, isInput, varName});
