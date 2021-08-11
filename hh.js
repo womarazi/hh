@@ -1711,16 +1711,21 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   var grade = +gData.graded;
   
   var stat0 = {}, statmax = {}, statmaxbless = {};
-  out.debug = {grade, maxGrade, stat0};
+  var statcurrent = {hk:gData.caracs.carac1, ch: gData.caracs.carac2, kh: gData.caracs.carac3};
+  out.debug = {grade, maxGrade, statcurrent, stat0};
   out.debug['at'+maxGrade+'stars'] = statmax;
   out.debug.statmaxbless = statmaxbless;
   out.debug.g = g;
   
   stat0.multiplier = (1 + 0.3 * grade);
-  statmax.multiplier = (1 + 0.3 * maxGrade);;
-  stat0.hk = gData.caracs.carac1 / gData.level / stat0.multiplier;
-  stat0.ch = gData.caracs.carac2 / gData.level / stat0.multiplier;
-  stat0.kh = gData.caracs.carac3 / gData.level / stat0.multiplier;
+  statmax.multiplier = (1 + 0.3 * maxGrade);
+  
+  statcurrent.sum = statcurrent.hk + statcurrent.ch + statcurrent.kh;
+  // statcurrent already include blessing bonus
+  var bonusmultiplier = g.bonus || 1;
+  stat0.hk = statcurrent.hk / gData.level / stat0.multiplier / bonusmultiplier;
+  stat0.ch = statcurrent.ch / gData.level / stat0.multiplier / bonusmultiplier;
+  stat0.kh = statcurrent.kh / gData.level / stat0.multiplier / bonusmultiplier;
   stat0.sum = stat0.hk + stat0.ch + stat0.kh;
   statmax.hk = stat0.hk * statmax.multiplier;
   statmax.ch = stat0.ch * statmax.multiplier;
@@ -1729,9 +1734,9 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   
   if (isNaN(statmax.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
   findGirlBonuses(g, blessings);
-  statmaxbless.hk = statmax.hk * (g.bonus || 1);
-  statmaxbless.ch = statmax.ch * (g.bonus || 1);
-  statmaxbless.kh = statmax.kh * (g.bonus || 1);
+  statmaxbless.hk = statmax.hk * bonusmultiplier;
+  statmaxbless.ch = statmax.ch * bonusmultiplier;
+  statmaxbless.kh = statmax.kh * bonusmultiplier;
   statmaxbless.sum = statmaxbless.hk + statmaxbless.ch + statmaxbless.kh;
   
   out.hk = statmaxbless.hk;
