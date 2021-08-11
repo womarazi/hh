@@ -1727,7 +1727,7 @@ function changeTeamSetup(){
     console.log('setbuttonstyle', {btn, isInput, varName});
     let isOn = getVar(varName);
     if (text) btn.innerText = text;
-    if (isInput) {
+    if (!isInput) {
       btn.style.border = '2px solid black';
       btn.style.borderRadius = '999px';
       btn.style.width = '30px';
