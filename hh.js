@@ -247,6 +247,7 @@ function findGirlBonuses(g, blessings, output = null){
 function doesBonusApply(g, blessing){
   var ret = doesBonusApply0(g, blessing);
   console.log('doesbonusapply() ? ' + !!ret, {name:g.gData.Name, g, gData: g.gData, blessing});
+  return ret;
 }
 function doesBonusApply0(g, blessing){
   var gData = g.gData;
@@ -1721,9 +1722,9 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   out.sum = out.hk + out.ch + out.kh;
   if (isNaN(out.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade, atMaxStars}); return; }
   findGirlBonuses(g, blessings);
-  out.hkb = out.hk * g.bonus;
-  out.chb = out.ch * g.bonus;
-  out.khb = out.kh * g.bonus;
+  out.hkb = out.hk * (1 + g.bonus);
+  out.chb = out.ch * (1 + g.bonus);
+  out.khb = out.kh * (1 + g.bonus);
   out.sumb = out.hkb + out.chb + out.khb;
   if (isNaN(out.sumb)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
   // console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
