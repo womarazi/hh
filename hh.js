@@ -1696,8 +1696,8 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   var out = {};
   g.maxGradeLv1 = out;
   var gData = g.gData;
-  var maxGrade = gData.nb_grades;
-  var grade = gData.graded;
+  var maxGrade = +gData.nb_grades;
+  var grade = +gData.graded;
   
   var at0stars = (1 + 0.3 * grade);
   var atMaxStars = (1 + 0.3 * maxGrade);
@@ -1708,12 +1708,15 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   out.hk = out.hk * atMaxStars;
   out.ch = out.ch * atMaxStars;
   out.kh = out.kh * atMaxStars;
+  out.sum = out.hk + out.ch + out.kh;
+  if (isNaN(out.sum)) { console.warn('calg girl stat error1:', {out, gData, g, maxGrade, grade}); return; }
   findGirlBonuses(g, blessings);
   out.hkb = out.hk * gData.bonus;
   out.chb = out.ch * gData.bonus;
   out.khb = out.kh * gData.bonus;
   out.sumb = out.hkb + out.chb + out.khb;
-  console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
+  if (isNaN(out.sumb)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
+  // console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
 }
 function changeTeamSetup(){
   const buttonOthers = document.createElement('button');
@@ -1763,7 +1766,8 @@ function changeTeamSetup(){
     if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021Pre(count+1, delay), delay); return; }
     girls.forEach((g)=>calcGirlStatMaxGradeLv1(g, blessings));
     girls = girls.filter(g => !!g.maxGradeLv1).sort( (g1, g2) => g1.maxGradeLv1.sumb - g2.maxGradeLv1.sumb);
-    window.girls = girls;
+    window.girlsarr = girls;
+    window.girls = girls.map(g => {name: g.gData.name, bonus: g.bonus, maxStat: g.maxGradeLv1, currStat: g.gData.caracs} ;
     console.log('sorted girls:', girls);
     console.error('todo: sort gui');
   }
