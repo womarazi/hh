@@ -254,6 +254,9 @@ function doesBonusApply0(g, blessing){
   if (blessing.condition.hair) {
     return gData.ref.hair?.toLowerCase().indexOf(blessing.condition.hair) >= 0;
   }
+  if (blessing.condition.zodiac) {
+    return gData.ref.zodiac?.toLowerCase().indexOf(blessing.condition.zodiac) >= 0;
+  }
   if (blessing.condition.eye) {
     return gData.ref.eyes?.toLowerCase().indexOf(blessing.condition.eye) >= 0;
   }
