@@ -1726,6 +1726,7 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   out.chb = out.ch * (1 + g.bonus);
   out.khb = out.kh * (1 + g.bonus);
   out.sumb = out.hkb + out.chb + out.khb;
+  out.debug = {grade, maxGrade, atMaxStars, at0stars};
   if (isNaN(out.sumb)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
   // console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
 }
