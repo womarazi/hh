@@ -9,11 +9,11 @@ function refreshPage(){
 function parseBlessingCondition(str) {
   switch(str.toLowerCase().substr(0, str.indexOf(' '))){
     default: console.error('todo: implement this condition:', {str}); throw new Error('todo: implement this condition:'+str);
-    case 'eye': return {eye: str.substr('rarity'.length).trim()};
+    case 'eye': return {eye: str.substr('eye color'.length).trim()};
     case 'rarity': return {rarity: str.substr('rarity'.length).trim()};
     case 'hair': return {hair: str.substr('hair color'.length).trim()};
     case 'favorite': return {position: str.substr('Favorite position'.length).trim()};
-    case 'zodiac': return {position: str.substr('Favorite position'.length).trim()};
+    case 'zodiac': return {position: str.substr('zodiac sign'.length).trim()};
   }
 }
 
@@ -242,6 +242,10 @@ function findGirlBonuses(g, blessings, output = null){
   return output.bonuses; }
 
 function doesBonusApply(g, blessing){
+  var ret = doesBonusApply0(g, blessing);
+  console.log('doesbonusapply() ? ' + !!ret, {name:g.gData.Name, g, gData: g.gData, blessing});
+}
+function doesBonusApply0(g, blessing){
   var gData = g.gData;
   console.log('doesbonusapply?()', {g, gData, blessing});
   if (blessing.condition.hair) {
