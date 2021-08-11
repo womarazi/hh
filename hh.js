@@ -9,11 +9,11 @@ function refreshPage(){
 function parseBlessingCondition(str) {
   switch(str.toLowerCase().substr(0, str.indexOf(' '))){
     default: console.error('todo: implement this condition:', {str}); throw new Error('todo: implement this condition:'+str);
-    case 'eye': return {eye: str.substr('eye color'.length).trim()};
-    case 'rarity': return {rarity: str.substr('rarity'.length).trim()};
-    case 'hair': return {hair: str.substr('hair color'.length).trim()};
-    case 'favorite': return {position: str.substr('Favorite position'.length).trim()};
-    case 'zodiac': return {position: str.substr('zodiac sign'.length).trim()};
+    case 'eye': return {eye: str.substr('eye color'.length).trim(), str};
+    case 'rarity': return {rarity: str.substr('rarity'.length).trim(), str};
+    case 'hair': return {hair: str.substr('hair color'.length).trim(), str};
+    case 'favorite': return {position: str.substr('Favorite position'.length).trim(), str};
+    case 'zodiac': return {zodiac: str.substr('zodiac sign'.length).trim(), str};
   }
 }
 
