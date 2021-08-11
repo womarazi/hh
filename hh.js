@@ -1692,6 +1692,7 @@ function replaceCharAt(string, index, replacestr) {
   return string.substr(0, +index) + replacestr + string.substr(index + 1); }
 
 function calcGirlStatMaxGradeLv1(g, blessings) {
+  if (!g.gData.caracs) return; // girl not owned
   var out = {};
   g.maxGradeLv1 = out;
   var gData = g.gData;
@@ -1723,7 +1724,6 @@ function changeTeamSetup(){
   const customteamfilter = eval(getVar('customteamfilter'));
   function setButtonStyle(btn, varName, onAction, offAction, colorOn = 'green', colorOff = 'red', text = '') {
     buttonContainer.append(btn);
-    varName = 'teampicker_' + varName;
     const isInput = btn.tagName === 'INPUT';
     console.log('setbuttonstyle', {btn, isInput, varName});
     let isOn = getVar(varName);
@@ -1734,6 +1734,7 @@ function changeTeamSetup(){
       btn.style.height = '30px';
       btn.innerText = text || varName[0];
     }
+    varName = 'teampicker_' + varName;
     function updateStyle() {
       console.log('updateStyle', {btn, isInput, varName});
       if (isInput) return;
@@ -1761,7 +1762,7 @@ function changeTeamSetup(){
     
     if (!validBlessings(blessings, true)) { setTimeout(() => seasonmain2021Pre(count+1, delay), delay); return; }
     girls.forEach((g)=>calcGirlStatMaxGradeLv1(g, blessings));
-    girls = girls.sort( (g1, g2) => g1.sumb - g2.sumb);
+    girls = girls.filter(g => !!g.maxGradeLv1).sort( (g1, g2) => g1.maxGradeLv1.sumb - g2.maxGradeLv1.sumb);
     window.girls = girls;
     console.log('sorted girls:', girls);
     console.error('todo: sort gui');
