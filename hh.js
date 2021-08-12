@@ -1748,7 +1748,7 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
 }
 
 function setHexagonNavigationClick() {
-  $('.hero-team .team-member-container').on('click', (e) => {
+  $('.hero-team .team-member-container').on('dblclick', (e) => {
     var gid = e.currentTarget.dataset.girlId;
     window.location = 'https://www.hentaiheroes.com/shop.html?type=potion&girl=' + gid;
   });
