@@ -1815,7 +1815,7 @@ function changeTeamSetup(){
       if (lvnode.parentElement != node) { console.error('mismatch girl and lv nodes', {node, lvnode, nodeidmap, levelmap, g, $girls}); throw new Error('lv mismatch'); }
       container.append(node);
       lvnode.innerText = g.maxGradeLv1.sum.toFixed(1) + '/' + (g.maxGradeLv1.sum * yourlv).toFixed(0);
-    
+    }
   }
   function othersOn() {}
   function othersOff() {}
