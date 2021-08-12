@@ -1746,6 +1746,14 @@ function calcGirlStatMaxGradeLv1(g, blessings) {
   if (isNaN(out.sum)) console.warn('calg girl stat error2:', {out, gData, g, maxGrade, grade});
   // console.log('calcGirlStatMaxGradeLv1 ', {gData, blessings, g});
 }
+
+function setHexagonNavigationClick() {
+  $('.hero-team .team-member-container').on('click', (e) => {
+    var gid = e.currentTarget.dataset.girlId;
+    window.location = 'https://www.hentaiheroes.com/shop.html?type=potion&girl=' + gid;
+  });
+}
+
 function changeTeamSetup(){
   const buttonOthers = document.createElement('button');
   const buttonBest = document.createElement('button');
@@ -1753,6 +1761,7 @@ function changeTeamSetup(){
   const buttonCustom = document.createElement('button');
   const customInput = document.createElement('input');
   const customteamfilter = eval(getVar('customteamfilter'));
+  setHexagonNavigationClick();
   function setButtonStyle(btn, varName, onAction, offAction, colorOn = 'green', colorOff = 'red', text = '') {
     buttonContainer.append(btn);
     const isInput = btn.tagName === 'INPUT';
@@ -1785,6 +1794,29 @@ function changeTeamSetup(){
     });
   }
   buttonContainer.append(document.createElement('br'));
+  function sortgui(girls) {
+    var $container = $('.harem-panel-girls');
+    var $girls =  $container.find('.harem-girl-container');
+    var $levels = $girls.find('.text_girl_level');
+    var container = $container[0], girlsnode;
+    var nodeidmap = {}, levelmap = {};
+    for (var i = 0; i < $girls.length; i++) {
+      var girlh = $girls[i];
+      var lvh = $levels[i];
+      var gid = girlh.getAttribute('id_girl');
+      nodeidmap[gid] = girlh;
+      levelmap[gid] = lvh;
+      
+    }
+    var yourlv = +$('[hero="level"]')[0].innerText;
+    for (var g of girls) {
+      var node = nodeidmap[g.gId];
+      var lvnode = levelmap[g.gId];
+      if (lvnode.parentElement != node) { console.error('mismatch girl and lv nodes', {node, lvnode, nodeidmap, levelmap, g, $girls}); throw new Error('lv mismatch'); }
+      container.append(node);
+      lvnode.innerText = g.maxGradeLv1.sum.toFixed(1) + '/' + (g.maxGradeLv1.sum * yourlv).toFixed(0);
+    
+  }
   function othersOn() {}
   function othersOff() {}
   function bestOn() { // sort
@@ -1797,7 +1829,7 @@ function changeTeamSetup(){
     window.girlsarr = girls;
     window.girls = girls.map(g => { return {name: g.gData.Name, bonus: g.bonus, bonuses: g.bonuses, maxStat: g.maxGradeLv1, currStat: g.gData.caracs}; });
     console.log('sorted girls:', girls);
-    console.error('todo: sort gui');
+    sortgui(girls);
   }
   function bestOff() {}
   function customOn() {
