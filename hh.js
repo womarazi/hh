@@ -1590,6 +1590,13 @@ function maketoweruserlist(userlist = null) {
   $('#buttonmakeuserlist')[0].style.backgroundColor = 'white';
   return userlist; }
 
+function parseNum = (str) => {
+    str = str.toLowerCase();
+    let num = parseFloat(str);
+    if (str.indexOf('k') > 0) return num*1000;
+    if (str.indexOf('m') > 0) return num*1000*1000;
+    return num; }
+
 function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, singleupdate = false, you = null) {
   let $userinfo = $('#leagues_right');
   let tmp;
@@ -1618,28 +1625,23 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   pg.you = false;
   // console.log('debuggg', userList[userid], $userinfo, $userinfo.find('.lead_ego'));
   // userList['error']['error']['error'] = 'error';
-  let tonum = (str) => {
-    str = str.toLowerCase();
-    let num = parseFloat(str);
-    if (str.indexOf('k') > 0) return num*1000;
-    if (str.indexOf('m') > 0) return num*1000*1000;
-    return num; }
+
   
   let $stat = $userinfo.find('.stats_wrap > .fighter-stats-container');
-  pg.ego = intParseToDo($stat.find('.carac-icon[carac="ego"] + .carac-value')[0].innerText);
+  pg.ego = parseNum($stat.find('.carac-icon[carac="ego"] + .carac-value')[0].innerText);
   // pg.pureEgo = ...
   /*
-  pg.stage1.hk = tonum($stat.find('[carac="1"]')[0].nextSibling.innerText);
-  pg.stage1.ch = tonum($stat.find('[carac="2"]')[0].nextSibling.innerText);
-  pg.stage1.kh = tonum($stat.find('[carac="3"]')[0].nextSibling.innerText);
-  pg.stage1.hkdef = tonum($stat.find('[carac="def1"]')[0].nextSibling.innerText);
-  pg.stage1.chdef = tonum($stat.find('[carac="def2"]')[0].nextSibling.innerText);
-  pg.stage1.khdef = tonum($stat.find('[carac="def3"]')[0].nextSibling.innerText);
-  pg.stage1.atk = tonum($stat.find('[carac="damage"]')[0].nextSibling.innerText);*/
-  pg.atk = intParseToDo($stat.find('.carac-icon[carac="damage"] + .carac-value')[0].innerText);
-  pg.def = intParseToDo($stat.find('.carac-icon[carac="def0"] + .carac-value')[0].innerText););
-  pg.harmony = intParseToDo($stat.find('.carac-icon[carac="chanche"] + .carac-value')[0].innerText);
-  // pg.excitement = tonum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
+  pg.stage1.hk = parseNum($stat.find('[carac="1"]')[0].nextSibling.innerText);
+  pg.stage1.ch = parseNum($stat.find('[carac="2"]')[0].nextSibling.innerText);
+  pg.stage1.kh = parseNum($stat.find('[carac="3"]')[0].nextSibling.innerText);
+  pg.stage1.hkdef = parseNum($stat.find('[carac="def1"]')[0].nextSibling.innerText);
+  pg.stage1.chdef = parseNum($stat.find('[carac="def2"]')[0].nextSibling.innerText);
+  pg.stage1.khdef = parseNum($stat.find('[carac="def3"]')[0].nextSibling.innerText);
+  pg.stage1.atk = parseNum($stat.find('[carac="damage"]')[0].nextSibling.innerText);*/
+  pg.atk = parseNum($stat.find('.carac-icon[carac="damage"] + .carac-value')[0].innerText));
+  pg.def = parseNum($stat.find('.carac-icon[carac="def0"] + .carac-value')[0].innerText));
+  pg.harmony = parseNum($stat.find('.carac-icon[carac="chanche"] + .carac-value')[0].innerText));
+  // pg.excitement = parseNum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
   pg.win = $userinfo.find('.challenge .result.won').length;
   pg.loses = $userinfo.find('.challenge .result.lost').length;
   pg.fought = userList[userid].win + userList[userid].loses;
