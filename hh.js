@@ -1966,10 +1966,16 @@ function towerOfFameMain2021(autorefill = true){
   const scorefunction = getScoreFunction(true);
   console.log("scorefunction", scorefunction);
   window.scorefunction = scorefunction;
+  let you = null;
+  
+  for (let pg of sortedUserList) if (pg.you) { you = pg; break; }
+ 
   for (let pg of sortedUserList) {
     // parameters: "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
-    pg.prizescore = scorefunction(pg.winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);
-    
+    let simulation = getWinRatio2021(you, pg);
+    pg.winratio = simulation.winrate;
+    pg.leaguePoints = simulation.leaguepoints;
+    pg.prizescore = pg.leaguePoints; //scorefunction(pg.winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);
   }
   sortedUserList = sortedUserList.filter( (user) => { return user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk; } );
   sortedUserList = sortedUserList.sort((e1, e2) => { return e1.prizescore - e2.prizescore; });
@@ -1980,7 +1986,7 @@ function towerOfFameMain2021(autorefill = true){
     const $row = $('[sorting_id="'+user.id+'"]');
     const row = $row[0];
     rowcontainer.append(row);
-    $row.find('.nickname')[0].innerText+="| wr:" + user.wr.toFixed(2), ', score: ' + user.prizescore.toFixed(1);
+    $row.find('.nickname')[0].innerText+="| wr:" + user.winratio.toFixed(2), ', score: ' + user.prizescore.toFixed(1);
   }
   for (let user of sortedUserList) {
     modifyRow(user);
