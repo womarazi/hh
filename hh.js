@@ -1912,7 +1912,7 @@ function towerOfFameSetup() {
   }
 }
 
-function towerOfFameMain(autorefill = true){
+function towerOfFameMain2021(autorefill = true){
   const dokh = $('#buttonkh')[0].style.backgroundColor === 'green';
   const dohk = $('#buttonhk')[0].style.backgroundColor === 'green';
   const doch = $('#buttonch')[0].style.backgroundColor === 'green';
@@ -1969,12 +1969,21 @@ function towerOfFameMain(autorefill = true){
   for (let pg of sortedUserList) {
     // parameters: "mojo=0, xp=0, wr=1" : "wr=1, points=0, weakness=0, boosted=0";
     pg.prizescore = scorefunction(pg.winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);
+    
   }
   sortedUserList = sortedUserList.filter( (user) => { return user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk; } );
   sortedUserList = sortedUserList.sort((e1, e2) => { return e1.prizescore - e2.prizescore; });
 
   console.log('toweroffamemain: sorted userlist:', sortedUserList);
+  const rowcontainer = $('.leagues_table)[0];
+  function modifyRow(user) {
+    const $row = $('[sorting_id="'+user.id+'"]');
+    const row = $row[0];
+    rowcontainer.append(row);
+    $row.find('.nickname')[0].innerText+="| wr:" + user.wr.toFixed(2), ', score: ' + user.prizescore.toFixed(1);
+  }
   for (let user of sortedUserList) {
+    modifyRow(user);
     if (+user.fought === 3) {
       // console.log("fought 3 times:", user.fought, user);
       continue; }
