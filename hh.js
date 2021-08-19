@@ -1991,7 +1991,8 @@ function towerOfFameMain2021(autorefill = true){
       console.log("wrong type:", user, user.type);
       continue; }
     if (mustStopToRefill()) { console.log("must stop to refill"); return; }
-    setUrl('https://www.hentaiheroes.com/battle.html?league_battle=1&id_member=' + user.id);
+    //setUrl('https://www.hentaiheroes.com/battle.html?league_battle=1&id_member=' + user.id);
+    setUrl('https://www.hentaiheroes.com/league-battle.html?number_of_battles=1&id_opponent='+user.id);
     // let html = $leagues.find('[sorting_id="' + key + '"]')[0];
     // if (!html) { alert('html not found codeline 171'); return; }
     // $(html).trigger('click');
