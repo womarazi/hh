@@ -1975,7 +1975,7 @@ function towerOfFameMain2021(autorefill = true){
   sortedUserList = sortedUserList.sort((e1, e2) => { return e1.prizescore - e2.prizescore; });
 
   console.log('toweroffamemain: sorted userlist:', sortedUserList);
-  const rowcontainer = $('.leagues_table)[0];
+  const rowcontainer = $('.leagues_table')[0];
   function modifyRow(user) {
     const $row = $('[sorting_id="'+user.id+'"]');
     const row = $row[0];
