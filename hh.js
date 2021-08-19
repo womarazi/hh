@@ -1640,7 +1640,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   pg.stage1.atk = parseNum($stat.find('[carac="damage"]')[0].nextSibling.innerText);*/
   pg.atk = parseNum($stat.find('.carac-icon[carac="damage"] + .carac-value')[0].innerText);
   pg.def = parseNum($stat.find('.carac-icon[carac="def0"] + .carac-value')[0].innerText);
-  pg.harmony = parseNum($stat.find('.carac-icon[carac="chanche"] + .carac-value')[0].innerText);
+  pg.harmony = parseNum($stat.find('.carac-icon[carac="chance"] + .carac-value')[0].innerText);
   // pg.excitement = parseNum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
   pg.win = $userinfo.find('.challenge .result.won').length;
   pg.loses = $userinfo.find('.challenge .result.lost').length;
