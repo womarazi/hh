@@ -1581,6 +1581,7 @@ function maketoweruserlist(userlist = null) {
     userlist.length = 1; // manually updated;
     parseTowerUserInfo(userlist[youruserid], $('.player_block'));
     userlist[youruserid].you = true;
+    userlist[youruserid].id = youruserid;
   }
   window.userlist = userlist;
   const $leagues = $('#leagues_middle .leagues_table');
