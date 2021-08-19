@@ -1579,9 +1579,12 @@ function maketoweruserlist(userlist = null) {
   let i;
   for (i = 0; i < $idarr.length; i++) { // user list validator
     let userid = $idarr[i].getAttribute('sorting_id');
-    if (userlist[userid] || $idarr[i].classList.contains('personal_highlight')) continue;
-    $($idarr[i]).trigger('click');
+    let isYou = $idarr[i].classList.contains('personal_highlight');
+    if (!userlist[userid] && !isYou) {
+      $($idarr[i]).trigger('click');
+    }
     gettoweruserinfo(userid, userlist);
+    userlist[userid].you = isYou;
     // temp end, ma restituisco l'oggetto che verrà riempito.
     return userlist; }
   // real end
