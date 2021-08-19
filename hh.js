@@ -351,7 +351,7 @@ function main0() {
       localStorage.setItem('womarazi_shards', JSON.stringify(shards));
       setVar('girls', girls);
       break;
-      
+    case "league-battle": window.location.href += ''; break;
     case "change-team": 
       changeTeamSetup();
       break;
