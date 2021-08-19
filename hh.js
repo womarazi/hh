@@ -1590,7 +1590,7 @@ function maketoweruserlist(userlist = null) {
   $('#buttonmakeuserlist')[0].style.backgroundColor = 'white';
   return userlist; }
 
-function parseNum = (str) => {
+function parseNum(str){
     str = str.toLowerCase();
     let num = parseFloat(str);
     if (str.indexOf('k') > 0) return num*1000;
