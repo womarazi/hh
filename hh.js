@@ -1603,7 +1603,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
     setTimeout(() => { gettoweruserinfo(userid, userList, timeout, msecwaiting)}, timeout);
     return; };
   const pg = new cCharacter();
-  const oldpg = JSON.parse(JSON.stringify(userList[userid] || {})); // forcecommit sbhgbksgnangoasngoiast
+  const oldpg = JSON.parse(JSON.stringify(userList[userid] || {}));
   userList[userid] = pg;
   if (!+userList.length) userList.length = 0; // dizionario ma con length arraylike tenuta manualmente.
   userList.length+=1;
@@ -1623,64 +1623,27 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
     let num = parseFloat(str);
     if (str.indexOf('k') > 0) return num*1000;
     if (str.indexOf('m') > 0) return num*1000*1000;
-    return num; };
-  tmp = $userinfo.find('.lead_ego')[0].children[1].innerText;
-  pg.ego = +replaceCharAt(tmp, tmp.indexOf(','), ''); // total ego
-  let $stat = $userinfo.find('.stats_wrap');
-  pg.pureEgo = tonum($stat.find('[carac="endurance"]')[0].nextSibling.innerText); // ego without girls?
+    return num; }
   
-  // console.log('debuggg', userList[userid], $userinfo, $userinfo.find('.lead_ego'));
-  // userList['error']['error']['error'] = 'error';
-  
-
+  let $stat = $userinfo.find('.stats_wrap > .fighter-stats-container');
+  pg.ego = intParseToDo($stat.find('.carac-icon[carac="ego"] + .carac-value')[0].innerText);
+  // pg.pureEgo = ...
+  /*
   pg.stage1.hk = tonum($stat.find('[carac="1"]')[0].nextSibling.innerText);
   pg.stage1.ch = tonum($stat.find('[carac="2"]')[0].nextSibling.innerText);
   pg.stage1.kh = tonum($stat.find('[carac="3"]')[0].nextSibling.innerText);
   pg.stage1.hkdef = tonum($stat.find('[carac="def1"]')[0].nextSibling.innerText);
   pg.stage1.chdef = tonum($stat.find('[carac="def2"]')[0].nextSibling.innerText);
   pg.stage1.khdef = tonum($stat.find('[carac="def3"]')[0].nextSibling.innerText);
-  pg.stage1.atk = tonum($stat.find('[carac="damage"]')[0].nextSibling.innerText);
-  pg.excitement = tonum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
-  pg.harmony = tonum($stat.find('[carac="chance"]')[0].nextSibling.innerText);
+  pg.stage1.atk = tonum($stat.find('[carac="damage"]')[0].nextSibling.innerText);*/
+  pg.atk = intParseToDo($stat.find('.carac-icon[carac="damage"] + .carac-value')[0].innerText);
+  pg.def = intParseToDo($stat.find('.carac-icon[carac="def0"] + .carac-value')[0].innerText););
+  pg.harmony = intParseToDo($stat.find('.carac-icon[carac="chanche"] + .carac-value')[0].innerText);
+  // pg.excitement = tonum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
   pg.win = $userinfo.find('.challenge .result.won').length;
   pg.loses = $userinfo.find('.challenge .result.lost').length;
   pg.fought = userList[userid].win + userList[userid].loses;
-  
-  const $girls = $userinfo.find('.girls_wrapper .team_girl');
-  let g1 =  $girls[0] && JSON.parse(    ( $girls[0].getAttribute('girl-tooltip-data')  )    );
-  let g2 =  $girls[1] && JSON.parse(    ( $girls[1].getAttribute('girl-tooltip-data')  )    );
-  let g3 =  $girls[2] && JSON.parse(    ( $girls[2].getAttribute('girl-tooltip-data')  )    );
-
-  const setGirlStat = (myGirlObj, girlNativeObj) => {
-    let mg = myGirlObj;
-    let ng = girlNativeObj;
-    if(!ng) {
-    console.error('girl html is null:', girlNativeObj, $girls);
-      return;
-    }
-    mg.rarity = ng.rarity;
-    switch(+ng.class) {
-      default: mg.type = null; break;
-      case 1: mg.type = 'hk'; break;
-      case 2: mg.type = 'ch'; break;
-      case 3: mg.type = 'kh'; break; }
-    mg.position = ng.position_img.replace('.png', '');
-    mg.name = ng.Name;
-    mg.hk = ng.caracs.carac1;
-    mg.ch = ng.caracs.carac2;
-    mg.kh = ng.caracs.carac3;
-    mg.salary_per_hour = mg.salary_per_hour;
-  };
-
-  setGirlStat(pg.girl1, g1);
-  setGirlStat(pg.girl2, g2);
-  setGirlStat(pg.girl3, g3);
-  let $girllevels = $girls.find('.level');
-  pg.girl1.lv = +$girllevels[0].innerText;
-  pg.girl2.lv = +$girllevels[1].innerText;
-  pg.girl3.lv = +$girllevels[2].innerText;
-  pg.deduceMissingData(); // wr2:
-  
+    
   oldpg.winratio = pg.winratio = null;
   oldpg.prizescore = pg.prizescore = null;
   const isChanged = JSON.stringify(oldpg) !== JSON.stringify(pg);
