@@ -1571,26 +1571,30 @@ function pachinkoshards(){
   $('.rewards_tooltip').append('<div style="' + style + '">' + totalPendingShards + '</div>');
 }
 
+const youruserid = 213108;
 function maketoweruserlist(userlist = null) {
-  if (!userlist) { userlist = {}; }
+  if (!userlist) {
+    userlist = {};
+    window.userlist = userlist;
+    $('#buttonmakeuserlist')[0].style.backgroundColor = 'white';
+    userlist[youruserid] = {};
+    userlist.length = 1; // manually updated;
+    parseTowerUserInfo(userlist[youruserid], $('.player_block'));
+    userlist[youruserid].you = true;
+  }
   window.userlist = userlist;
   const $leagues = $('#leagues_middle .leagues_table');
   const $idarr = $leagues.find('[sorting_id]:visible');
   let i;
   for (i = 0; i < $idarr.length; i++) { // user list validator
     let userid = $idarr[i].getAttribute('sorting_id');
-    let isYou = $idarr[i].classList.contains('personal_highlight');
-    if (!userlist[userid] && !isYou) {
-      $($idarr[i]).trigger('click');
-    }
+    if (userlist[userid] || $idarr[i].classList.contains('personal_highlight')) continue;
+    $($idarr[i]).trigger('click');
     gettoweruserinfo(userid, userlist);
-    userlist[userid].you = isYou;
     // temp end, ma restituisco l'oggetto che verrà riempito.
     return userlist; }
   // real end
   localStorage.setItem('_hhtowerlist', JSON.stringify(userlist) );
-  window.userlist = userlist;
-  $('#buttonmakeuserlist')[0].style.backgroundColor = 'white';
   return userlist; }
 
 function parseNum(str){
@@ -1599,6 +1603,21 @@ function parseNum(str){
     if (str.indexOf('k') > 0) return num*1000;
     if (str.indexOf('m') > 0) return num*1000*1000;
     return num; }
+
+function parseTowerUserInfo(pg, $userinfo) {
+  pg.name = $userinfo.find('.title')[0].innerText;
+  pg.club = $userinfo.find('.clubs_title')[0].innerText;
+  pg.lv = +$userinfo.find('.level')[0].innerText;
+  let ishk = $userinfo.find('[carac="class1"]').length ? true : false;
+  let isch = $userinfo.find('[carac="class2"]').length ? true : false;
+  let iskh = $userinfo.find('[carac="class3"]').length ? true : false;
+  pg.type = ishk ? 'hk' : isch ? 'ch' : 'kh'
+  let $stat = $userinfo.find('.stats_wrap > .fighter-stats-container');
+  pg.ego = parseNum($stat.find('.carac-icon[carac="ego"] + .carac-value')[0].innerText);
+  pg.atk = parseNum($stat.find('.carac-icon[carac="damage"] + .carac-value')[0].innerText);
+  pg.def = parseNum($stat.find('.carac-icon[carac="def0"] + .carac-value')[0].innerText);
+  pg.harmony = parseNum($stat.find('.carac-icon[carac="chance"] + .carac-value')[0].innerText);
+}
 
 function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, singleupdate = false, you = null) {
   let $userinfo = $('#leagues_right');
@@ -1618,20 +1637,11 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   if (!+userList.length) userList.length = 0; // dizionario ma con length arraylike tenuta manualmente.
   userList.length+=1;
   pg.id = userid;
-  pg.name = $userinfo.find('.title')[0].innerText;
-  pg.club = $userinfo.find('.clubs_title')[0].innerText;
-  pg.lv = +$userinfo.find('.level')[0].innerText;
-  let ishk = $userinfo.find('[carac="class1"]').length ? true : false;
-  let isch = $userinfo.find('[carac="class2"]').length ? true : false;
-  let iskh = $userinfo.find('[carac="class3"]').length ? true : false;
-  pg.type = ishk ? 'hk' : isch ? 'ch' : 'kh';
+  parseTowerUserInfo(pg, $userinfo);
   pg.you = false;
   // console.log('debuggg', userList[userid], $userinfo, $userinfo.find('.lead_ego'));
   // userList['error']['error']['error'] = 'error';
 
-  
-  let $stat = $userinfo.find('.stats_wrap > .fighter-stats-container');
-  pg.ego = parseNum($stat.find('.carac-icon[carac="ego"] + .carac-value')[0].innerText);
   // pg.pureEgo = ...
   /*
   pg.stage1.hk = parseNum($stat.find('[carac="1"]')[0].nextSibling.innerText);
@@ -1641,9 +1651,7 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   pg.stage1.chdef = parseNum($stat.find('[carac="def2"]')[0].nextSibling.innerText);
   pg.stage1.khdef = parseNum($stat.find('[carac="def3"]')[0].nextSibling.innerText);
   pg.stage1.atk = parseNum($stat.find('[carac="damage"]')[0].nextSibling.innerText);*/
-  pg.atk = parseNum($stat.find('.carac-icon[carac="damage"] + .carac-value')[0].innerText);
-  pg.def = parseNum($stat.find('.carac-icon[carac="def0"] + .carac-value')[0].innerText);
-  pg.harmony = parseNum($stat.find('.carac-icon[carac="chance"] + .carac-value')[0].innerText);
+  
   // pg.excitement = parseNum($stat.find('[carac="excit"]')[0].nextSibling.innerText);
   pg.win = $userinfo.find('.challenge .result.won').length;
   pg.loses = $userinfo.find('.challenge .result.lost').length;
