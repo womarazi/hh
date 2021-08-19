@@ -1997,6 +1997,7 @@ function towerOfFameMain2021(autorefill = true){
     const $row = $('[sorting_id="'+user.id+'"]');
     const row = $row[0];
     rowcontainer.append(row);
+    console.log('sorting tower of fame rows:', {$row, user});
     $row.find('.nickname')[0].innerText+="| wr:" + user.winratio.toFixed(2), ', score: ' + user.prizescore.toFixed(1);
   }
   for (let user of sortedUserList) {
