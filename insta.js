@@ -1,5 +1,5 @@
 function maxressetup(){
-   document.addEventListener("click", maxresreplace); 
+   document.addEventListener("click", maxresreplace);
 }
 function maxresreplace() {
     const imgs = document.querySelectorAll('img[srcset]');
