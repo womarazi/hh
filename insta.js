@@ -4,6 +4,7 @@ function maxressetup(){
 function maxresreplace() {
     const imgs = document.querySelectorAll('img[srcset]');
     for (const img of imgs) {
+       const srcs = img.getAttribute('srcset');
        const resobj = 
            ('££££,' + srcs)
                .replaceAll(',https:', '££££,https')
