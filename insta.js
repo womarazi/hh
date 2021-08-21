@@ -25,4 +25,4 @@ function docReady(fn) {
         document.addEventListener("DOMContentLoaded", fn);
     }
 }
-docReady(maressetup);
+docReady(maxressetup);
