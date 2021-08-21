@@ -12,7 +12,7 @@ function maxresreplace() {
                .splice(1)
                .map( s => { let a = s.split(' '); return {url: a[0], res: Number.parseInt(a[1])}});
        resobj = resobj.sort( (e2, e1) => e1.res - e2.res);
-       img.setAttribute('src', resobj[0]);
+       img.setAttribute('src', resobj[0].url);
        console.log('set res:', {resobj, img});
     }
 }
