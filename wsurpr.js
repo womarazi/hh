@@ -1,6 +1,6 @@
 function collect(){
  const $chests = $('.theChestButtons');
- console.log('collectLoop', chests);
+ console.log('collectLoop', $chests);
  if (!window.isTest) $chests.trigger('click');
 }
 
@@ -198,9 +198,13 @@ function _wmain() {
   
   document.body.append(buttoncontainer);
   const matchbtn = makeButton(buttoncontainer);
+  const collectbtn = makeButton(buttoncontainer);
+  collectbtn.setAttribute('title', "collect chests and upgrade girls");
   matchbtn.setAttribute('title', "calculate best matches and highlight");
-  matchbtn.style.borderColor='green';
+  collectbtn.style.borderColor =  
+  matchbtn.style.borderColor = 'green';
   matchbtn.addEventListener("click", calculateMatches);
+  collectbtn.addEventListener('click', collect);
  
  const style = document.createElement('style');
  style.innerHTML = '._wswappable{ border: 2px solid red;}' +
@@ -211,22 +215,6 @@ function _wmain() {
    '.rc{ border-right: 2px solid #ff000077; }' +
    '';
  document.body.append(style);
- 
- makeRunBtn();
-}
+ }
 
-function makeRunBtn() {
-  const runbtn = document.createElement('div');
-  runbtn.style.border = '2px solid black';
-  runbtn.style.width = '20px';
-  runbtn.style.width = '20px';
-  runbtn.style.borderWidth = '999px';
-  runbtn.style.backgroundColor = 'green';
-  runbtn.style.position = 'absolute';
-  runbtn.style.top = '150px';
-  runbtn.style.left = '50px';
-  runbtn.innerText = 'C';
-  runbtn.onclick = collect;
-  document.body.append(runbtn);
-}
 document.addEventListener("DOMContentLoaded", _wmain);
