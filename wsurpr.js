@@ -1,5 +1,5 @@
 function collect(){
- console.log('collectLoop', $('.theChestButtons').trigger('click'));
+ console.log('collectLoop', $('.theChestButtons')); //.trigger('click'));
 }
 setInterval(collect, 1000);
 
