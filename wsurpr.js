@@ -1,7 +1,7 @@
 function collect(){
  const $chests = $('.theChestButtons');
  console.log('collectLoop', chests);
- if (!window.isTest) $chests.trigger('click'));
+ if (!window.isTest) $chests.trigger('click');
 }
 
 class _wGemBoard{
