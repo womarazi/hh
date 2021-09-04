@@ -210,6 +210,22 @@ function _wmain() {
    '.rc{ border-right: 2px solid #ff000077; }' +
    '';
  document.body.append(style);
+ 
+ makeRunBtn();
 }
 
+function makeRunBtn() {
+  const runbtn = document.createElement('div');
+  runbtn.style.border = '2px solid black';
+  runbtn.style.width = '20px';
+  runbtn.style.width = '20px';
+  runbtn.style.borderWidth = '999px';
+  runbtn.style.backgroundColor = 'green';
+  runbtn.style.position = 'absolute';
+  runbtn.style.top = '150px';
+  runbtn.style.left = '50px';
+  runbtn.innerText = 'C';
+  runbtn.onclick = collect;
+  document.body.append(runbtn);
+}
 document.addEventListener("DOMContentLoaded", _wmain);
