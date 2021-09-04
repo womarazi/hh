@@ -1,7 +1,8 @@
 function collect(){
- console.log('collectLoop', $('.theChestButtons')); //.trigger('click'));
+ const $chests = $('.theChestButtons');
+ console.log('collectLoop', chests);
+ if (!window.isTest) $chests.trigger('click'));
 }
-setInterval(collect, 1000);
 
 class _wGemBoard{
  // gem;// Gem[8][8]
