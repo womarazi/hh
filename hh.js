@@ -5,6 +5,7 @@ setTimeout(main0, 500);
 function refreshPage(){
   setUrl(document.location.href);
 }
+
 ///////////////////////////////////////////// new season 2021
 // eyes check: console.table(Object.values(getVar('girls')).map(g => {return {name:g.gData.Name, eyes:g.gData.ref.eyes}}).filter(g => g.eyes.toLowerCase().indexOf('silver')>=0))
 // zodiac check: console.table(Object.values(getVar('girls')).map(g => {return {name:g.gData.Name, zodiac:g.gData.ref.zodiac}}).filter(g => g.zodiac.toLowerCase().indexOf('sagitt')>=0))
@@ -188,13 +189,19 @@ function parseSeasonPlayer($player, blessings) {
   console.log('parseSeasonPlayer', {$player, blessings});
   player.stats0 = $stats.find('.cjs_opponent_stats')[0];
   console.log('1', {stats0:player.stats0, player, $player});
-  if (player.stats0) player.stats0 = player.stats0.getAttribute('ca-opponent-stats');
-  console.log('2', {stats0:player.stats0, player});
-  if (!player.stats0) {
+  if (!player.stats0) player.stats0 = player.stats0.getAttribute('ca-opponent-stats');
+  if (player.stats0) { // opponent
+    player.stats = JSON.parse(player.stats0);
+  } else {/*
     player.stats0 = $('#player_defence_stat')[0];
-    player.stats0 = player.stats0.getAttribute('ca-player-caracs');
+    player.stats0 = player.stats0.getAttribute('ca-player-caracs');*/
+    var caracs = {};
+    player.stats = {name: 'kon', class:null, club: null, level: null, caracs};
+    caracs.damage = parseNum($p.find('[carac="damage"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
+    caracs.defense = parseNum($p.find('[carac="def0"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
+    caracs.chance = parseNum($p.find('[carac="chance"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
+    caracs.ego = parseNum($p.find('[carac="ego"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
   }
-  player.stats = JSON.parse(player.stats0);
   console.log('3', {stats0:player.stats0, player});
   if (!player.stats.caracs) player.stats.caracs = player.stats;
   player.id = player.stats.id_member;
