@@ -196,11 +196,11 @@ function parseSeasonPlayer($player, blessings) {
     player.stats0 = $('#player_defence_stat')[0];
     player.stats0 = player.stats0.getAttribute('ca-player-caracs');*/
     var caracs = {};
+    caracs.damage = parseNum($stats.find('[carac="damage"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
+    caracs.defense = parseNum($stats.find('[carac="def0"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
+    caracs.chance = parseNum($stats.find('[carac="chance"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
+    caracs.ego = parseNum($stats.find('[carac="ego"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
     player.stats = {name: 'kon', class:null, club: null, level: null, caracs};
-    caracs.damage = parseNum($p.find('[carac="damage"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
-    caracs.defense = parseNum($p.find('[carac="def0"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
-    caracs.chance = parseNum($p.find('[carac="chance"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
-    caracs.ego = parseNum($p.find('[carac="ego"]')[0].nextElementSibling.innerText.replaceAll(',', ''));
   }
   console.log('3', {stats0:player.stats0, player});
   if (!player.stats.caracs) player.stats.caracs = player.stats;
