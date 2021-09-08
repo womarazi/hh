@@ -189,8 +189,8 @@ function parseSeasonPlayer($player, blessings) {
   console.log('parseSeasonPlayer', {$player, blessings});
   player.stats0 = $stats.find('.cjs_opponent_stats')[0];
   console.log('1', {stats0:player.stats0, player, $player});
-  if (!player.stats0) player.stats0 = player.stats0.getAttribute('ca-opponent-stats');
   if (player.stats0) { // opponent
+    player.stats0 = player.stats0.getAttribute('ca-opponent-stats');
     player.stats = JSON.parse(player.stats0);
   } else {/*
     player.stats0 = $('#player_defence_stat')[0];
