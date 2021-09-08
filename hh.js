@@ -187,12 +187,15 @@ function parseSeasonPlayer($player, blessings) {
   // player.atk = $stats.find('[hh_title="Attack power"]')[0].innerText.replace(',','')
   console.log('parseSeasonPlayer', {$player, blessings});
   player.stats0 = $stats.find('.cjs_opponent_stats')[0];
+  console.log('1', {stats0:player.stats0, player, $player});
   if (player.stats0) player.stats0 = player.stats0.getAttribute('ca-opponent-stats');
+  console.log('2', {stats0:player.stats0, player});
   if (!player.stats0) {
     player.stats0 = $('#player_defence_stat')[0];
     player.stats0 = player.stats0.getAttribute('ca-player-caracs');
   }
   player.stats = JSON.parse(player.stats0);
+  console.log('3', {stats0:player.stats0, player});
   if (!player.stats.caracs) player.stats.caracs = player.stats;
   player.id = player.stats.id_member;
   player.lv = player.stats.level;
