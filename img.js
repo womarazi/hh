@@ -62,7 +62,7 @@ function imgmain(){
 
 const excludeDomains = ["nutaku.waifusurprise.com", "hentaiheroes"];
 
-if (!docReady)
+if (!window.docReady)
     window.docReady = function docReady(fn) {
         // see if DOM is already available
         if (document.readyState === "complete" || document.readyState === "interactive") {
