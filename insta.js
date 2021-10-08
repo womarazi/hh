@@ -12,9 +12,13 @@ function maxresreplace() {
                .splice(1)
                .map( s => { let a = s.split(' '); return {url: a[0], res: Number.parseInt(a[1])}});
        resobj = resobj.sort( (e2, e1) => e1.res - e2.res);
-       img.src = resobj[0].url;
-       img.setAttribute('src', resobj[0].url);
-       console.log('set res:', {resobj, img});
+       let src2 = img.getAttribute('src2');
+       let biggestsrc = resobj[0].url;
+       if (src2 === biggestsrc) continue;
+       img.src = biggestsrc;
+       img.setAttribute('src', biggestsrc);
+       img.setAttribute('src2', biggestsrc);
+       console.log('instagram.js set res:', {resobj, img, biggestsrc}, resobj[0]);
     }
 }
 
