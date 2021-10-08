@@ -1,5 +1,6 @@
 var imgdebug = false;  
 function imgmain(){
+    console.log('img.js main executed');
     for (let dom of excludeDomains) if (location.host.indexOf(dom) >= 0) return;
     const container = document.createElement('div');
     document.body.append(container);
@@ -59,6 +60,7 @@ function imgmain(){
 
   }
 
-  const excludeDomains = ["nutaku.waifusurprise.com", "hentaiheroes"];
+const excludeDomains = ["nutaku.waifusurprise.com", "hentaiheroes"];
 
-  document.addEventListener("DOMContentLoaded", imgmain);
+document.addEventListener("DOMContentLoaded", imgmain);
+console.log('img.js injected');
