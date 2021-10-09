@@ -20,7 +20,7 @@ function imgmain(){
     let timers = [];
 
     function showImage(e){
-      if (imgdebug) console.log('show image', {e, img, timers, target:e.target, src:e.target.?src});
+      if (imgdebug) console.log('show image', {e, img, timers, target:e.target, src:e.target?.src});
       for(let timer of timers) clearTimeout(timer);
       timers = [];
       // if (e.target.src === img.src) return;
