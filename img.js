@@ -1,4 +1,4 @@
-var imgdebug = false;  
+var imgdebug = true;  
 function imgmain(){
     console.log('img.js main executed');
     for (let dom of excludeDomains) if (location.host.indexOf(dom) >= 0) return;
@@ -20,7 +20,7 @@ function imgmain(){
     let timers = [];
 
     function showImage(e){
-      if (imgdebug) console.log('show image', {e, timers});
+      if (imgdebug) console.log('show image', {e, timers, target:e.target, src:e.target.?src});
       for(let timer of timers) clearTimeout(timer);
       timers = [];
       // if (e.target.src === img.src) return;
