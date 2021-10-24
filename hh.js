@@ -359,7 +359,8 @@ function main0() {
     case "harem":
       let shards = Object.values(girls).filter( (e, i) => !!e.gData.shards ).map( (e, i)=> { return {gid: e.gId, shards: e.gData.shards}; } )
       localStorage.setItem('womarazi_shards', JSON.stringify(shards));
-      setVar('girls', girls);
+      let girlsNotCyclic = Object.assign({}, Object.values(girls).map(g => {return{...g, animationInstance: undefined}}));
+      setVar('girls', girlsNotCyclic);
       break;
     case "league-battle": window.location.href += ''; break;
     case "change-team": 
