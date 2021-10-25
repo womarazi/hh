@@ -1462,8 +1462,8 @@ function hhmain() {
       const girls = getVar('girls');
       let shardssum = 0;
       let shards = trollStatus[trollnum]?.girls.map( gid => {
-        let s = girls[gid].gData.shards;
-        s = (s === undefined ? 100 : girls[gid].gData.shards);
+        let s = girls[gid] ? girls[gid].gData.shards : 0; // if new girl not yet included in my collection (updated when i open harem)
+        s = (s === undefined ? 100 : s); // if a girl have 100 shards it resets the shard counter to undefined.
         shardssum += s;
         return s;
       });
