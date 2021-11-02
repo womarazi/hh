@@ -284,9 +284,6 @@ function doesBonusApply0(g, blessing){
     return gData.elementData?.flavor.toLowerCase().indexOf(blessing.condition.element) >= 0
       || gData.elementData?.type.toLowerCase().indexOf(blessing.condition.element) >= 0;
   }
-  
-  
-    case 'element': return {element: str.substr('element'.length).trim(), str};
 }
 ///////////////////// new season 2021 end
 var buttonContainer;
