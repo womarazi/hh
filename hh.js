@@ -13,6 +13,7 @@ function parseBlessingCondition(str) {
   str = str.toLowerCase();
   switch(str.substr(0, str.indexOf(' '))){
     default: console.error('todo: implement this condition:', {str}); throw new Error('todo: implement this condition:'+str);
+    case 'element': return {element: str.substr('element'.length).trim(), str};
     case 'eye': return {eye: str.substr('eye color'.length).trim(), str};
     case 'rarity': return {rarity: str.substr('rarity'.length).trim(), str};
     case 'hair': return {hair: str.substr('hair color'.length).trim(), str};
@@ -24,7 +25,7 @@ function parseBlessingCondition(str) {
 function onBlessingClick(delay = 200, count = 0) {
   console.log('onBlessingClick check', {delay, count});
   let success = false;
-  if (count > 300) return;
+  if (count > 10*1000/delay) return;
   try { success = parseBlessings(); } catch(e) {
     console.error(e);
     return;
@@ -277,6 +278,15 @@ function doesBonusApply0(g, blessing){
   if (blessing.condition.position){
     return gData.position_img?.toLowerCase().indexOf(blessing.condition.position) >= 0;
   }
+  if (blessing.condition.element){
+    // elementData.flavor // playfyul
+    // elementData.type // sun
+    return gData.elementData?.flavor.toLowerCase().indexOf(blessing.condition.element) >= 0
+      || gData.elementData?.type.toLowerCase().indexOf(blessing.condition.element) >= 0;
+  }
+  
+  
+    case 'element': return {element: str.substr('element'.length).trim(), str};
 }
 ///////////////////// new season 2021 end
 var buttonContainer;
