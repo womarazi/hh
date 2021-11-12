@@ -411,7 +411,7 @@ function main0() {
     case "season-arena": seasonmain2021Pre(); break;
     case "pantheon":
       hhjs_pantheonSetup();
-      if (!localStorage.getItem('pageAutorun_pantheon-pre-battle.html')) break;
+      if (!localStorage.getItem('pageAutorun_pantheon.html')) break;
       hhjs_pantheon();
       break;
     case "pantheon-pre-battle":
