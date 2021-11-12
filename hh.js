@@ -410,19 +410,19 @@ function main0() {
       
     case "season-arena": seasonmain2021Pre(); break;
     case "pantheon":
-      pantheonSetup();
+      hhjs_pantheonSetup();
       if (!localStorage.getItem('pageAutorun_pantheon-pre-battle.html')) break;
-      pantheon();
+      hhjs_pantheon();
       break;
     case "pantheon-pre-battle":
-      pantheonPreBattleSetup();
+      hhjs_pantheonPreBattleSetup();
       if (!localStorage.getItem('pageAutorun_pantheon-pre-battle.html')) break;
-      pantheonPreBattle(params);
+      hhjs_pantheonPreBattle(params);
       break;
     case "pantheon-battle":
-      pantheonBattleSetup();
+      hhjs_pantheonBattleSetup();
       if (!localStorage.getItem('pageAutorun_pantheon-battle.html')) break;
-      pantheonBattle();
+      hhjs_pantheonBattle();
       break;
     case "tower-of-fame":
       towerOfFameSetup();
@@ -505,23 +505,22 @@ function setvar(name) { return localStorage.setItem(name); }*/
 
 
 
-function pantheonSetup(){
-function pantheon(){
+function hhjs_pantheonSetup(){
+function hhjs_pantheon(){
   const currentFloor = +$('.floor-bgr.floor-current')[0]?.innerText || -1;
   // if (currentFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-pre-battle.html?id_opponent=" + ( +currentFloor + 1));
   if (currentFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-battle.html?number_of_battles=1&id_opponent=" + ( +currentFloor + 1));
 }
 
-function pantheonBattleSetup(){ }
-function pantheonBattle(){
+function hhjs_pantheonBattleSetup(){ }
+function hhjs_pantheonBattle(){
   whenBattleStart(()=>refreshPage());
   setTimeout(()=> refreshPage(), 2.5 * hours); }
 }
-function pantheonPreBattleSetup(){
+function hhjs_pantheonPreBattleSetup(){
 }
-function pantheonPreBattle(params){
+function hhjs_pantheonPreBattle(params){
   const floor = +params['id_opponent'];
-  pantheonPreBattle(params);
   if (floor > 0) setUrl('https://www.hentaiheroes.com/pantheon-battle.html?number_of_battles=1&id_opponent=' + floor);
 }
 
