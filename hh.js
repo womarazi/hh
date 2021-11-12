@@ -409,6 +409,21 @@ function main0() {
       break; }
       
     case "season-arena": seasonmain2021Pre(); break;
+    case "pantheon":
+      pantheonSetup();
+      if (!localStorage.getItem('pageAutorun_pantheon-pre-battle.html')) break;
+      pantheon();
+      break;
+    case "pantheon-pre-battle":
+      pantheonPreBattleSetup();
+      if (!localStorage.getItem('pageAutorun_pantheon-pre-battle.html')) break;
+      pantheonPreBattle(params);
+      break;
+    case "pantheon-battle":
+      pantheonBattleSetup();
+      if (!localStorage.getItem('pageAutorun_pantheon-battle.html')) break;
+      pantheonBattle();
+      break;
     case "tower-of-fame":
       towerOfFameSetup();
       break;
@@ -487,6 +502,29 @@ function makeRunButton(size = 30) {
 /*
 function getvar(name) { return localStorage.getItem(name); }
 function setvar(name) { return localStorage.setItem(name); }*/
+
+
+
+function pantheonSetup(){
+function pantheon(){
+  const currentFloor = +$('.floor-bgr.floor-current')[0]?.innerText || -1;
+  // if (currentFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-pre-battle.html?id_opponent=" + ( +currentFloor + 1));
+  if (currentFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-battle.html?number_of_battles=1&id_opponent=" + ( +currentFloor + 1));
+}
+
+function pantheonBattleSetup(){ }
+function pantheonBattle(){
+  whenBattleStart(()=>refreshPage());
+  setTimeout(()=> refreshPage(), 2.5 * hours); }
+}
+function pantheonPreBattleSetup(){
+}
+function pantheonPreBattle(params){
+  const floor = +params['id_opponent'];
+  pantheonPreBattle(params);
+  if (floor > 0) setUrl('https://www.hentaiheroes.com/pantheon-battle.html?number_of_battles=1&id_opponent=' + floor);
+}
+
 function shopitemsetup(container) {
   container = container || document.createElement('div');
   buttonContainer.append(container);
@@ -1461,6 +1499,7 @@ function hhmain() {
       
     case "season-battle":
        whenBattleStart(()=>refreshPage());
+      setTimeout(refreshPage, 1 * hours);
       break;
     case "troll-battle":{
 
@@ -1538,7 +1577,8 @@ function getQuestEnergy(){
 
 function whenBattleStart(callback, enemyhp = null, count = 0, delay = 100){
   if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar')[1];
-  if(enemyhp.style.width) return callback();
+  let myhp = $('.new-battle-hero-ego-initial-bar')[1];
+  if(enemyhp?.style.width || myhp?.style.width) return callback();
   if(count > 100) return;
   console.count('whenbattlestart check delay', delay);
   setTimeout(()=>whenBattleStart(callback, enemyhp, count++, delay), delay);
