@@ -509,7 +509,8 @@ function setvar(name) { return localStorage.setItem(name); }*/
 function hhjs_pantheonSetup(){}
 function hhjs_pantheon(){
   const nextFloor = +$('.floor-bgr.floor-current')[0]?.innerText || -1;
-  if (nextFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-pre-battle.html?id_opponent=" + (nextFloor));
+  let energy = +$('.energy_counter[type="worship"] [energy]')[0]?.innerText || 0;
+  if (energy > 0 && nextFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-pre-battle.html?id_opponent=" + (nextFloor));
   // if (nextFloor > 0) setUrl("https://www.hentaiheroes.com/pantheon-battle.html?number_of_battles=1&id_opponent=" + ( nextFloor ));
 }
 
