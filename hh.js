@@ -416,7 +416,7 @@ function main0() {
       break;
     case "pantheon-pre-battle":
       hhjs_pantheonPreBattleSetup();
-      console.log('main switch hhjs_pantheonPreBattle', {params, floor, autorun: localStorage.getItem('pageAutorun_pantheon-pre-battle.html')});
+      console.log('main switch hhjs_pantheonPreBattle', {params, autorun: localStorage.getItem('pageAutorun_pantheon-pre-battle.html')});
       if (!localStorage.getItem('pageAutorun_pantheon-pre-battle.html')) break;
       hhjs_pantheonPreBattle(params);
       break;
