@@ -1576,12 +1576,12 @@ function getQuestEnergy(){
   return +$('.energy_counter[type="quest"] [energy]')[0].innerText;
 }
 
-function whenBattleStart(callback, enemyhp = null, count = 0, delay = 100){
+function whenBattleStart(callback, enemyhp = null, count = 0, delay = 200){
   if(!enemyhp) enemyhp = $('.new-battle-hero-ego-initial-bar')[1];
   let myhp = $('.new-battle-hero-ego-initial-bar')[1];
   if(enemyhp?.style.width || myhp?.style.width) return callback();
   if(count > 100) return;
-  console.log('whenbattlestart check delay', delay, 'count:', count);
+  console.log('whenbattlestart check delay', delay*1,05, 'count:', count);
   setTimeout(()=>whenBattleStart(callback, enemyhp, count+1, delay), delay);
 }
 
