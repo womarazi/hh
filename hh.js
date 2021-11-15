@@ -52,8 +52,8 @@ function parseBlessing(blessinghtml){
   var blessing = {};
   console.log({$blessinghtml, blessinghtml, blessing});
   blessing.time0 = $blessinghtml.find('.blessing-timer')[0].innerText;
-  blessing.time = 1000*timeparse(blessing.time0);
-  blessing.expiration = new Date(new Date().getTime() + blessing.time);
+  blessing.time = blessing.time0 ? 1000*timeparse(blessing.time0) : null;
+  blessing.expiration = blessing.time ? new Date(new Date().getTime() + blessing.time) : null;
   blessing.condition0 = $blessinghtml.find('.blessing-condition')[0].innerText;
   blessing.condition = parseBlessingCondition(blessing.condition0);
   blessing.bonus0 = $blessinghtml.find('.blessing-bonus')[0].innerText
@@ -66,8 +66,9 @@ function parseBlessing(blessinghtml){
 
 function validBlessings(blessings = null, canTriggerUpdate = true){
   if (!blessings) blessings = getVar('blessings');
-  let expirations = blessings.map( bl => new Date(bl.expiration)).sort((a,b)=>a.getTime()-b.getTime());
-  if (expirations[0].getTime() <= new Date().getTime()) {
+  if 
+  let expirations = blessings.map( bl => bl.expiration ? new Date(bl.expiration) : null).sort((a,b)=> (!a || !b ? 0 : a.getTime()-b.getTime()));
+  if (expirations[0] && expirations[0].getTime() <= new Date().getTime()) {
     if (!canTriggerUpdate) return false;
     HHPopupManager.show("popup_blessings", { prevent_events: true });
     onBlessingClick();
