@@ -66,7 +66,6 @@ function parseBlessing(blessinghtml){
 
 function validBlessings(blessings = null, canTriggerUpdate = true){
   if (!blessings) blessings = getVar('blessings');
-  if 
   let expirations = blessings.map( bl => bl.expiration ? new Date(bl.expiration) : null).sort((a,b)=> (!a || !b ? 0 : a.getTime()-b.getTime()));
   if (expirations[0] && expirations[0].getTime() <= new Date().getTime()) {
     if (!canTriggerUpdate) return false;
