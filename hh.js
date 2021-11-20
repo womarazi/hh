@@ -1443,6 +1443,7 @@ function popSingle(collected = false, retrycount = 0){
 var sec = 1000;
 var min = 60*sec;
 var hour = 60*min;
+
 function hhmain() {
   const pathArray = window.location.pathname.substring(1).replaceAll('\.html', '').split('/');
   // window.is_cheat_click = () => false;
@@ -1456,8 +1457,20 @@ function hhmain() {
       towerOfFameMain2021();
       break;
       
-    case "home":
     case "quest":
+      let $girlupgradepay = $('.grade-complete-button.green_text_button[act="SC"]');
+      if ($girlupgradepay) {
+        // upgrade harem girl stars
+        $girlupgradepay.trigger('click');
+        window.close();
+        setUrl('about:upgradedone');
+        return;
+      }
+
+      let questNormalNext = $('#pay:visible');
+      // normal quests: todo, remember to avoid picking up sidequest reward
+      break;
+    case "home":
     case "":
     case "hero":
     case "world":
