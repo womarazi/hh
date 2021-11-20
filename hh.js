@@ -1463,7 +1463,7 @@ function hhmain() {
         // upgrade harem girl stars
         $girlupgradepay.trigger('click');
         setTimeout( window.close, 2000);
-        setUrl('about:upgradedone');
+        setUrl('https://closepagesfsadgfd.com');
         return;
       }
 
