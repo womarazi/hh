@@ -1458,7 +1458,7 @@ function hhmain() {
       break;
       
     case "quest":
-      let $girlupgradepay = $('.grade-complete-button.green_text_button[act="SC"]');
+      let $girlupgradepay = $('.grade-complete-button.green_text_button[act="SC"]:visible');
       if (isGirlGrade) {
         if ($girlupgradepay.length){
           // upgrade harem girl stars
