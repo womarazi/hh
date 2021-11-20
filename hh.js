@@ -1459,17 +1459,23 @@ function hhmain() {
       
     case "quest":
       let $girlupgradepay = $('.grade-complete-button.green_text_button[act="SC"]');
-      if ($girlupgradepay) {
-        // upgrade harem girl stars
-        $girlupgradepay.trigger('click');
-        setTimeout( window.close, 2000);
-        // setUrl('https://closepagesfsadgfd.com');
-        setTimeout( refreshPage, 100);
-        return;
+      if (isGirlGrade) {
+        if ($girlupgradepay.length){
+          // upgrade harem girl stars
+          $girlupgradepay.trigger('click');
+          // setUrl('https://closepagesfsadgfd.com');
+          setTimeout( refreshPage, 100);
+          return; }
+        // re-visit girl page
+        // do nothing or // window.close()
       }
-
-      let questNormalNext = $('#pay:visible');
-      // normal quests: todo, remember to avoid picking up sidequest reward
+      const isGirlGrade = !!$('#controls[type="grade"]:visible').length;
+      const isQuest = !!$('#controls[type="quest"]:visible').length;
+      if (isQuest) {
+          let energyNextButton = $('#pay:visible'); // it says pay but it's just the "next" with energy button
+          // normal quests: todo, remember to avoid picking up sidequest reward
+      }
+      
       break;
     case "home":
     case "":
