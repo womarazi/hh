@@ -1462,7 +1462,7 @@ function hhmain() {
       if ($girlupgradepay) {
         // upgrade harem girl stars
         $girlupgradepay.trigger('click');
-        window.close();
+        setTimeout( window.close, 2000);
         setUrl('about:upgradedone');
         return;
       }
