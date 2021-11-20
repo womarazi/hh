@@ -1466,7 +1466,7 @@ function hhmain() {
           // upgrade harem girl stars
           $girlupgradepay.trigger('click');
           // setUrl('https://closepagesfsadgfd.com');
-          setTimeout( refreshPage, 100);
+          setTimeout( refreshPage, 50);
           return; }
         // re-visit girl page
         // do nothing or // window.close()
