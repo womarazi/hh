@@ -1459,6 +1459,8 @@ function hhmain() {
       
     case "quest":
       let $girlupgradepay = $('.grade-complete-button.green_text_button[act="SC"]:visible');
+      const isGirlGrade = !!$('#controls[type="grade"]:visible').length;
+      const isQuest = !!$('#controls[type="quest"]:visible').length;
       if (isGirlGrade) {
         if ($girlupgradepay.length){
           // upgrade harem girl stars
@@ -1469,8 +1471,6 @@ function hhmain() {
         // re-visit girl page
         // do nothing or // window.close()
       }
-      const isGirlGrade = !!$('#controls[type="grade"]:visible').length;
-      const isQuest = !!$('#controls[type="quest"]:visible').length;
       if (isQuest) {
           let energyNextButton = $('#pay:visible'); // it says pay but it's just the "next" with energy button
           // normal quests: todo, remember to avoid picking up sidequest reward
