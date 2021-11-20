@@ -1464,7 +1464,7 @@ function hhmain() {
         $girlupgradepay.trigger('click');
         setTimeout( window.close, 2000);
         // setUrl('https://closepagesfsadgfd.com');
-        SetTimeout( refreshPage, 100);
+        setTimeout( refreshPage, 100);
         return;
       }
 
