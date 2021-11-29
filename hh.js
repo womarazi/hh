@@ -1990,12 +1990,15 @@ function towerOfFameSetup() {
   
   
   let userlist = JSON.parse(localStorage.getItem('_hhtowerlist'));
+  let playerid = '' + 213108; 
+  delete userlist[playerid];
   buttonmakeuserlist.style.backgroundColor = (userlist && userlist.length > 0) ? 'white' : 'black';
   
   const selectedUser = $('#leagues_middle').find('.lead_table_default')[0];
   if (!selectedUser) return;
   const selectedid = selectedUser.getAttribute('sorting_id');
-  if (userlist[selectedid]) {
+  // updates info of the last fought player
+  if (userlist[selectedid] && selectedid != playerid) {
     let singleupdate = true;
     let msecwaiting = 0;
     let timeout = 200;
