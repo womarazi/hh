@@ -1990,8 +1990,6 @@ function towerOfFameSetup() {
   
   
   let userlist = JSON.parse(localStorage.getItem('_hhtowerlist'));
-  let playerid = '' + 213108; 
-  delete userlist[playerid];
   buttonmakeuserlist.style.backgroundColor = (userlist && userlist.length > 0) ? 'white' : 'black';
   
   const selectedUser = $('#leagues_middle').find('.lead_table_default')[0];
@@ -2046,7 +2044,7 @@ function towerOfFameMain2021(autorefill = true){
     let userid = $idarr[i].getAttribute('sorting_id');
     if (userlist[userid]) continue;
     
-    console.log('toweroffamemain: userlist invalida resettata per colpa di:' + userid);
+    console.error('toweroffamemain: userlist invalida resettata per colpa di:' + userid);
     userlist = null;
     localStorage.setItem('_hhtowerlist', null);
     break; }
@@ -2072,7 +2070,7 @@ function towerOfFameMain2021(autorefill = true){
     pg.leaguePoints = simulation.leaguepoints;
     pg.prizescore = pg.leaguePoints; //scorefunction(pg.winratio || 0, pg.leaguePoints || 0, pg.isWeak || 0, pg.isBoosted || 0);
   }
-  sortedUserList = sortedUserList.filter( (user) => { return user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk; } );
+  sortedUserList = sortedUserList.filter( (user) => { return !user.you && (user.type == 'ch' && doch || user.type == 'kh' && dokh || user.type == 'hk' && dohk); } );
   sortedUserList = sortedUserList.sort((e1, e2) => { return e1.prizescore - e2.prizescore; });
 
   console.log('toweroffamemain: sorted userlist:', sortedUserList);
