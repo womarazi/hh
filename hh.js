@@ -1970,6 +1970,7 @@ function towerOfFameSetup() {
   $(buttonmakeuserlist).on('click', () =>  {
     if (buttonmakeuserlist.style.backgroundColor === 'white') {
       buttonmakeuserlist.style.backgroundColor = 'black';
+      localStorage.setItem('_hhtowerlist', null);
       return; }
       buttonmakeuserlist.style.backgroundColor = 'gray' ;
     maketoweruserlist(); });
