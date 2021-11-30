@@ -1996,7 +1996,7 @@ function towerOfFameSetup() {
   if (!selectedUser) return;
   const selectedid = selectedUser.getAttribute('sorting_id');
   // updates info of the last fought player
-  if (userlist[selectedid] && selectedid != playerid) {
+  if (userlist[selectedid]) {
     let singleupdate = true;
     let msecwaiting = 0;
     let timeout = 200;
