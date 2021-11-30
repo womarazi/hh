@@ -1669,8 +1669,8 @@ function maketoweruserlist(userlist = null) {
   let i;
   for (i = 0; i < $idarr.length; i++) { // user list validator
     let userid = $idarr[i].getAttribute('sorting_id');
-    if (userlist[userid] || $idarr[i].classList.contains('personal_highlight')) continue;
-    $($idarr[i]).trigger('click');
+    if (userlist[userid]) continue;
+    $ ($idarr[i]).trigger('click');
     gettoweruserinfo(userid, userlist);
     // temp end, ma restituisco l'oggetto che verrà riempito.
     return userlist; }
@@ -1706,7 +1706,8 @@ function gettoweruserinfo(userid, userList, timeout = 200, msecwaiting = 0, sing
   
   tmp = $userinfo.find('.avatar_border > img')[0].getAttribute('onclick');
   if (msecwaiting > 3000) {
-    // todo: così perdo i progressi finora analizzati, dovrei ri-triggerare il click o salvare la struttura incompleta e marchiarla come incompleta.
+    userList.complete = false;
+    localStorage.setItem('_hhtowerlist', userList);
     refreshPage(); return; }
   if (tmp !== 'hero_page_popup({ id: ' + userid + ' })') {
     msecwaiting += timeout;
@@ -1991,6 +1992,7 @@ function towerOfFameSetup() {
   
   let userlist = JSON.parse(localStorage.getItem('_hhtowerlist'));
   buttonmakeuserlist.style.backgroundColor = (userlist && userlist.length > 0) ? 'white' : 'black';
+  if (userlist && (!userlist.complete || userlist.length === $('.leadTable>[sorting_id]:visible').length)) buttonmakeuserlist.style.backgroundColor = 'lightgray';
   
   const selectedUser = $('#leagues_middle').find('.lead_table_default')[0];
   if (!selectedUser) return;
