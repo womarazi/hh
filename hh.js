@@ -1668,9 +1668,9 @@ function maketoweruserlist(userlist = null) {
   const $idarr = $leagues.find('[sorting_id]:visible');
   let i;
   for (i = 0; i < $idarr.length; i++) { // user list validator
-    if (userlist[userid]) continue;
     let userrowhtml = $idarr[i];
     let userid = userrowhtml.getAttribute('sorting_id');
+    if (userlist[userid]) continue;
     let challengesLeftStr = userrowhtml.cells[3]?.innerText;
     if (challengesLeftStr === '-' || challengesLeftStr === '3/3') continue;
     $ ($idarr[i]).trigger('click');
