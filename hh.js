@@ -2578,7 +2578,7 @@ function timeparse(str) {
 //////
 function exception(message) {
   console.log("Exception occurred:");
-  console.trace(message);
+  console.trace(message, arguments);
 }
 
 function p(obj, printobjects) {
