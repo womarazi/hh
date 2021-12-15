@@ -1536,7 +1536,7 @@ function hhmain() {
       });
       console.log('troll-battle', {shards, girls, trollnum, trollStatus, energy: getFightEnergy()});
       if (shards.length === shardssum/100){
-         throw new Exception('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
+         throw new Error('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
       }
       if (true || getFightEnergy()) whenBattleStart(()=>refreshPage());
       else {
