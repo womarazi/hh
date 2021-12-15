@@ -1536,7 +1536,7 @@ function hhmain() {
       });
       console.log('troll-battle', {shards, girls, trollnum, trollStatus, energy: getFightEnergy()});
       if (shards.length === shardssum/100){
-         throw new Error('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
+         throw new MyError('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
       }
       if (true || getFightEnergy()) whenBattleStart(()=>refreshPage());
       else {
@@ -1620,6 +1620,11 @@ function pachinkoMainOnClick() {
              , 100)//timeout
            );//on
   // $(".girls_reward.girl_shards").on('mouseleave', () => setTimeout(()=>{ document.body.append(rewards); }, 100));
+}
+
+function MyError(msg, ...args){
+  console.error('MyError:', ...(arguments));
+  return new Erorr(msg);
 }
 
 function pachinkoshards(){
