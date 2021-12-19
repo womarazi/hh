@@ -2408,9 +2408,9 @@ function trollFight(isarena = false, istroll = false, isleague = false, isSeason
     let forceFight = localStorage.getItem('forceFight');
     if (forceFight === 'true') { forceFight = true; }
     else if (forceFight === 'false') { farceFight = false; }
-    else { forceFight = !!+forceFight; }
+    else { forceFight = !!+forceFight; localStorage.setItem('forceFight', false); }
     console.log('forceFight? ', forceFight, document.location.href, favurl);
-    if (isNaN(favBoss) || favBoss <= 0) return;
+    if (isNaN(favBoss) || favBoss <= 0) { favBoss = 12; localStorage.setItem('favBoss', favBoss); }
     if (document.location.href !== favurl || !forceFight) { setUrl(favurl); return; }
   }
   // console.log("trollFight event changed check");
