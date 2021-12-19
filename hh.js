@@ -1540,7 +1540,9 @@ function hhmain() {
       });
       console.log('troll-battle', {shards, girls, trollnum, trollStatus, energy: getFightEnergy()});
       if (shards.length === shardssum/100){
-         throw new MyError('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum});
+        let favBoss = localStorage.getItem('favBoss');
+        let forceFight = localStorage.getItem('forceFight');
+        if (!forceFight && favBoss != trollnum) throw new MyError('todo: change troll', {shards, shardssum, girls, trollStatus, trollnum, forceFight, favBoss});
       }
       if (true || getFightEnergy()) whenBattleStart(()=>refreshPage());
       else {
