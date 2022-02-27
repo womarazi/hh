@@ -1460,6 +1460,16 @@ function hhmain() {
     case "tower-of-fame":
       towerOfFameMain2021();
       break;
+    case "event":
+      const bngbtn = $('a#start-bang-button')[0];
+      if (!bngbtn) return;
+      let teamselectedegohtml = $('.selected-hero-team .boss-bang-team-ego:visible')[0];
+      if (!teamselectedegohtml) return;
+      seturl(bngbtn.href);
+      break;
+    case "boss-bang-battle":
+      whenBattleStart(()=>refreshPage());
+      break;
       
     case "quest":
       let $girlupgradepay = $('.grade-complete-button.green_text_button[act="SC"]:visible');
