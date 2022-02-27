@@ -1465,9 +1465,11 @@ function hhmain() {
       if (!bngbtn) return;
       let teamselectedegohtml = $('.selected-hero-team .boss-bang-team-ego:visible')[0];
       if (!teamselectedegohtml) return;
-      seturl(bngbtn.href);
+      console.log("setUrl("+bngbtn.href+");");
+      setUrl(bngbtn.href);
       break;
     case "boss-bang-battle":
+      console.log("run boss-bang-battle");
       whenBattleStart(()=>refreshPage());
       break;
       
@@ -1480,7 +1482,7 @@ function hhmain() {
           // upgrade harem girl stars
           $girlupgradepay.trigger('click');
           // setUrl('https://closepagesfsadgfd.com');
-          setTimeout( refreshPage, 50);
+          setTimeout(refreshPage, 50);
           return; }
         // re-visit girl page
         // do nothing or // window.close()
