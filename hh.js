@@ -1622,8 +1622,8 @@ function whenBattleStart(callback, enemyhp = null, count = 0, delay = 200, canus
   if ((enemyhppx && enemyhppx !== '100%' || canuseownhp && myhppx && myhppx !== '100%')) return callback();
   if (count > 100) return;
   delay *= 1.05;
-  console.log('whenbattlestart check delay', delay, 'count:', count);
-  setTimeout(()=>whenBattleStart(callback, enemyhp, count+1, delay), delay);
+  console.log('whenbattlestart check delay', {delay, count, canuseownhp});
+  setTimeout(()=>whenBattleStart(callback, enemyhp, count+1, delay, canuseownhp), delay);
 }
 
 function pachinkoMain() {
