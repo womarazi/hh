@@ -1,0 +1,50 @@
+function getcamname(){ // cb & stripchat
+ return getsitename() + "_" + window.location.pathname.replaceAll("\/","");
+}
+function getsitename() {
+  switch (window.location.hostname){
+    case "chaturbate.com": return "cb";
+    case "it.stripchat.com": return "sc";
+    default return window.location.hostname;
+  }
+}
+
+function setAlias(knownname, newname){
+
+}
+function getalias(name) {
+return localStorage.
+}
+
+get(key) {
+  let data = localStorage.getItem('cams_' + key);
+  try { data = JSON.parse(data); } catch(){}
+  return data;
+}
+
+set(key, val) {
+  localStorage.setItem(key, val);
+}
+class alias{
+  site;
+  name;
+  constructor(site, name) { this.site = site; this.name = name;}
+}
+class Model{
+  static get(name){
+    let json = get('model_' + name);
+    if (typeof(json)=="string") return Model.get(name) // alias are stored with a string of main model name
+    let model = new Model();
+    for (let key in json) model[key] = json[key];
+    return model;
+  }
+  name;
+
+}
+
+function camlinkmain() {
+let name = getcamname();
+let girl = Model.get(name);
+girl.aliases build list
+
+}
