@@ -8,41 +8,80 @@ function getsitename() {
     default return window.location.hostname;
   }
 }
-
-function setAlias(knownname, newname){
-
+/*
+function setalias(knownname, newname){
+  /*let alias = get('alias');
+  let aliases = alias[name]
+  for (let alias of aliases) alias[alias].push(newname);
+  alias[knownname].push(newname);
+  alias[newname] = [knownname, ...aliases];
+  set('alias', alias);* /
+  set('model_' + newname, knownname);
 }
+
 function getalias(name) {
-return localStorage.
-}
+   return get('alias')[name];
+}*/
 
+var clstorageprefix = '_camlink_';
 get(key) {
-  let data = localStorage.getItem('cams_' + key);
+  let data = localStorage.getItem(clstorageprefix + key);
   try { data = JSON.parse(data); } catch(){}
   return data;
 }
 
 set(key, val) {
-  localStorage.setItem(key, val);
+   if (typeof (val) == "object") val = JSON.stringify(val);
+   localStorage.setItem(clstorageprefix + key, val);
 }
+
 class alias{
   site;
   name;
   constructor(site, name) { this.site = site; this.name = name;}
 }
+
 class Model{
+  static alias;
+  static staticinit(){ Model.alias = get('alias'); }
   static get(name){
     let json = get('model_' + name);
     if (typeof(json)=="string") return Model.get(name) // alias are stored with a string of main model name
     let model = new Model();
     for (let key in json) model[key] = json[key];
+    this.names = alias[this.name];
     return model;
   }
-  name;
 
+static save(jsontxt){
+    let json = JSON.parse(jsontxt);
+    for (let alias of model.names) set('model_'+alias, json.name);
+    set('model_'+json.name, json);
+  }
+
+  name;
+  names;
+  
+  parsename(url){ // {site, name}
+     let ret = {site:'', name:''};
+     switch(url.substring(0, "https://chatu".length)){
+     case "chatu": ret.site = "cb"; ret.name = url.substring("https://chaturbate.com/".length, url.length-1); return ret;
+     
+  }
+  return null;
+  }
+  getcw(nameindex = 0){
+    return "https://www.camwhores.tv/search/" + this.names[nameindex] + "/";
+  }
+
+  constructor(name=''){
+    this.name = name;
+    this.names=[name];
+  }
 }
 
 function camlinkmain() {
+Model.staticinit();
 let name = getcamname();
 let girl = Model.get(name);
 girl.aliases build list
