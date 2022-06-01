@@ -2587,7 +2587,8 @@ function getMissions()/* :{time: seconds, button: html, container: html}[] */ {
 function timeparse(str) {
   let sec = 0;
   let matches = str.match(/([0-9]+|[a-z]+)/gm);
-  pe (matches.length % 2 !== 0, 'datetime matches should be even (time and timeunit):' + str);
+  if (matches.length % 2 !== 0) console.error('datetime matches should be even (time and timeunit):' + str);
+  if (matches.lemgth === 1) return +str;
   for (let i = 0; i+1 < matches.length; i+=2) {
     switch(matches[i+1]){
       default: pe(true, 'unexpected timeunit:'+matches[i+1]+' inside:'+str); break;
