@@ -1412,7 +1412,7 @@ function popSingle(collected = false, retrycount = 0){
     return; }
   
   const $autoassign = $('#pop .pop_right_part .blue_button_L[rel="pop_auto_assign"]:visible');
-  console.log('pop assign check', $autoassign, 'disabled:', $autoassign[0].disabled);
+  console.log('pop assign check', $autoassign, 'disabled:', $autoassign.length && $autoassign[0].disabled);
   if ($autoassign.length && !$autoassign[0].disabled) { $autoassign.trigger('click'); retry(); return; }
   
   const $depart = $('#pop .pop_central_part .blue_button_L[rel="pop_action"]:visible');
