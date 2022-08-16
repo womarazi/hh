@@ -520,8 +520,8 @@ function hhjs_pantheon(){
 
 function hhjs_pantheonBattleSetup(){ }
 function hhjs_pantheonBattle(){
-  whenBattleStart(()=>refreshPage());
-  setTimeout(()=> refreshPage(), 2.5 * hours); }
+  whenBattleStart(()=>history.back());
+  setTimeout(()=> history.back(), 2.5 * hours); }
 function hhjs_pantheonPreBattleSetup(){
 }
 function hhjs_pantheonPreBattle(params){
