@@ -10,8 +10,8 @@ function hhgimmain() {
   const div = document.createElement('div');
   div.classList.add("image_control_buttons");
   let divcontent = '';
-  for ( let i = 0; i <= maxstars; i++) {
-    let url = baseurl + gid + (i===0 ? "/avb" : "/ava") + i + "-1200.webp";
+  for ( let i = -1; i <= maxstars; i++) {
+    let url = baseurl + gid + (i === -1 ? "/avb" : "/ava") + ( i === -1 ? 0 : i) + "-1200x.webp";
     urls.push(url);
     divcontent += '<a class="gimage_a" href="' + url + '"><button class="gimage_btn">' + i + '</button></a>';
   }
