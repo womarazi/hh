@@ -8,7 +8,7 @@ function hhgimmain() {
   let baseurl = "https://hh2.hh-content.com/pictures/girls/";
   let urls = [];
   const div = document.createElement('div');
-  div.className.add("image_control_buttons");
+  div.classList.add("image_control_buttons");
   let divcontent = '';
   for ( let i = 0; i <= maxstars; i++) {
     let url = baseurl + gid + (i===0 ? "/avb" : "/ava") + "-1200.webp";
