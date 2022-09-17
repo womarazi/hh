@@ -11,7 +11,7 @@ function hhgimmain() {
   div.classList.add("image_control_buttons");
   let divcontent = '';
   for ( let i = 0; i <= maxstars; i++) {
-    let url = baseurl + gid + (i===0 ? "/avb" : "/ava") + "-1200.webp";
+    let url = baseurl + gid + (i===0 ? "/avb" : "/ava") + i + "-1200.webp";
     urls.push(url);
     divcontent += '<a class="gimage_a" href="' + url + '"><button class="gimage_btn">' + i + '</button></a>';
   }
@@ -21,4 +21,4 @@ function hhgimmain() {
 }
 
 
-hhgimmain()
+hhgimmain();
