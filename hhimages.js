@@ -21,4 +21,4 @@ function hhgimmain() {
 }
 
 
-hhgimmain();
+setTimeout(hhgimmain, 100);
