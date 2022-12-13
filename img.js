@@ -1,4 +1,4 @@
-var imgdebug = true;  
+var imgdebug = false;  
 function imgmain(){
     console.log('img.js main executed');
     for (let dom of excludeDomains) if (location.host.indexOf(dom) >= 0) return;
@@ -24,7 +24,20 @@ function imgmain(){
       for(let timer of timers) clearTimeout(timer);
       timers = [];
       // if (e.target.src === img.src) return;
-      img.src = e.target.src;
+        let imghtml = e.target;
+        let style = getComputedStyle(imghtml);
+        let priority = ["background-image", "background", "src"];
+
+        let urlstr = null;
+        for (let prio of priority) {
+          urlstr = style[prio] || imghtml[prio];
+          let url = null;
+          try {
+            url = urlstr && new URL(urlstr, "http://www.justtovalidate.kon");
+          } catch(e){}
+            if (url) break;
+        }
+      img.src = urlstr; //e.target.src;
       container.style.display = 'block';
     }
     function hideImage(e){
@@ -49,9 +62,11 @@ function imgmain(){
         container.style.right = '';
         container.style.left = '0'; }
     }
+    let selectors = JSON.parse(localStorage.getItem('_imgjs_selector') || '["img"]');
     function mouseover(e){
       if (imgdebug) console.log('mouseover');
-      if (e.target.tagName === 'IMG') showImage(e); else hideImageDelay(e);
+      for (let selector of selectors) if (e.target?.matches(selector)) { showImage(e); return; }
+      hideImageDelay(e);
     }
     container.addEventListener('click', moveContainer);
     document.body.addEventListener('mouseover', mouseover);
