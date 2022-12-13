@@ -18,33 +18,42 @@ function imgmain(){
     const img = document.createElement('img');
     container.append(img);
     let timers = [];
+    let priority = ["background-image", "background", "src"];
+    
+    function getimage(imghtml) {
+        let style = getComputedStyle(imghtml);
+        let urlstr = null;
+        for (let prio of priority) {
+          urlstr = style[prio] || imghtml[prio];
+          let url = null;
+          switch(urlstr){
+              case "none":
+              case "":
+              case "inherit":
+              case "default": break;
+              default: try { url = new URL(urlstr, "http://www.justtovalidate.kon"); } catch(e){}
+          }
+          if (imgdebug) console.log({imghtml, url, urlstr, prio, style});
+          if (url) return urlstr;
+        }
+        return null;
+    }
+    function deepgetimage(html){
+       while(html) {
+           let urlstr = getimage(html);
+           if (urlstr) return urlstr;
+           html = html.parentElement;
+       }
+       return null;
+    }
 
     function showImage(e){
       if (imgdebug) console.log('show image', {e, img, timers, target:e.target, src:e.target?.src});
       for(let timer of timers) clearTimeout(timer);
       timers = [];
       // if (e.target.src === img.src) return;
-        let imghtml = e.target;
-        let style = getComputedStyle(imghtml);
-        let priority = ["background-image", "background", "src"];
-
-        let urlstr = null;
-        for (let prio of priority) {
-          urlstr = style[prio] || imghtml[prio];
-          let url = null;
-          try {
-              switch(urlstr){
-                  case "none":
-                  case "":
-                  case "inherit":
-                  case "default": break;
-                  default: url = new URL(urlstr, "http://www.justtovalidate.kon");
-              }
-          } catch(e){}
-            
-          if (imgdebug) console.log({url, urlstr, prio, style, imghtml});
-          if (url) break;
-        }
+      let imghtml = e.target;
+      let urlstr = deepgetimage(imghtml);
       img.src = urlstr; //e.target.src;
       container.style.display = 'block';
     }
