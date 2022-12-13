@@ -20,6 +20,13 @@ function imgmain(){
     let timers = [];
     let priority = ["background-image", "background", "src"];
     
+    function isurl(urlstr) {
+        let url = null;
+        if (urlstr.includes(" ")) return null;
+        if (!urlstr.includes("/") || !urlstr.includes("\\")) return null;
+        try { url = new URL(urlstr, "http://www.justtovalidate.kon"); } catch(e){ }
+        return url;
+    }
     function getimage(imghtml) {
         let style = getComputedStyle(imghtml);
         let urlstr = null;
@@ -31,7 +38,7 @@ function imgmain(){
               case "":
               case "inherit":
               case "default": break;
-              default: try { url = new URL(urlstr, "http://www.justtovalidate.kon"); } catch(e){}
+              default: url = isurl(urlstr); break;
           }
           if (imgdebug) console.log({imghtml, url, urlstr, prio, style});
           if (url) return urlstr;
