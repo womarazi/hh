@@ -36,7 +36,7 @@ function imgmain(){
               switch(urlstr){
                   case "none":
                   case "":
-                  case "inherit";
+                  case "inherit":
                   case "default": break;
                   default: url = new URL(urlstr, "http://www.justtovalidate.kon");
               }
