@@ -33,7 +33,13 @@ function imgmain(){
           urlstr = style[prio] || imghtml[prio];
           let url = null;
           try {
-            url = urlstr && new URL(urlstr, "http://www.justtovalidate.kon");
+              switch(urlstr){
+                  case "none":
+                  case "":
+                  case "inherit";
+                  case "default": break;
+                  default: url = new URL(urlstr, "http://www.justtovalidate.kon");
+              }
           } catch(e){}
             
           if (imgdebug) console.log({url, urlstr, prio, style, imghtml});
