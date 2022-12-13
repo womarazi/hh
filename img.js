@@ -1,4 +1,4 @@
-var imgdebug = false;  
+var imgdebug = true;  
 function imgmain(){
     console.log('img.js main executed');
     for (let dom of excludeDomains) if (location.host.indexOf(dom) >= 0) return;
@@ -35,7 +35,9 @@ function imgmain(){
           try {
             url = urlstr && new URL(urlstr, "http://www.justtovalidate.kon");
           } catch(e){}
-            if (url) break;
+            
+          if (imgdebug) console.log({url, urlstr, prio, style, imghtml});
+          if (url) break;
         }
       img.src = urlstr; //e.target.src;
       container.style.display = 'block';
@@ -64,7 +66,7 @@ function imgmain(){
     }
     let selectors = JSON.parse(localStorage.getItem('_imgjs_selector') || '["img"]');
     function mouseover(e){
-      if (imgdebug) console.log('mouseover');
+      if (imgdebug) console.log('img.js mouseover', {selectors, target:e.target});
       for (let selector of selectors) if (e.target?.matches(selector)) { showImage(e); return; }
       hideImageDelay(e);
     }
