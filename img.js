@@ -1,4 +1,4 @@
-var imgdebug = true;  
+var imgdebug = false;  
 function imgmain(){
     console.log('img.js main executed');
     for (let dom of excludeDomains) if (location.host.indexOf(dom) >= 0) return;
